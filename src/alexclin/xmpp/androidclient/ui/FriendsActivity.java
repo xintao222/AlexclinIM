@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 
 
+import alexclin.frame.Application;
 import alexclin.xmpp.androidclient.R;
 import alexclin.xmpp.androidclient.XMPPRosterServiceAdapter;
-import alexclin.xmpp.androidclient.Application;
-import alexclin.xmpp.androidclient.YaximConfiguration;
+import alexclin.xmpp.androidclient.AimConfiguration;
 import alexclin.xmpp.androidclient.dialogs.AddRosterItemDialog;
 import alexclin.xmpp.androidclient.dialogs.ChangeStatusDialog;
 import alexclin.xmpp.androidclient.dialogs.FirstStartDialog;
@@ -76,7 +76,7 @@ public class FriendsActivity extends SherlockExpandableListActivity {
 
 	private static final String TAG = "alexclin.MainWindow";
 
-	private YaximConfiguration mConfig;
+	private AimConfiguration mConfig;
 
 	private Handler mainHandler = new Handler();
 
@@ -111,7 +111,7 @@ public class FriendsActivity extends SherlockExpandableListActivity {
 		actionBar = getSupportActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setHomeButtonEnabled(true);
-		mConfig = new YaximConfiguration(PreferenceManager
+		mConfig = new AimConfiguration(PreferenceManager
 				.getDefaultSharedPreferences(this));
 		registerCrashReporter();
 

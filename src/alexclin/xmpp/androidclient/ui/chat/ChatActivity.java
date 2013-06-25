@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import alexclin.frame.Application;
 import alexclin.xmpp.androidclient.provider.ChatProvider;
 import alexclin.xmpp.androidclient.provider.RosterProvider;
 import alexclin.xmpp.androidclient.provider.ChatProvider.ChatConstants;
@@ -15,7 +16,6 @@ import com.actionbarsherlock.view.Window;
 
 import alexclin.xmpp.androidclient.R;
 import alexclin.xmpp.androidclient.XMPPChatServiceAdapter;
-import alexclin.xmpp.androidclient.Application;
 import alexclin.xmpp.androidclient.service.XMPPService;
 import alexclin.xmpp.androidclient.ui.FriendsActivity;
 import alexclin.xmpp.androidclient.util.StatusMode;

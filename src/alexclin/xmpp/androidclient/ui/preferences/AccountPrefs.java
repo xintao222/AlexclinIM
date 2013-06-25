@@ -1,8 +1,8 @@
 package alexclin.xmpp.androidclient.ui.preferences;
 
 
+import alexclin.frame.Application;
 import alexclin.xmpp.androidclient.R;
-import alexclin.xmpp.androidclient.Application;
 import alexclin.xmpp.androidclient.exceptions.YaximXMPPAdressMalformedException;
 import alexclin.xmpp.androidclient.util.PreferenceConstants;
 import alexclin.xmpp.androidclient.util.XMPPHelper;

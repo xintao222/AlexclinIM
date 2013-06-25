@@ -1,4 +1,4 @@
-package alexclin.xmpp.androidclient;
+package alexclin.frame;
 
 import android.os.Environment;
 

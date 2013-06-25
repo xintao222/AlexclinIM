@@ -1,5 +1,8 @@
-package alexclin.xmpp.androidclient;
+package alexclin.frame;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -9,11 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import alexclin.util.LogUtil;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
+import android.util.Log;
 
 public class CrashHandler implements UncaughtExceptionHandler {
 	private static final SimpleDateFormat dataFormat = new SimpleDateFormat(
@@ -22,6 +26,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 	private static CrashHandler myCrashHandler;
 	private Context context;	
 	private CrashAble mCrashAble;
+	private UncaughtExceptionHandler mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
 
 	private CrashHandler(Context context,CrashAble crashAble){
 		this.context = context;
@@ -30,7 +35,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
-		LogUtil.logError(ex);		
+		recordCrashToFile(ex);		
 		try {
 			// 1.获取当前程序的版本号. 版本的id
 			PackageManager pm = context.getPackageManager();
@@ -58,6 +63,55 @@ public class CrashHandler implements UncaughtExceptionHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		mDefaultHandler.uncaughtException(thread, ex);
+	}
+
+	/**
+	 * 将程序Crash的异常信息保存到文件中
+	 * @param tw
+	 */
+	private void recordCrashToFile(Throwable tw) {
+		Log.e("CrashException", "AppCrash NeedToRecordForCheck");
+		if (tw == null) return;		
+		String errorlog = context.getPackageName().replace(".", "_")+"_crashlog.txt";
+		String savePath = "";
+		String logFilePath = "";
+		FileWriter fw = null;
+		PrintWriter pw = null;
+		try {
+			//判断是否挂载了SD卡
+			String storageState = Environment.getExternalStorageState();		
+			if(storageState.equals(Environment.MEDIA_MOUNTED)){
+				savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Log/Crash/";
+				File file = new File(savePath);
+				if(!file.exists()){
+					file.mkdirs();
+				}
+				logFilePath = savePath + errorlog;
+			}
+			//没有挂载SD卡，无法写文件
+			if(logFilePath == ""){
+				return;
+			}
+			File logFile = new File(logFilePath);
+			if (!logFile.exists()) {
+				logFile.createNewFile();
+			}
+			fw = new FileWriter(logFile,true);
+			pw = new PrintWriter(fw);
+			pw.println("---------START-----------"+(new Date().toLocaleString())+"---------------------\r\n");
+			tw.printStackTrace(pw);
+			pw.println("\r\n---------END  -----------"+(new Date().toLocaleString())+"---------------------\r\n");	
+			pw.close();
+			fw.close();
+		} catch (Exception ex) {
+			return;
+		}finally{ 
+			if(pw != null){ pw.close(); } 
+			if(fw != null){ try { fw.close(); } catch (IOException ex) { }}
+		}
+		return;
+		
 	}
 
 	/**

@@ -10,7 +10,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.util.Log;
 
-public class YaximConfiguration implements OnSharedPreferenceChangeListener {
+public class AimConfiguration implements OnSharedPreferenceChangeListener {
 
 	private static final String TAG = "yaxim.Configuration";
 
@@ -45,7 +45,7 @@ public class YaximConfiguration implements OnSharedPreferenceChangeListener {
 
 	private final SharedPreferences prefs;
 
-	public YaximConfiguration(SharedPreferences _prefs) {
+	public AimConfiguration(SharedPreferences _prefs) {
 		prefs = _prefs;
 		prefs.registerOnSharedPreferenceChangeListener(this);
 		loadPrefs(prefs);

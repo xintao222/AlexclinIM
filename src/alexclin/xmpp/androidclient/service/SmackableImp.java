@@ -41,8 +41,8 @@ import org.jivesoftware.smackx.receipts.DeliveryReceipt;
 import org.jivesoftware.smackx.receipts.DeliveryReceiptManager;
 import org.jivesoftware.smackx.receipts.DeliveryReceiptRequest;
 
-import alexclin.xmpp.androidclient.Application;
-import alexclin.xmpp.androidclient.YaximConfiguration;
+import alexclin.frame.Application;
+import alexclin.xmpp.androidclient.AimConfiguration;
 import alexclin.xmpp.androidclient.exceptions.YaximXMPPException;
 import alexclin.xmpp.androidclient.provider.ChatProvider;
 import alexclin.xmpp.androidclient.provider.RosterProvider;
@@ -102,7 +102,7 @@ public class SmackableImp implements Smackable {
 		ServiceDiscoveryManager.setIdentityType(Application.XMPP_IDENTITY_TYPE);
 	}
 
-	private final YaximConfiguration mConfig;
+	private final AimConfiguration mConfig;
 	private final ConnectionConfiguration mXMPPConfig;
 	private final XMPPConnection mXMPPConnection;
 
@@ -130,7 +130,7 @@ public class SmackableImp implements Smackable {
 	private BroadcastReceiver mPingAlarmReceiver = new PingAlarmReceiver();
 
 
-	public SmackableImp(YaximConfiguration config,
+	public SmackableImp(AimConfiguration config,
 			ContentResolver contentResolver,
 			Service service) {
 		this.mConfig = config;

@@ -1,12 +1,14 @@
-package alexclin.xmpp.androidclient;
+package alexclin.frame;
 
 import java.io.File;
 
+import alexclin.frame.CrashHandler.CrashAble;
+import alexclin.xmpp.androidclient.AimConfiguration;
 import android.content.Context;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
-public class Application extends android.app.Application {
+public class Application extends android.app.Application implements CrashAble {
 	public static final int SDK_INT = Integer.valueOf(Build.VERSION.SDK);
 	// identity name and type, see:
 	// http://xmpp.org/registrar/disco-categories.html
@@ -25,7 +27,7 @@ public class Application extends android.app.Application {
 		else
 			TRUST_STORE_PATH = path;
 	}
-	private YaximConfiguration mConfig;
+	private AimConfiguration mConfig;
 
 	public Application() {
 		super();
@@ -33,15 +35,28 @@ public class Application extends android.app.Application {
 
 	@Override
 	public void onCreate() {
-		mConfig = new YaximConfiguration(
+		mConfig = new AimConfiguration(
 				PreferenceManager.getDefaultSharedPreferences(this));
+		Thread.setDefaultUncaughtExceptionHandler(CrashHandler.getInstance(this, this));
 	}
 
 	public static Application getApp(Context ctx) {
 		return (Application) ctx.getApplicationContext();
 	}
 
-	public static YaximConfiguration getConfig(Context ctx) {
+	public static AimConfiguration getConfig(Context ctx) {
 		return getApp(ctx).mConfig;
+	}
+
+	@Override
+	public void sendErrorToServer(String errorInfo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exit() {
+		// TODO Auto-generated method stub
+		
 	}
 }

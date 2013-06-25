@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 import alexclin.xmpp.androidclient.R;
-import alexclin.xmpp.androidclient.YaximConfiguration;
+import alexclin.xmpp.androidclient.AimConfiguration;
 import alexclin.xmpp.androidclient.ui.chat.ChatActivity;
 import alexclin.xmpp.androidclient.util.LogConstants;
 import android.app.Notification;
@@ -43,7 +43,7 @@ public abstract class GenericService extends Service {
 	protected static int SERVICE_NOTIFICATION = 1;
 	private int lastNotificationId = 2;
 
-	protected YaximConfiguration mConfig;
+	protected AimConfiguration mConfig;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -67,7 +67,7 @@ public abstract class GenericService extends Service {
 	public void onCreate() {
 		Log.i(TAG, "called onCreate()");
 		super.onCreate();
-		mConfig = new YaximConfiguration(PreferenceManager
+		mConfig = new AimConfiguration(PreferenceManager
 				.getDefaultSharedPreferences(this));
 		mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		mWakeLock = ((PowerManager)getSystemService(Context.POWER_SERVICE))
