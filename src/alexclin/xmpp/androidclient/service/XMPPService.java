@@ -58,7 +58,6 @@ public class XMPPService extends GenericService {
 			mIsBoundTo.add(chatPartner);
 			return mServiceChatConnection;
 		}
-
 		return mService2RosterConnection;
 	}
 
@@ -128,14 +127,12 @@ public class XMPPService extends GenericService {
 				if (mConnectingThread != null || mIsConnected.get())
 					connectionFailed(getString(R.string.conn_networkchg));
 				return START_STICKY;
-			} else
-			if ("reconnect".equals(intent.getAction())) {
+			} else	if ("reconnect".equals(intent.getAction())) {
 				// reset reconnection timeout
 				mReconnectTimeout = RECONNECT_AFTER;
 				doConnect();
 				return START_STICKY;
-			} else
-			if ("ping".equals(intent.getAction())) {
+			} else	if ("ping".equals(intent.getAction())) {
 				if (mSmackable != null && mSmackable.isAuthenticated())
 					mSmackable.sendServerPing();
 				return START_STICKY;

@@ -126,12 +126,14 @@ public class AimConfiguration implements OnSharedPreferenceChangeListener {
         this.theme = prefs.getString(PreferenceConstants.THEME, "dark");
         this.chatFontSize = prefs.getString("setSizeChat", "18");
 
-		try {
-			XMPPHelper.verifyJabberID(jabberID);
-			splitAndSetJabberID(jabberID);
-		} catch (YaximXMPPAdressMalformedException e) {
-			Log.e(TAG, "Exception in getPreferences(): " + e);
-		}
+//		try {
+//			XMPPHelper.verifyJabberID(jabberID);
+//			splitAndSetJabberID(jabberID);
+//		} catch (YaximXMPPAdressMalformedException e) {
+//			Log.e(TAG, "Exception in getPreferences(): " + e);
+//		}
+        this.userName = this.jabberID;
+		this.server = this.customServer;
 	}
 
 

@@ -3,7 +3,7 @@ package alexclin.xmpp.androidclient.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+import alexclin.util.StringUtil;
 import alexclin.xmpp.androidclient.exceptions.YaximXMPPAdressMalformedException;
 import android.content.Context;
 import android.text.Editable;
@@ -52,6 +52,14 @@ public class XMPPHelper {
 		} else {
 			// SDK < 11
 			return ctx.getResources().getColor(android.R.color.primary_text_light);
+		}
+	}
+	
+	public static boolean verifyUserAndPW(String user,String password){
+		if(StringUtil.isNullOrEmpty(user)||password.length()<6){
+			return false;
+		}else{
+			return true;
 		}
 	}
 }

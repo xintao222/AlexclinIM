@@ -24,7 +24,6 @@ public class AccountPrefs extends PreferenceActivity {
 	private static int prioIntValue = 0;
 
 	private EditTextPreference prefPrio;
-	private EditTextPreference prefAccountID;
 	private int themedTextColor;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,30 +33,7 @@ public class AccountPrefs extends PreferenceActivity {
 
 		sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
 		themedTextColor = XMPPHelper.getEditTextColor(this);
-
-		this.prefAccountID = (EditTextPreference) findPreference(PreferenceConstants.JID);
-		this.prefAccountID.getEditText().addTextChangedListener(
-				new TextWatcher() {
-					public void afterTextChanged(Editable s) {
-						// Nothing
-					}
-
-					public void beforeTextChanged(CharSequence s, int start,
-							int count, int after) {
-						// Nothing
-					}
-
-					public void onTextChanged(CharSequence s, int start,
-							int before, int count) {
-
-						try {
-							XMPPHelper.verifyJabberID(s.toString());
-							prefAccountID.getEditText().setTextColor(themedTextColor);
-						} catch (YaximXMPPAdressMalformedException e) {
-							prefAccountID.getEditText().setTextColor(Color.RED);
-						}
-					}
-				});
+	
 
 		this.prefPrio = (EditTextPreference) findPreference(PreferenceConstants.PRIORITY);
 		this.prefPrio

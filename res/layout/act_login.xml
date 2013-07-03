@@ -43,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:text="alexclin"
-                android:inputType="textWebEditText"
+                android:inputType="text"
+                android:textColor="@android:color/black"
                 android:maxLength="20" />
         </TableRow>
 
@@ -65,6 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:text="lin64978844"
+                android:gravity="left"
+                android:textColor="@android:color/black"
                 android:inputType="textPassword"
                 android:maxLength="30" />
         </TableRow>
@@ -80,14 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
-            android:text="确定" />
-
-        <Button
-            android:id="@+id/Cancel_Login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:text="取消" />
+            android:text="登陆" />        
     </LinearLayout>
 
     <LinearLayout
