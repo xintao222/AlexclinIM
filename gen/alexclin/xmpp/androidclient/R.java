@@ -995,50 +995,50 @@ containing a value of this type.
         public static final int ic_chat_msg_status_unread=0x7f020080;
         public static final int ic_group_closed=0x7f020081;
         public static final int ic_group_opened=0x7f020082;
-        public static final int ic_menu_plug=0x7f020083;
-        public static final int ic_menu_unplug=0x7f020084;
-        public static final int ic_offline=0x7f020085;
-        public static final int ic_online=0x7f020086;
-        public static final int ic_status=0x7f020087;
-        public static final int ic_status_available=0x7f020088;
-        public static final int ic_status_away=0x7f020089;
-        public static final int ic_status_chat=0x7f02008a;
-        public static final int ic_status_dnd=0x7f02008b;
-        public static final int ic_status_offline=0x7f02008c;
-        public static final int ic_status_xa=0x7f02008d;
-        public static final int icon=0x7f02008e;
-        public static final int sb_message=0x7f02008f;
+        public static final int ic_launcher=0x7f020083;
+        public static final int ic_menu_plug=0x7f020084;
+        public static final int ic_menu_unplug=0x7f020085;
+        public static final int ic_offline=0x7f020086;
+        public static final int ic_online=0x7f020087;
+        public static final int ic_status=0x7f020088;
+        public static final int ic_status_available=0x7f020089;
+        public static final int ic_status_away=0x7f02008a;
+        public static final int ic_status_chat=0x7f02008b;
+        public static final int ic_status_dnd=0x7f02008c;
+        public static final int ic_status_offline=0x7f02008d;
+        public static final int ic_status_xa=0x7f02008e;
+        public static final int icon=0x7f02008f;
+        public static final int sb_message=0x7f020090;
     }
     public static final class id {
-        public static final int AddContactAlias_EditTextField=0x7f04005c;
-        public static final int AddContact_EditTextField=0x7f04005b;
-        public static final int AddContact_ScrollLayout=0x7f04006a;
-        public static final int AddRosterItem_GroupName=0x7f04005d;
-        public static final int Addcontact_Title=0x7f04005a;
+        public static final int AddContactAlias_EditTextField=0x7f040059;
+        public static final int AddContact_EditTextField=0x7f040058;
+        public static final int AddContact_ScrollLayout=0x7f040067;
+        public static final int AddRosterItem_GroupName=0x7f04005a;
+        public static final int Addcontact_Title=0x7f040057;
         public static final int Btn_AbstractList=0x7f04003b;
-        public static final int Cancel_Login=0x7f04004c;
-        public static final int Chat_SendButton=0x7f040047;
-        public static final int Chat_UserInput=0x7f040046;
+        public static final int Chat_SendButton=0x7f040045;
+        public static final int Chat_UserInput=0x7f040044;
         public static final int CoverView_Abstract=0x7f040038;
         public static final int DialogList_Abstract=0x7f04003a;
         public static final int DialogTitle_Abstract=0x7f040039;
-        public static final int Forget_Login=0x7f04004e;
+        public static final int Forget_Login=0x7f04004b;
         public static final int LeftText_Abstract=0x7f040035;
-        public static final int PasswordInput_Login=0x7f04004a;
-        public static final int Register_Login=0x7f04004d;
+        public static final int PasswordInput_Login=0x7f040048;
+        public static final int Register_Login=0x7f04004a;
         public static final int RightText_Abstract=0x7f040037;
-        public static final int ServerSetting_Login=0x7f04004f;
+        public static final int ServerSetting_Login=0x7f04004c;
         public static final int StandardView_Abstract=0x7f040033;
-        public static final int StartupDialog_JID_EditTextField=0x7f04006c;
-        public static final int StartupDialog_PASSWD_EditTextField=0x7f04006e;
-        public static final int StartupDialog_ScrollView=0x7f040069;
-        public static final int StartupDialog_Summary=0x7f040068;
-        public static final int StartupDialog_Username_title=0x7f04006b;
-        public static final int StartupDialog_passwd_title=0x7f04006d;
-        public static final int Submit_Login=0x7f04004b;
+        public static final int StartupDialog_JID_EditTextField=0x7f040069;
+        public static final int StartupDialog_PASSWD_EditTextField=0x7f04006b;
+        public static final int StartupDialog_ScrollView=0x7f040066;
+        public static final int StartupDialog_Summary=0x7f040065;
+        public static final int StartupDialog_Username_title=0x7f040068;
+        public static final int StartupDialog_passwd_title=0x7f04006a;
+        public static final int Submit_Login=0x7f040049;
         public static final int TitleLayout_Abstract=0x7f040034;
         public static final int TitleText_Abstract=0x7f040036;
-        public static final int UserNameInput_Login=0x7f040049;
+        public static final int UserNameInput_Login=0x7f040047;
         public static final int abs__action_bar=0x7f040021;
         public static final int abs__action_bar_container=0x7f040020;
         public static final int abs__action_bar_subtitle=0x7f040012;
@@ -1078,83 +1078,81 @@ containing a value of this type.
         public static final int abs__textButton=0x7f040014;
         public static final int abs__title=0x7f04001c;
         public static final int abs__up=0x7f04000b;
-        public static final int account_customserver=0x7f040042;
-        public static final int account_jabberID=0x7f04003c;
-        public static final int account_jabberPW=0x7f04003d;
-        public static final int account_port=0x7f040043;
-        public static final int account_prio=0x7f04003f;
-        public static final int account_resource=0x7f04003e;
-        public static final int action_bar_status=0x7f04005e;
-        public static final int action_bar_subtitle=0x7f040060;
-        public static final int action_bar_title=0x7f04005f;
-        public static final int button=0x7f04007b;
-        public static final int carbons=0x7f040041;
-        public static final int chat_contextmenu_copy_text=0x7f04007f;
-        public static final int chat_contextmenu_exit=0x7f040081;
-        public static final int chat_contextmenu_resend=0x7f040080;
-        public static final int chat_date=0x7f040061;
-        public static final int chat_from=0x7f040062;
-        public static final int chat_message=0x7f040064;
-        public static final int create_account=0x7f04006f;
-        public static final int details=0x7f040045;
+        public static final int account_customserver=0x7f040040;
+        public static final int account_port=0x7f040041;
+        public static final int account_prio=0x7f04003d;
+        public static final int account_resource=0x7f04003c;
+        public static final int action_bar_status=0x7f04005b;
+        public static final int action_bar_subtitle=0x7f04005d;
+        public static final int action_bar_title=0x7f04005c;
+        public static final int button=0x7f040078;
+        public static final int carbons=0x7f04003f;
+        public static final int chat_contextmenu_copy_text=0x7f04007c;
+        public static final int chat_contextmenu_exit=0x7f04007e;
+        public static final int chat_contextmenu_resend=0x7f04007d;
+        public static final int chat_date=0x7f04005e;
+        public static final int chat_from=0x7f04005f;
+        public static final int chat_message=0x7f040061;
+        public static final int create_account=0x7f04006c;
+        public static final int details=0x7f040043;
         public static final int disableHome=0x7f040009;
-        public static final int editText=0x7f040067;
+        public static final int editText=0x7f040064;
         public static final int edit_query=0x7f040027;
-        public static final int error_view=0x7f040048;
-        public static final int foregroundService=0x7f040055;
-        public static final int groupname=0x7f040076;
-        public static final int groupspinner=0x7f040070;
+        public static final int error_view=0x7f040046;
+        public static final int foregroundService=0x7f040052;
+        public static final int groupname=0x7f040073;
+        public static final int groupspinner=0x7f04006d;
         public static final int homeAsUp=0x7f040006;
-        public static final int iconView=0x7f040063;
-        public static final int layout_root=0x7f040065;
-        public static final int led=0x7f040050;
+        public static final int iconView=0x7f040060;
+        public static final int layout_root=0x7f040062;
+        public static final int led=0x7f04004d;
         public static final int listMode=0x7f040002;
-        public static final int members=0x7f040077;
-        public static final int menu_about=0x7f040090;
-        public static final int menu_add_friend=0x7f04008d;
-        public static final int menu_connect=0x7f04008c;
-        public static final int menu_exit=0x7f040091;
-        public static final int menu_settings=0x7f04008f;
-        public static final int menu_show_hide=0x7f04008b;
-        public static final int menu_status=0x7f04008e;
-        public static final int moverosterentrytogroupview=0x7f040078;
-        public static final int moverosterentrytogroupview_gv=0x7f04007a;
-        public static final int moverosterentrytogroupview_summary=0x7f040079;
-        public static final int newgroupinput=0x7f040071;
+        public static final int members=0x7f040074;
+        public static final int menu_about=0x7f04008d;
+        public static final int menu_add_friend=0x7f04008a;
+        public static final int menu_connect=0x7f040089;
+        public static final int menu_exit=0x7f04008e;
+        public static final int menu_settings=0x7f04008c;
+        public static final int menu_show_hide=0x7f040088;
+        public static final int menu_status=0x7f04008b;
+        public static final int moverosterentrytogroupview=0x7f040075;
+        public static final int moverosterentrytogroupview_gv=0x7f040077;
+        public static final int moverosterentrytogroupview_summary=0x7f040076;
+        public static final int newgroupinput=0x7f04006e;
         public static final int normal=0x7f040001;
-        public static final int reconnect=0x7f040040;
-        public static final int reportcrash=0x7f040058;
-        public static final int require_ssl=0x7f040044;
-        public static final int ringtone=0x7f040052;
-        public static final int roster_contextmenu_contact_change_group=0x7f040088;
-        public static final int roster_contextmenu_contact_delete=0x7f04008a;
-        public static final int roster_contextmenu_contact_delmsg=0x7f040089;
-        public static final int roster_contextmenu_contact_menu=0x7f040084;
-        public static final int roster_contextmenu_contact_open_chat=0x7f040085;
-        public static final int roster_contextmenu_contact_rename=0x7f040086;
-        public static final int roster_contextmenu_contact_request_auth=0x7f040087;
-        public static final int roster_contextmenu_group_menu=0x7f040082;
-        public static final int roster_contextmenu_group_rename=0x7f040083;
-        public static final int roster_icon=0x7f040073;
-        public static final int roster_screenname=0x7f040074;
-        public static final int roster_statusmsg=0x7f040075;
-        public static final int roster_unreadmsg_cnt=0x7f040072;
-        public static final int setSizeChat=0x7f040056;
+        public static final int reconnect=0x7f04003e;
+        public static final int reportcrash=0x7f040055;
+        public static final int require_ssl=0x7f040042;
+        public static final int ringtone=0x7f04004f;
+        public static final int roster_contextmenu_contact_change_group=0x7f040085;
+        public static final int roster_contextmenu_contact_delete=0x7f040087;
+        public static final int roster_contextmenu_contact_delmsg=0x7f040086;
+        public static final int roster_contextmenu_contact_menu=0x7f040081;
+        public static final int roster_contextmenu_contact_open_chat=0x7f040082;
+        public static final int roster_contextmenu_contact_rename=0x7f040083;
+        public static final int roster_contextmenu_contact_request_auth=0x7f040084;
+        public static final int roster_contextmenu_group_menu=0x7f04007f;
+        public static final int roster_contextmenu_group_rename=0x7f040080;
+        public static final int roster_icon=0x7f040070;
+        public static final int roster_screenname=0x7f040071;
+        public static final int roster_statusmsg=0x7f040072;
+        public static final int roster_unreadmsg_cnt=0x7f04006f;
+        public static final int setSizeChat=0x7f040053;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
-        public static final int showOffline=0x7f040054;
+        public static final int showOffline=0x7f040051;
         public static final int showTitle=0x7f040007;
-        public static final int smackdebug=0x7f040057;
-        public static final int statusLayout=0x7f040059;
-        public static final int statusview_message=0x7f04007d;
-        public static final int statusview_prio=0x7f04007e;
-        public static final int statusview_spinner=0x7f04007c;
+        public static final int smackdebug=0x7f040054;
+        public static final int statusLayout=0x7f040056;
+        public static final int statusview_message=0x7f04007a;
+        public static final int statusview_prio=0x7f04007b;
+        public static final int statusview_spinner=0x7f040079;
         public static final int tabMode=0x7f040003;
-        public static final int text=0x7f040066;
-        public static final int ticker=0x7f040053;
+        public static final int text=0x7f040063;
+        public static final int ticker=0x7f040050;
         public static final int translator_credits=0x7f040010;
         public static final int useLogo=0x7f040004;
-        public static final int vibration=0x7f040051;
+        public static final int vibration=0x7f04004e;
         public static final int wrap_content=0x7f040000;
     }
     public static final class integer {
@@ -1213,212 +1211,63 @@ containing a value of this type.
     }
     public static final class string {
         public static final int AboutDialog_DevelopersList=0x7f09000d;
-        public static final int AboutDialog_DevelopersText=0x7f09008a;
-        public static final int AboutDialog_DevelopersTitle=0x7f090089;
-        public static final int AboutDialog_LicenceText=0x7f09008d;
-        public static final int AboutDialog_LicenceTitle=0x7f09008b;
-        public static final int AboutDialog_Vote=0x7f09008c;
+        public static final int AboutDialog_DevelopersText=0x7f09008f;
+        public static final int AboutDialog_DevelopersTitle=0x7f09008e;
+        public static final int AboutDialog_LicenceText=0x7f090092;
+        public static final int AboutDialog_LicenceTitle=0x7f090090;
+        public static final int AboutDialog_Vote=0x7f090091;
         /**  GPS settings 
 
 	<string name="showGPS_title">GPS to status</string>
 	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
 	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
 
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
- About Dialog 
- GPS settings 
-
-	<string name="showGPS_title">GPS to status</string>
-	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
-	
+    
  About Dialog 
          */
-        public static final int AboutDialog_title=0x7f090088;
-        /** StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
-StatusPopUp
+        public static final int AboutDialog_title=0x7f09008d;
+        /**  StatusPopUp 
          */
-        public static final int AddContact_SpinnerPrompt=0x7f090076;
-        public static final int FontChat_dialog=0x7f09003b;
-        public static final int FontChat_summ=0x7f09003a;
-        public static final int FontChat_title=0x7f090039;
+        public static final int AddContact_SpinnerPrompt=0x7f09007b;
+        public static final int FontChat_dialog=0x7f090040;
+        public static final int FontChat_summ=0x7f09003f;
+        public static final int FontChat_title=0x7f09003e;
         /**  Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
- Global Strings 
          */
-        public static final int Global_Exit=0x7f090018;
-        public static final int Global_JID_hint=0x7f09001a;
-        public static final int Global_authenticate_first=0x7f090019;
-        public static final int Menu_AccSettings=0x7f090041;
-        public static final int Menu_HideOff=0x7f090040;
-        public static final int Menu_Settings=0x7f090042;
-        public static final int Menu_ShowOff=0x7f09003f;
-        public static final int Menu_Status=0x7f090043;
-        public static final int Menu_about=0x7f090046;
-        /**  Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
- Mainmenu 	
+        public static final int Global_Exit=0x7f09001d;
+        public static final int Global_JID_hint=0x7f09001f;
+        public static final int Global_authenticate_first=0x7f09001e;
+        public static final int LoginFailedNotify=0x7f090012;
+        public static final int Menu_AccSettings=0x7f090046;
+        public static final int Menu_HideOff=0x7f090045;
+        public static final int Menu_Settings=0x7f090047;
+        public static final int Menu_ShowOff=0x7f090044;
+        public static final int Menu_Status=0x7f090048;
+        public static final int Menu_about=0x7f09004b;
+        /**  Mainmenu 
          */
-        public static final int Menu_addFriend=0x7f09003e;
-        public static final int Menu_connect=0x7f090044;
-        public static final int Menu_disconnect=0x7f090045;
-        public static final int MoveRosterEntryToGroupDialog_summ=0x7f09007d;
-        public static final int MoveRosterEntryToGroupDialog_title=0x7f09007e;
-        public static final int NewGroup_EditTextField_Hint=0x7f09004b;
-        public static final int RenameEntry_summ=0x7f09007b;
-        public static final int RenameEntry_title=0x7f09007c;
-        public static final int RenameGroup_summ=0x7f090079;
-        public static final int RenameGroup_title=0x7f09007a;
-        public static final int StartupDialog_Summary=0x7f09001c;
-        /**  FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
- FirstStartUpDialog 
+        public static final int Menu_addFriend=0x7f090043;
+        public static final int Menu_connect=0x7f090049;
+        public static final int Menu_disconnect=0x7f09004a;
+        public static final int MoveRosterEntryToGroupDialog_summ=0x7f090082;
+        public static final int MoveRosterEntryToGroupDialog_title=0x7f090083;
+        public static final int NewGroup_EditTextField_Hint=0x7f090050;
+        public static final int NoServerSetting=0x7f090013;
+        public static final int OperationNotify=0x7f090011;
+        public static final int RenameEntry_summ=0x7f090080;
+        public static final int RenameEntry_title=0x7f090081;
+        public static final int RenameGroup_summ=0x7f09007e;
+        public static final int RenameGroup_title=0x7f09007f;
+        public static final int StartupDialog_Summary=0x7f090021;
+        /**  初始进入对话框 
          */
-        public static final int StartupDialog_Title=0x7f09001b;
-        public static final int StartupDialog_Username_title=0x7f09001e;
-        public static final int StartupDialog_advanced=0x7f090020;
-        public static final int StartupDialog_create_new=0x7f090021;
-        public static final int StartupDialog_passwd_title=0x7f09001f;
-        public static final int StartupDialog_pwHint=0x7f09001d;
+        public static final int StartupDialog_Title=0x7f090020;
+        public static final int StartupDialog_Username_title=0x7f090023;
+        public static final int StartupDialog_advanced=0x7f090025;
+        public static final int StartupDialog_create_new=0x7f090026;
+        public static final int StartupDialog_passwd_title=0x7f090024;
+        public static final int StartupDialog_pwHint=0x7f090022;
+        public static final int WrongUserOrPW=0x7f090010;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f090000;
@@ -1458,418 +1307,154 @@ StatusPopUp
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090007;
-        public static final int account_customserver_dialog_title=0x7f090072;
-        public static final int account_customserver_hint=0x7f090073;
-        public static final int account_customserver_summ=0x7f090071;
-        public static final int account_customserver_title=0x7f090070;
-        public static final int account_jabberID_dialog_title=0x7f090061;
-        public static final int account_jabberID_sum=0x7f090060;
-        public static final int account_jabberID_title=0x7f09005f;
-        public static final int account_jabberPW_dialog_title=0x7f090064;
-        public static final int account_jabberPW_sum=0x7f090063;
-        public static final int account_jabberPW_title=0x7f090062;
-        public static final int account_options_advanced=0x7f090057;
-        public static final int account_options_title=0x7f090056;
-        public static final int account_port_dialog_title=0x7f09006e;
-        public static final int account_port_hint=0x7f09006f;
-        public static final int account_port_sum=0x7f09006d;
-        public static final int account_port_title=0x7f09006c;
-        public static final int account_prio_dialog_title=0x7f09006b;
-        public static final int account_prio_summ=0x7f09006a;
-        public static final int account_prio_title=0x7f090069;
-        public static final int account_resource_dialog_title=0x7f090067;
-        public static final int account_resource_hint=0x7f090068;
-        public static final int account_resource_summ=0x7f090066;
+        public static final int account_customserver_dialog_title=0x7f090077;
+        public static final int account_customserver_hint=0x7f090078;
+        public static final int account_customserver_summ=0x7f090076;
+        public static final int account_customserver_title=0x7f090075;
+        public static final int account_jabberID_dialog_title=0x7f090066;
+        public static final int account_jabberID_sum=0x7f090065;
+        public static final int account_jabberID_title=0x7f090064;
+        public static final int account_jabberPW_dialog_title=0x7f090069;
+        public static final int account_jabberPW_sum=0x7f090068;
+        public static final int account_jabberPW_title=0x7f090067;
+        public static final int account_options_advanced=0x7f09005c;
+        public static final int account_options_title=0x7f09005b;
+        public static final int account_port_dialog_title=0x7f090073;
+        public static final int account_port_hint=0x7f090074;
+        public static final int account_port_sum=0x7f090072;
+        public static final int account_port_title=0x7f090071;
+        public static final int account_prio_dialog_title=0x7f090070;
+        public static final int account_prio_summ=0x7f09006f;
+        public static final int account_prio_title=0x7f09006e;
+        public static final int account_resource_dialog_title=0x7f09006c;
+        public static final int account_resource_hint=0x7f09006d;
+        public static final int account_resource_summ=0x7f09006b;
         /**  accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
- accountprefs 
          */
-        public static final int account_resource_title=0x7f090065;
+        public static final int account_resource_title=0x7f09006a;
         /**  Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
- Accountprefs 
          */
-        public static final int account_settings_login=0x7f090054;
-        public static final int account_settings_title=0x7f090055;
-        public static final int addFriend_Summ=0x7f090048;
+        public static final int account_settings_login=0x7f090059;
+        public static final int account_settings_title=0x7f09005a;
+        public static final int addFriend_Summ=0x7f09004d;
         /**  AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
- AddFriend 
          */
-        public static final int addFriend_Title=0x7f090047;
-        public static final int addFriend_aliasHint=0x7f090049;
-        public static final int addrosteritemaddgroupchoice=0x7f09004a;
+        public static final int addFriend_Title=0x7f09004c;
+        public static final int addFriend_aliasHint=0x7f09004e;
+        public static final int addrosteritemaddgroupchoice=0x7f09004f;
         public static final int app_name=0x7f09000e;
         public static final int build_version=0x7f09000f;
-        public static final int carbons_summ=0x7f09005e;
-        public static final int carbons_title=0x7f09005d;
-        public static final int chat_enterMsgHint=0x7f090086;
+        public static final int carbons_summ=0x7f090063;
+        public static final int carbons_title=0x7f090062;
+        public static final int chat_enterMsgHint=0x7f09008b;
         /**  CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
- CHATWINDOW 
          */
-        public static final int chat_from_me=0x7f090083;
+        public static final int chat_from_me=0x7f090088;
         /**  Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
- Chat menu 
          */
-        public static final int chatmenu_resend=0x7f090087;
+        public static final int chatmenu_resend=0x7f09008c;
         /**  SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
- SEND listener popup 
          */
-        public static final int chooseContact=0x7f090096;
-        public static final int conn_connecting=0x7f090011;
-        public static final int conn_disconnected=0x7f090016;
-        public static final int conn_empty_roster=0x7f090014;
-        public static final int conn_networkchg=0x7f090017;
-        public static final int conn_offline=0x7f090013;
-        public static final int conn_online=0x7f090012;
-        public static final int conn_reconnect=0x7f090015;
-        /**  Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
- Connection state 
+        public static final int chooseContact=0x7f09009b;
+        public static final int conn_connecting=0x7f090016;
+        public static final int conn_disconnected=0x7f09001b;
+        public static final int conn_empty_roster=0x7f090019;
+        public static final int conn_networkchg=0x7f09001c;
+        public static final int conn_offline=0x7f090018;
+        public static final int conn_online=0x7f090017;
+        public static final int conn_reconnect=0x7f09001a;
+        /**  连接状态 
          */
-        public static final int conn_title=0x7f090010;
-        public static final int connstartup_summOff=0x7f09005a;
-        public static final int connstartup_summOn=0x7f090059;
-        public static final int connstartup_title=0x7f090058;
+        public static final int conn_title=0x7f090015;
+        public static final int connstartup_summOff=0x7f09005f;
+        public static final int connstartup_summOn=0x7f09005e;
+        public static final int connstartup_title=0x7f09005d;
         /**  default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
- default roster group with no name 
          */
-        public static final int default_group=0x7f090095;
-        public static final int deleteChatHistory_text=0x7f090081;
-        public static final int deleteChatHistory_title=0x7f090082;
-        public static final int deleteRosterItem_text=0x7f09007f;
-        public static final int deleteRosterItem_title=0x7f090080;
-        public static final int foregroundService_summ=0x7f090031;
-        public static final int foregroundService_title=0x7f090032;
-        public static final int led_summ=0x7f090026;
-        public static final int led_title=0x7f090025;
-        public static final int notification_anonymous_message=0x7f090023;
-        /**  Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
- Notifications 
+        public static final int default_group=0x7f09009a;
+        public static final int deleteChatHistory_text=0x7f090086;
+        public static final int deleteChatHistory_title=0x7f090087;
+        public static final int deleteRosterItem_text=0x7f090084;
+        public static final int deleteRosterItem_title=0x7f090085;
+        public static final int foregroundService_summ=0x7f090036;
+        public static final int foregroundService_title=0x7f090037;
+        public static final int led_summ=0x7f09002b;
+        public static final int led_title=0x7f09002a;
+        public static final int notification_anonymous_message=0x7f090028;
+        /**  通知 
          */
-        public static final int notification_message=0x7f090022;
+        public static final int notification_message=0x7f090027;
+        public static final int ok=0x7f090014;
         /** 
 	<string name="FontRost_title">Roster font size</string>
 	<string name="FontRost_summ">Set roster font size</string>
 	<string name="FontRost_dialog">Roster font fize</string>
 	<string name="setFontRoster">Set roster font size</string>
-	
 
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
-
-	<string name="FontRost_title">Roster font size</string>
-	<string name="FontRost_summ">Set roster font size</string>
-	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
-	
+    
          */
-        public static final int pref_theme=0x7f09003c;
+        public static final int pref_theme=0x7f090041;
         /**  Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
- Appearence Strings 
          */
-        public static final int preftitle_app=0x7f090038;
-        /**  Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
- Startup Setting Strings 
+        public static final int preftitle_app=0x7f09003d;
+        /**  启动设置字符串 
          */
-        public static final int preftitle_boot=0x7f09002d;
-        public static final int preftitle_debug=0x7f090033;
-        /**  Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
- Notification Settings 
+        public static final int preftitle_boot=0x7f090032;
+        public static final int preftitle_debug=0x7f090038;
+        /**  通知设置 
          */
-        public static final int preftitle_notify=0x7f090024;
-        public static final int preftitle_ui=0x7f09003d;
-        public static final int reconnect_summ=0x7f09005c;
-        public static final int reconnect_title=0x7f09005b;
-        public static final int reportcrash_summ=0x7f090037;
-        public static final int reportcrash_title=0x7f090036;
-        public static final int require_ssl_summ=0x7f090075;
-        public static final int require_ssl_title=0x7f090074;
-        public static final int ringtone_summ=0x7f09002a;
-        public static final int ringtone_title=0x7f090029;
-        public static final int roster_contextmenu_contact_change_group=0x7f090053;
-        public static final int roster_contextmenu_contact_delete=0x7f09004e;
-        public static final int roster_contextmenu_contact_delmsg=0x7f09004f;
-        public static final int roster_contextmenu_contact_open_chat=0x7f090050;
-        public static final int roster_contextmenu_contact_rename=0x7f090051;
-        public static final int roster_contextmenu_contact_request_auth=0x7f090052;
-        public static final int roster_contextmenu_group_rename=0x7f09004d;
+        public static final int preftitle_notify=0x7f090029;
+        public static final int preftitle_ui=0x7f090042;
+        public static final int reconnect_summ=0x7f090061;
+        public static final int reconnect_title=0x7f090060;
+        public static final int reportcrash_summ=0x7f09003c;
+        public static final int reportcrash_title=0x7f09003b;
+        public static final int require_ssl_summ=0x7f09007a;
+        public static final int require_ssl_title=0x7f090079;
+        public static final int ringtone_summ=0x7f09002f;
+        public static final int ringtone_title=0x7f09002e;
+        public static final int roster_contextmenu_contact_change_group=0x7f090058;
+        public static final int roster_contextmenu_contact_delete=0x7f090053;
+        public static final int roster_contextmenu_contact_delmsg=0x7f090054;
+        public static final int roster_contextmenu_contact_open_chat=0x7f090055;
+        public static final int roster_contextmenu_contact_rename=0x7f090056;
+        public static final int roster_contextmenu_contact_request_auth=0x7f090057;
+        public static final int roster_contextmenu_group_rename=0x7f090052;
         /**  Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
- Roster CONTEXTMENU 
          */
-        public static final int roster_contextmenu_title=0x7f09004c;
-        public static final int setStatusTitle=0x7f090078;
-        public static final int setStatusmsgHint=0x7f090077;
-        public static final int showOffline_summ=0x7f09002f;
-        public static final int showOffline_title=0x7f090030;
-        public static final int smackdebug_summ=0x7f090034;
-        public static final int smackdebug_title=0x7f090035;
-        public static final int status_available=0x7f09008e;
-        public static final int status_away=0x7f09008f;
-        public static final int status_chat=0x7f090090;
-        public static final int status_dnd=0x7f090091;
-        public static final int status_offline=0x7f090093;
-        public static final int status_xa=0x7f090092;
-        public static final int statuspopup_name=0x7f09002e;
-        public static final int ticker_summ=0x7f09002c;
-        public static final int ticker_title=0x7f09002b;
-        public static final int toast_connectfail_message=0x7f090084;
-        public static final int toast_stored_offline=0x7f090085;
-        public static final int translator_credits=0x7f090094;
-        public static final int vibr_summ=0x7f090028;
-        public static final int vibr_title=0x7f090027;
+        public static final int roster_contextmenu_title=0x7f090051;
+        public static final int setStatusTitle=0x7f09007d;
+        public static final int setStatusmsgHint=0x7f09007c;
+        public static final int showOffline_summ=0x7f090034;
+        public static final int showOffline_title=0x7f090035;
+        public static final int smackdebug_summ=0x7f090039;
+        public static final int smackdebug_title=0x7f09003a;
+        public static final int status_available=0x7f090093;
+        public static final int status_away=0x7f090094;
+        public static final int status_chat=0x7f090095;
+        public static final int status_dnd=0x7f090096;
+        public static final int status_offline=0x7f090098;
+        public static final int status_xa=0x7f090097;
+        public static final int statuspopup_name=0x7f090033;
+        public static final int ticker_summ=0x7f090031;
+        public static final int ticker_title=0x7f090030;
+        public static final int toast_connectfail_message=0x7f090089;
+        public static final int toast_stored_offline=0x7f09008a;
+        public static final int translator_credits=0x7f090099;
+        public static final int vibr_summ=0x7f09002d;
+        public static final int vibr_title=0x7f09002c;
     }
     public static final class style {
         public static final int IndeterminateProgress=0x7f0a0062;
         public static final int MyActionBarDark=0x7f0a0064;
         public static final int MyActionBarLight=0x7f0a0063;
-        public static final int RosterGroupItem=0x7f0a005d;
+        public static final int RosterGroupItem=0x7f0a005c;
         /**      the unprefixed ones (without android:) are for the Sherlock implementation 
          */
-        public static final int RosterGroupName=0x7f0a005a;
-        public static final int RosterGroupName_Dark=0x7f0a005b;
-        public static final int RosterGroupName_Light=0x7f0a005c;
-        public static final int RosterMessageCounter=0x7f0a0060;
+        public static final int RosterGroupName=0x7f0a0059;
+        public static final int RosterGroupName_Dark=0x7f0a005a;
+        public static final int RosterGroupName_Light=0x7f0a005b;
+        public static final int RosterMessageCounter=0x7f0a005f;
         public static final int Sherlock___TextAppearance_Small=0x7f0a0046;
         public static final int Sherlock___Theme=0x7f0a0051;
         public static final int Sherlock___Theme_DarkActionBar=0x7f0a0053;
@@ -1881,8 +1466,8 @@ StatusPopUp
         public static final int Sherlock___Widget_Holo_ListView=0x7f0a0026;
         public static final int Sherlock___Widget_Holo_Spinner=0x7f0a0023;
         public static final int Sherlock___Widget_SearchAutoCompleteTextView=0x7f0a0033;
-        public static final int StyleErrorView=0x7f0a005e;
-        public static final int StyleErrorView_Light=0x7f0a005f;
+        public static final int StyleErrorView=0x7f0a005d;
+        public static final int StyleErrorView_Light=0x7f0a005e;
         public static final int TextAppearance_Sherlock=0x7f0a004a;
         public static final int TextAppearance_Sherlock_Light_SearchResult=0x7f0a004e;
         public static final int TextAppearance_Sherlock_Light_SearchResult_Subtitle=0x7f0a0050;
@@ -1967,9 +1552,7 @@ StatusPopUp
      the unprefixed ones (without android:) are for the Sherlock implementation 
          */
         public static final int YaximLightTheme=0x7f0a0061;
-        /**  empty 
-         */
-        public static final int dialogBackground=0x7f0a0059;
+        public static final int dialogBackground=0x7f0a0060;
     }
     public static final class styleable {
         /**  Attributes used to style the Action Bar. 
