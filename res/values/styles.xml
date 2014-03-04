@@ -54,5 +54,8 @@
         <item name="android:background">@drawable/count_bcg</item>
         <item name="android:text"></item>
     </style>
+    <style name="dialogBackground">
+        <item name="android:textColor">#fff</item>
+    </style>
 
 </resources>

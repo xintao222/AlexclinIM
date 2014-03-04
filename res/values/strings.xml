@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AIM</string>
-    <string name="build_version">1.0</string>
+    <string name="app_name">JabberIM</string>
+    <string name="build_version">0.1</string>
     <string name="WrongUserOrPW">错误的用户名或密码，用户名不能为空，密码不能小于6位！</string>
     <string name="OperationNotify">操作提示</string>
     <string name="LoginFailedNotify">登陆失败，请检查用户名,密码和服务器设置是否正确</string>
     <string name="NoServerSetting">您尚未配置服务器</string>
     <string name="ok">确定</string>
-    <!-- 连接状态 -->
-    <string name="conn_title">AIM: %s</string>
+    
+    <string name="Chats">对话</string>
+    <string name="Friends">好友</string>
+    <string name="Groups">群组</string>
+    <string name="Personal">个人</string>
+    <!-- 连接状态 -->    
     <string name="conn_connecting">正在连接服务器…</string>
     <string name="conn_online">在线</string>
     <string name="conn_offline">离线</string>
@@ -17,15 +21,18 @@
     <string name="conn_reconnect">%s 后连接。</string>
     <string name="conn_disconnected">连接已关闭</string>
     <string name="conn_networkchg">网络连接改变</string>
+    
+    <string name="subscriptionRequest_title">验证请求</string>
+    <string name="subscriptionRequest_text">%1$s 希望添加你为好友。\n验证信息: \"%2$s\"</string>
 
     <!-- Global Strings -->
     <string name="Global_Exit">退出</string>
     <string name="Global_authenticate_first">请先连接</string>
-    <string name="Global_JID_hint">user@jabber.example.com</string>
+    <string name="Global_JID_hint">用户名</string>
 
     <!-- 初始进入对话框 -->
-    <string name="StartupDialog_Title">欢迎使用yaxim！</string>
-    <string name="StartupDialog_Summary">你需要先配置AIM才能使用。请输入你的帐号和密码。</string>
+    <string name="StartupDialog_Title">欢迎使用JabberIM！</string>
+    <string name="StartupDialog_Summary">你需要先配置才能使用。请输入你的帐号和密码。</string>
     <string name="StartupDialog_pwHint">输入密码</string>
     <string name="StartupDialog_Username_title">帐号</string>
     <string name="StartupDialog_passwd_title">密码：</string>
@@ -53,6 +60,8 @@
     <string name="ringtone_summ">来信息时响铃</string>
     <string name="ticker_title">消息预览</string>
     <string name="ticker_summ">在状态栏显示发送者和消息</string>
+    
+    <string name="notification_error">消息发送失败!</string>
 
     <!-- 启动设置字符串 -->
     <string name="preftitle_boot">启动选项</string>
@@ -102,12 +111,19 @@
     <string name="Menu_Status">状态</string>
     <string name="Menu_connect">连接</string>
     <string name="Menu_disconnect">断开连接</string>
-    <string name="Menu_about">关于 yaxim</string>
+    <string name="Menu_about">关于JabberIM</string>
+    <string name="Menu_Logout">注销</string>
+    
+    <!-- Chatmenu -->
+    <string name="Menu_Details">好友资料</string>
+    <string name="Menu_Sendfile">发送文件</string>
+    <string name="Menu_Sendofflinefile">发送离线文件</string>
 
     <!-- AddFriend -->
     <string name="addFriend_Title">添加一个联系人</string>
     <string name="addFriend_Summ">请输入你朋友的帐号，显示的名字和联系人组</string>
     <string name="addFriend_aliasHint">显示名字</string>
+    <string name="addFriend_verifyHint">验证信息</string>
     <string name="addrosteritemaddgroupchoice">增加到新的分组</string>
     <string name="NewGroup_EditTextField_Hint">新的分组名字</string>
 
@@ -127,14 +143,14 @@
     <string name="account_options_title">连接选项</string>
     <string name="account_options_advanced">高级选项</string>
     <string name="connstartup_title">启动时连接</string>
-    <string name="connstartup_summOn">yaxim打开时自动切换成在线状态</string>
+    <string name="connstartup_summOn">JabberIM打开时自动切换成在线状态</string>
     <string name="connstartup_summOff">不自动连接</string>
     <string name="reconnect_title">自动连接</string>
     <string name="reconnect_summ">连接丢失时自动重连</string>
-    <string name="carbons_title">Message Carbons (XEP-0280)</string>
-    <string name="carbons_summ">Request message copies from your other client(s)</string>
+    <string name="carbons_title">消息体(XEP-0280)</string>
+    <string name="carbons_summ">同步其它客户端消息</string>
     <string name="account_jabberID_title">Jabber ID</string>
-    <string name="account_jabberID_sum">example: me@jabber.example.com</string>
+    <string name="account_jabberID_sum">例如：myuser</string>
     <string name="account_jabberID_dialog_title">输入您的帐号</string>
     <string name="account_jabberPW_title">帐户密码</string>
     <string name="account_jabberPW_sum">您的账户密码</string>
@@ -142,9 +158,9 @@
 
     <!-- accountprefs -->
     <string name="account_resource_title">客户来源</string>
-    <string name="account_resource_summ">默认: yaxim</string>
+    <string name="account_resource_summ">默认: JabberIM</string>
     <string name="account_resource_dialog_title">输入你的来源</string>
-    <string name="account_resource_hint">yaxim</string>
+    <string name="account_resource_hint">JabberIM</string>
     <string name="account_prio_title">客户端优先级</string>
     <string name="account_prio_summ">默认：０（允许范围：-128..127）</string>
     <string name="account_prio_dialog_title">输入您的优先级</string>
@@ -192,21 +208,18 @@
 
 
     <!-- About Dialog -->
-    <string name="AboutDialog_title">关于AIM</string>
-    <string name="AboutDialog_DevelopersTitle">开发者</string>
-    <string name="AboutDialog_DevelopersText">联系开发者：http://yaxim.org 或者 freenode IRC: #yaxim</string>
+    <string name="AboutDialog_title">关于JabberIM</string>
+    <string name="AboutDialog_DevelopersTitle">开发者:Alexclin</string>
+    <string name="AboutDialog_DevelopersText">说明：从yaxim修改而来，修改了界面及部分逻辑</string>
     <string name="AboutDialog_LicenceTitle">许可</string>
     <string name="AboutDialog_Vote">提供反馈</string>
-    <string name="AboutDialog_LicenceText">This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 2 as published by the Free Software Foundation. Link: http://www.gnu.org/licenses/gpl-2.0.html\n \n Parts of this software are provided under the MIT License:\n \n Copyright © 2009 Mads Kristiansen, Nullwire ApS\n \n Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: \n The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. \n THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
+    <string name="AboutDialog_LicenceText">This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 2 as published by the Free Software Foundation. Link: http://www.gnu.org/licenses/gpl-2.0.html\n \n </string>
     <string name="status_available">在线</string>
     <string name="status_away">离开</string>
     <string name="status_chat">随时可聊</string>
     <string name="status_dnd">请勿打扰</string>
     <string name="status_xa">不可用</string>
     <string name="status_offline">离线</string>
-    <string name="translator_credits">Launchpad Contributions:
-  Mariotaku https://launchpad.net/~leeningyuan
-  Road Tang https://launchpad.net/~roadtang</string>
 
     <!-- default roster group with no name -->
     <string name="default_group">常规</string>

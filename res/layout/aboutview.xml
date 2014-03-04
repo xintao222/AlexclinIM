@@ -19,19 +19,11 @@
 		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:drawableLeft="@drawable/icon"
+			android:drawableTop="@drawable/ic_launcher"
 			android:drawablePadding="10sp"
 			android:text="@string/AboutDialog_DevelopersTitle"
 			android:textSize="20sp"
 			android:padding="10sp"
-			style="?attr/dialogTextColor"
-			/>
-		<TextView
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:autoLink="web"
-			android:text="@string/AboutDialog_DevelopersList"
-			android:padding="2sp"
 			style="?attr/dialogTextColor"
 			/>
 		<TextView
@@ -57,15 +49,6 @@
 			android:layout_height="wrap_content"
 			android:autoLink="web"
 			android:text="@string/AboutDialog_LicenceText"
-			android:padding="2sp"
-			style="?attr/dialogTextColor"
-			/>
-		<TextView
-			android:id="@+id/translator_credits"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/translator_credits"
-			android:autoLink="web"
 			android:padding="2sp"
 			style="?attr/dialogTextColor"
 			/>

@@ -2,7 +2,7 @@
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android">	
 	<PreferenceCategory android:title="@string/account_settings_title">
-		<alexclin.xmpp.androidclient.ui.preferences.EditTextPreferenceWithValue
+		<alexclin.ui.preferences.EditTextPreferenceWithValue
 			android:id="@+id/account_resource"
 			android:key="account_resource"
 			android:title="@string/account_resource_title"
@@ -11,7 +11,7 @@
 			android:singleLine="true"
 			android:hint="@string/account_resource_hint"
 		 />
-		<alexclin.xmpp.androidclient.ui.preferences.EditTextPreferenceWithValue
+		<alexclin.ui.preferences.EditTextPreferenceWithValue
 			android:id="@+id/account_prio"
 			android:key="account_prio"
 			android:title="@string/account_prio_title"
@@ -38,7 +38,7 @@
 		/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/account_options_advanced">
-		<alexclin.xmpp.androidclient.ui.preferences.EditTextPreferenceWithValue
+		<alexclin.ui.preferences.EditTextPreferenceWithValue
 			android:id="@+id/account_customserver"
 			android:key="account_customserver"
 			android:title="@string/account_customserver_title"
@@ -48,7 +48,7 @@
 			android:singleLine="true"
 			android:inputType="textUri"
 		/>	
-		<alexclin.xmpp.androidclient.ui.preferences.EditTextPreferenceWithValue
+		<alexclin.ui.preferences.EditTextPreferenceWithValue
 			android:id="@+id/account_port"
 			android:key="account_port"
 			android:title="@string/account_port_title"

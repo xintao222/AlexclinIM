@@ -1,29 +1,39 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@+id/menu_show_hide" android:title="@string/Menu_HideOff"
-		android:alphabeticShortcut="o"
-		android:icon="@android:drawable/ic_menu_delete" android:showAsAction="ifRoom"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<item android:id="@+id/menu_connect" android:title="@string/Menu_connect"
-		android:alphabeticShortcut="c"
-		android:icon="@drawable/ic_menu_plug"/>
+    <item
+        android:id="@+id/menu_connect"
+        android:alphabeticShortcut="c"
+        android:icon="@drawable/ic_menu_plug"
+        android:title="@string/Menu_connect"/>
+    <item
+        android:id="@+id/menu_add_friend"
+        android:alphabeticShortcut="a"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/Menu_addFriend"/>
+    <item
+        android:id="@+id/menu_show_hide"
+        android:alphabeticShortcut="o"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/Menu_HideOff"/>
+    <item
+        android:id="@+id/menu_settings"
+        android:alphabeticShortcut="p"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/Menu_Settings"/>
+    <item
+        android:id="@+id/menu_logout"
+        android:alphabeticShortcut="s"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="@string/Menu_Logout"/>
+    <item
+        android:id="@+id/menu_about"
+        android:alphabeticShortcut="y"
+        android:icon="@drawable/about"
+        android:title="@string/Menu_about"/>
+    <item
+        android:id="@+id/menu_exit"
+        android:alphabeticShortcut="x"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/Global_Exit"/>
 
-	<item android:id="@+id/menu_add_friend" android:title="@string/Menu_addFriend"
-		android:alphabeticShortcut="a"
-		android:icon="@android:drawable/ic_menu_add" />
-
-	<item android:id="@+id/menu_status" android:title="@string/Menu_Status"
-		android:alphabeticShortcut="s" android:icon="@android:drawable/ic_menu_myplaces"
-		android:showAsAction="never"/>
-
-	<item android:id="@+id/menu_settings" android:title="@string/Menu_Settings"
-		android:alphabeticShortcut="p"
-		android:icon="@android:drawable/ic_menu_preferences" />
-
-	<item android:id="@+id/menu_about" android:title="@string/Menu_about"
-		android:alphabeticShortcut="y"
-		android:icon="@drawable/about" />
-
-	<item android:id="@+id/menu_exit" android:title="@string/Global_Exit"
-		android:alphabeticShortcut="x"
-		android:icon="@android:drawable/ic_menu_close_clear_cancel" />
 </menu>

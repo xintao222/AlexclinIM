@@ -13,11 +13,13 @@
 
 	<group android:enabled="true" android:visible="true"
 		android:id="@+id/roster_contextmenu_contact_menu" android:orderInCategory="1">
-
+<!--  
 		<item android:id="@+id/roster_contextmenu_contact_open_chat" android:visible="true"
 			android:enabled="true" android:orderInCategory="1"
 			android:title="@string/roster_contextmenu_contact_open_chat">
 		</item>
+		
+		-->
 
 		<item android:id="@+id/roster_contextmenu_contact_rename" android:visible="true"
 			android:enabled="true" android:orderInCategory="3"
