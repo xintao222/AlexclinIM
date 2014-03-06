@@ -12,6 +12,7 @@ public class FragPagerAdapter extends FragmentPagerAdapter {
 	public FragPagerAdapter(FragmentManager fm,List<Fragment> list) {
 		super(fm);
 		this.mList = list;
+		
 	}
 
 	@Override

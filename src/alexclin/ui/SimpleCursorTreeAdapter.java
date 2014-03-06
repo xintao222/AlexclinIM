@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package umeox.xmpp.util;
+package alexclin.ui;
 
 import android.content.Context;
 import android.database.Cursor;

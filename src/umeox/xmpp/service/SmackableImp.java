@@ -23,8 +23,8 @@ import org.jivesoftware.smack.packet.IQ.Type;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.packet.RosterPacket;
 import org.jivesoftware.smack.packet.Presence.Mode;
+import org.jivesoftware.smack.packet.RosterPacket;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smack.util.DNSUtil;
 import org.jivesoftware.smack.util.StringUtils;
@@ -60,7 +60,6 @@ import umeox.xmpp.util.ConnectionState;
 import umeox.xmpp.util.LogUtil;
 import umeox.xmpp.util.PrefConsts;
 import umeox.xmpp.util.XmppHelper;
-import alexclin.ui.base.StatusMode;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -847,7 +846,7 @@ public class SmackableImp implements Smackable {
 
 	private void setStatusOffline() {
 		ContentValues values = new ContentValues();
-		values.put(RosterConstants.STATUS_MODE, StatusMode.offline.ordinal());
+		values.put(RosterConstants.STATUS_MODE, PrefConsts.offline);
 		mContentResolver.update(RosterProvider.CONTENT_URI, values, null, null);
 	}
 

@@ -9,7 +9,6 @@ import umeox.xmpp.data.ChatProvider.ChatConstants;
 import umeox.xmpp.data.RosterProvider;
 import umeox.xmpp.data.RosterProvider.RosterConstants;
 import umeox.xmpp.util.PrefConsts;
-import umeox.xmpp.util.SimpleCursorTreeAdapter;
 import alexclin.dialogs.AddRosterItemDialog;
 import alexclin.dialogs.GroupNameView;
 import alexclin.ui.base.StatusMode;
