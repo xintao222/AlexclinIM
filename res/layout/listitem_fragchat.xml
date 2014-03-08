@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="5dip" >
+
+    <ImageView
+        android:id="@+id/FragChat_HeadIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_status_available" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@id/FragChat_HeadIcon" >
+
+        <TextView
+            android:id="@+id/FragChat_UserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="18sp"
+            android:layout_marginBottom="5dip"
+            android:text="用户名称" />
+        
+        <TextView
+            android:id="@+id/FragChat_LastTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:textSize="16sp"
+            android:text="20:20" />
+        
+        <TextView
+            android:id="@+id/FragChat_LastMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_below="@id/FragChat_UserName"
+            android:layout_alignParentLeft="true"
+            android:textSize="16sp"
+            android:text="最后的消息" />
+    </RelativeLayout>
+
+</RelativeLayout>
