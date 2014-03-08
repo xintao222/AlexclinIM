@@ -71,11 +71,11 @@ public class XmppHelper {
 		}
 	}
 	
-	public static String getUserWithSuffix(String user,XMPPConnection con){
+	public static String getUserAtHost(String user,XMPPConnection con){
 		return user +"@"+con.getUser().split("@")[1].split("/")[0];
 	}
 	
-	public static String getUserWithoutSuffix(String userStr){
+	public static String getUser(String userStr){
 		String[] arrays = userStr.split("@");
 		if(arrays==null||arrays.length<2){
 			return userStr;

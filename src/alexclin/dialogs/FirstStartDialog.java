@@ -45,7 +45,7 @@ public class FirstStartDialog extends AlertDialog implements DialogInterface.OnC
 
 		LayoutInflater inflater = (LayoutInflater) mainWindow
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View group = inflater.inflate(R.layout.firststartdialog, null, false);
+		View group = inflater.inflate(R.layout.dialog_firststart, null, false);
 		setView(group);
 
 		setButton(BUTTON_POSITIVE, mainWindow.getString(android.R.string.ok), this);

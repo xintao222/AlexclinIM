@@ -57,7 +57,7 @@ public class AddRosterItemDialog extends AlertDialog implements
 	public AddRosterItemDialog(FriendsFragment mainWindow,
 			XMPPRosterServiceAdapter serviceAdapter, String jid) {
 		this(mainWindow, serviceAdapter);
-		userInputField.setText(XmppHelper.getUserWithoutSuffix(jid));
+		userInputField.setText(XmppHelper.getUser(jid));
 	}
 
 	public void onCreate(Bundle icicle) {

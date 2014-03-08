@@ -353,7 +353,7 @@ public class ChatActivity extends SherlockListActivity implements
 
 			if (row == null) {
 				LayoutInflater inflater = getLayoutInflater();
-				row = inflater.inflate(R.layout.chatrow, null);
+				row = inflater.inflate(R.layout.listitem_chatrow, null);
 				wrapper = new ChatItemWrapper(row, ChatActivity.this);
 				row.setTag(wrapper);
 			} else {

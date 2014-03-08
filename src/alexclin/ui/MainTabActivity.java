@@ -266,7 +266,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	void editTextDialog(int titleId, CharSequence message, String text,
 			final EditOk ok) {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-		View layout = inflater.inflate(R.layout.edittext_dialog,
+		View layout = inflater.inflate(R.layout.dialog_edittext,
 				(ViewGroup) findViewById(R.id.layout_root));
 
 		TextView messageView = (TextView) layout.findViewById(R.id.text);

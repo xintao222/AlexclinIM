@@ -466,7 +466,7 @@ public class SmackableImp implements Smackable {
 
 	public void addRosterItem(String user, String alias, String group,String msg)
 			throws UmeoxException {
-		tryToAddRosterEntry(XmppHelper.getUserWithSuffix(user,mXMPPConnection), alias, group,msg);
+		tryToAddRosterEntry(XmppHelper.getUserAtHost(user,mXMPPConnection), alias, group,msg);
 	}
 
 	public void removeRosterItem(String user) throws UmeoxException {

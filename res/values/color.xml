@@ -2,4 +2,6 @@
 <resources>
     <color name="tab_green">#556B2F</color>
     <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>
