@@ -14,7 +14,6 @@ import umeox.xmpp.base.BaseConfig;
 import umeox.xmpp.base.UmeoxException;
 import umeox.xmpp.util.ConnectionState;
 import umeox.xmpp.util.LogUtil;
-import alexclin.xmpp.jabberim.R;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -158,14 +157,6 @@ public abstract class XMPPService extends Service {
 		notificationCount.remove(userJid);
 	}
 
-	protected void logError(String data) {
-		LogUtil.e(TAG, data);		
-	}
-
-	protected void logInfo(String data) {
-		LogUtil.i(TAG, data);
-	}
-
 	public void clearNotification(String Jid) {
 		int notifyId = 0;
 		if (notificationId.containsKey(Jid)) {
@@ -219,7 +210,7 @@ public abstract class XMPPService extends Service {
 
 	@Override
 	public void onCreate() {
-		Log.i(TAG, "called onCreate()");
+		Log.i(TAG, "Create");
 		super.onCreate();
 		mConfig = ((BaseApp)getApplication()).getConfig();
 		mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -253,6 +244,7 @@ public abstract class XMPPService extends Service {
 
 	@Override
 	public void onDestroy() {
+		Log.i(TAG, "Destroy");
 		super.onDestroy();
 		((AlarmManager)getSystemService(Context.ALARM_SERVICE)).cancel(mPAlarmIntent);
 		mRosterCallbacks.kill();
@@ -262,7 +254,7 @@ public abstract class XMPPService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		logInfo("onStartCommand(), mConnectionDemanded=" + mConnectionDemanded.get());
+		LogUtil.i(this, "onStartCommand(), mConnectionDemanded=" + mConnectionDemanded.get());
 		if (intent != null) {
 			create_account = intent.getBooleanExtra("create_account", false);			
 			if ("disconnect".equals(intent.getAction())) {
@@ -354,7 +346,7 @@ public abstract class XMPPService extends Service {
 					mSmackable.addRosterItem(user, alias, group,msg);
 				} catch (UmeoxException e) {
 					shortToastNotify(e.getMessage());
-					logError("exception in addRosterItem(): " + e.getMessage());
+					LogUtil.e(this, "exception in addRosterItem(): " + e.getMessage());
 				}
 			}
 
@@ -367,7 +359,7 @@ public abstract class XMPPService extends Service {
 					mSmackable.removeRosterItem(user);
 				} catch (UmeoxException e) {
 					shortToastNotify(e.getMessage());
-					logError("exception in removeRosterItem(): "
+					LogUtil.e(this, "exception in removeRosterItem(): "
 							+ e.getMessage());
 				}
 			}
@@ -378,7 +370,7 @@ public abstract class XMPPService extends Service {
 					mSmackable.moveRosterItemToGroup(user, group);
 				} catch (UmeoxException e) {
 					shortToastNotify(e.getMessage());
-					logError("exception in moveRosterItemToGroup(): "
+					LogUtil.e(this, "exception in moveRosterItemToGroup(): "
 							+ e.getMessage());
 				}
 			}
@@ -389,7 +381,7 @@ public abstract class XMPPService extends Service {
 					mSmackable.renameRosterItem(user, newName);
 				} catch (UmeoxException e) {
 					shortToastNotify(e.getMessage());
-					logError("exception in renameRosterItem(): "
+					LogUtil.e(this, "exception in renameRosterItem(): "
 							+ e.getMessage());
 				}
 			}
@@ -446,7 +438,7 @@ public abstract class XMPPService extends Service {
 			try {
 				mRosterCallbacks.getBroadcastItem(i).connectionStateChanged(cs.ordinal());
 			} catch (RemoteException e) {
-				logError("caught RemoteException: " + e.getMessage());
+				LogUtil.e(this, "caught RemoteException: " + e.getMessage());
 			}
 		}
 		mRosterCallbacks.finishBroadcast();
@@ -464,7 +456,7 @@ public abstract class XMPPService extends Service {
 	}	
 
 	private void connectionFailed(String reason) {
-		logInfo("connectionFailed: " + reason);
+		LogUtil.i(this, "connectionFailed: " + reason);
 		//mLastConnectionError = reason;
 		if (!networkConnected()&&mSmackable!=null) {
 			mReconnectInfo = getConnectStr(conn_no_network);
@@ -472,7 +464,7 @@ public abstract class XMPPService extends Service {
 		} else if (mConnectionDemanded.get()&&mSmackable!=null) {
 			mReconnectInfo = getConnectStr(conn_reconnect)+mReconnectTimeout;
 			mSmackable.requestConnectionState(ConnectionState.RECONNECT_DELAYED);
-			logInfo("connectionFailed(): registering reconnect in " + mReconnectTimeout + "s");
+			LogUtil.i(this, "connectionFailed(): registering reconnect in " + mReconnectTimeout + "s");
 			((AlarmManager)getSystemService(Context.ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP,
 					System.currentTimeMillis() + mReconnectTimeout * 1000, mPAlarmIntent);
 			mReconnectTimeout = mReconnectTimeout * 2;
@@ -484,7 +476,7 @@ public abstract class XMPPService extends Service {
 	}
 
 	private void connectionClosed() {
-		logInfo("connectionClosed.");
+		LogUtil.i(this, "connectionClosed.");
 		mReconnectInfo = "";
 		mServiceNotification.hideNotification(this, SERVICE_NOTIFICATION);
 	}
@@ -501,7 +493,7 @@ public abstract class XMPPService extends Service {
 					mConnectingThread.interrupt();
 					mConnectingThread.join(50);
 				} catch (InterruptedException e) {
-					logError("doDisconnect: failed catching connecting thread");
+					LogUtil.i(this, "doDisconnect: failed catching connecting thread");
 				} finally {
 					mConnectingThread = null;
 				}
@@ -525,12 +517,12 @@ public abstract class XMPPService extends Service {
 
 		mSmackable.registerCallback(new XMPPServiceCallback() {
 			public void newMessage(String from, String message, boolean silent_notification) {
-				logInfo("notification: " + from);
+				LogUtil.i(this, "notification: " + from);
 				notifyClient(from, mSmackable.getNameForJID(from), message, !mIsBoundTo.contains(from), silent_notification, false);
 			}
 
 			public void messageError(final String from, final String error, final boolean silent_notification) {
-				logInfo("error notification: " + from);
+				LogUtil.i(this, "error notification: " + from);
 				mMainHandler.post(new Runnable() {
 					public void run() {
 						// work around Toast fallback for errors
@@ -545,7 +537,7 @@ public abstract class XMPPService extends Service {
 				switch (mSmackable.getConnectionState()) {
 				//case OFFLINE:
 				case DISCONNECTED:
-					connectionFailed(getString(R.string.conn_disconnected));
+					connectionFailed(getConnectStr(conn_disconnected));
 					break;
 				case ONLINE:
 					mReconnectTimeout = RECONNECT_AFTER;
@@ -559,12 +551,12 @@ public abstract class XMPPService extends Service {
 
 	private class ReconnectAlarmReceiver extends BroadcastReceiver {
 		public void onReceive(Context ctx, Intent i) {
-			logInfo("Alarm received.");
+			LogUtil.i(this, "Alarm received.");
 			if (!mConnectionDemanded.get()) {
 				return;
 			}
 			if (mIsConnected.get()) {
-				logError("Reconnect attempt aborted: we are connected again!");
+				LogUtil.e(this, "Reconnect attempt aborted: we are connected again!");
 				return;
 			}
 			doConnect();

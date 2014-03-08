@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_details"
+        android:alphabeticShortcut="d"
+        android:icon="@drawable/about"
+        android:title="@string/Menu_Details"/>
+    <item
+        android:id="@+id/menu_sendfile"
+        android:alphabeticShortcut="f"
+        android:icon="@drawable/about"
+        android:title="@string/Menu_Sendfile"/>
+    <item
+        android:id="@+id/menu_offlinefile"
+        android:alphabeticShortcut="o"
+        android:icon="@drawable/about"
+        android:title="@string/Menu_Sendofflinefile"/>
+
+</menu>

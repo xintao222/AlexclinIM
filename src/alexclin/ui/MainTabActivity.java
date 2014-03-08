@@ -60,7 +60,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.Window;
-import com.nullwire.trace.ExceptionHandler;
 
 public class MainTabActivity extends SherlockFragmentActivity implements
 		OnClickListener, OnPageChangeListener {
@@ -104,7 +103,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.i(TAG, getString(R.string.build_version));
 		mConfig = ((BaseApp) getApplication()).getConfig();
 		mTheme = mConfig.theme;
 		setTheme(mConfig.getTheme());
@@ -116,8 +114,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE,
 				ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setHomeButtonEnabled(true);
-		registerCrashReporter();
-		registerXMPPService();
+		initXMPPServiceIntent();
 		createUICallback();
 		initViews();
 		actionBar.setSubtitle(mStatusMessage);
@@ -125,6 +122,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onDestroy() {
+		LogUtil.e(this, "onDestroy");
 		super.onDestroy();
 	}
 
@@ -152,11 +150,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 		bindXMPPService();
 		// handle SEND action
 		handleSendIntent();
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		// super.onSaveInstanceState(outState);
 	}
 
 	void initViews() {
@@ -505,19 +498,14 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 			new ChangeStatusDialog(this).show();
 			return true;
 		case R.id.menu_logout:// 注销
-			finish();
-			stopService(xmppServiceIntent);
 			PreferenceManager.getDefaultSharedPreferences(this).edit()
 					.putString(PrefConsts.PASSWORD, "").commit();
+			startActivity(new Intent(this.getApplicationContext(), LoginActivity.class));			
+		case R.id.menu_exit:// 退出
 			PreferenceManager.getDefaultSharedPreferences(this).edit()
 					.putBoolean(PrefConsts.CONN_STARTUP, false).commit();
-			startActivity(new Intent(this, LoginActivity.class));
-			return true;
-		case R.id.menu_exit:
-			PreferenceManager.getDefaultSharedPreferences(this).edit()
-					.putBoolean(PrefConsts.CONN_STARTUP, false).commit();
-			finish();
-			stopService(xmppServiceIntent);			
+			stopService(xmppServiceIntent);
+			finish();						
 			return true;
 		case R.id.menu_settings:
 			startActivity(new Intent(this, MainPrefs.class));
@@ -599,13 +587,11 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 		return getString(R.string.Menu_connect);
 	}
 
-	private void registerXMPPService() {
-		Log.i(TAG, "called startXMPPService()");
+	private void initXMPPServiceIntent() {
+		Log.i(TAG, "init XMPPService intent");
 		xmppServiceIntent = new Intent(this, JimService.class);
 		xmppServiceIntent.setAction("org.yaxim.androidclient.XMPPSERVICE");
-
 		xmppServiceConnection = new ServiceConnection() {
-
 			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 			// required for Sherlock's invalidateOptionsMenu */
 			public void onServiceConnected(ComponentName name, IBinder service) {
@@ -681,12 +667,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	protected void showToastNotification(int message) {
 		Toast tmptoast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
 		tmptoast.show();
-	}
-
-	private void registerCrashReporter() {
-		if (mConfig.reportCrash) {
-			ExceptionHandler.register(this, "http://duenndns.de/yaxim-crash/");
-		}
 	}
 
 	@Override

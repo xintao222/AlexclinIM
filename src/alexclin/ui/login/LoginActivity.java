@@ -60,26 +60,23 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 		mActivityIntent = new Intent(this, MainTabActivity.class);
 		sp = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		if(autoLogin(sp)){
-			return;
-		}else{
+		if(!autoLogin(sp)){
 			sp.edit().putBoolean(PrefConsts.CONN_STARTUP, false).commit();
-		}
-		callback = new IXMPPRosterCallback.Stub(){
-			@Override
-			public void connectionStateChanged(int connectionstate) throws RemoteException {
-				mDailog.dismiss();
-				LogUtil.e(this, Calendar.getInstance().getTime().toString()+","+connectionstate);
-				if(connectionstate == ConnectionState.ONLINE.ordinal()){	
-					sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();
-					startActivity(mActivityIntent);
-					LoginActivity.this.finish();
-				}else if(connectionstate == ConnectionState.OFFLINE.ordinal()){
-					ToastUtil.toastShort(LoginActivity.this, R.string.LoginFailedNotify);					
-				}				
-			}			
-		};
-		bindService(mXmppServiceIntent, this, BIND_AUTO_CREATE);
+			callback = new IXMPPRosterCallback.Stub(){
+				@Override
+				public void connectionStateChanged(int connectionstate) throws RemoteException {
+					mDailog.dismiss();
+					LogUtil.e(this, Calendar.getInstance().getTime().toString()+","+connectionstate);
+					if(connectionstate == ConnectionState.ONLINE.ordinal()){	
+						sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();
+						startMainActivity();
+					}else if(connectionstate == ConnectionState.OFFLINE.ordinal()){
+						ToastUtil.toastShort(LoginActivity.this, R.string.LoginFailedNotify);					
+					}				
+				}			
+			};
+			bindService(mXmppServiceIntent, this, BIND_AUTO_CREATE);
+		}		
 	}
 
 	private boolean autoLogin(SharedPreferences sp) {
@@ -93,9 +90,15 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 			return false;
 		}else{
 			startService(mXmppServiceIntent);
-			startActivity(mActivityIntent);
-			this.finish();
+			startMainActivity();
 			return true;
+		}		
+	}
+
+	private void startMainActivity() {
+		if(!isFinishing()){
+			startActivity(mActivityIntent);
+			finish();
 		}		
 	}
 
@@ -105,11 +108,10 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 			try {
 				mStub.unregisterRosterCallback(callback);
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			unbindService(this);
-		}
+		}		
 		super.onDestroy();
 	}
 
