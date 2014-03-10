@@ -75,15 +75,6 @@ public class XmppHelper {
 		return user +"@"+con.getUser().split("@")[1].split("/")[0];
 	}
 	
-	public static String getUser(String userStr){
-		String[] arrays = userStr.split("@");
-		if(arrays==null||arrays.length<2){
-			return userStr;
-		}else{
-			return arrays[0];
-		}		
-	}
-	
 	public static String getHostName(XMPPConnection con){
 		return con.getUser().split("@")[1].split("/")[0];
 	}

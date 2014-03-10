@@ -1,6 +1,8 @@
 package alexclin.dialogs;
 
 
+import org.jivesoftware.smack.util.StringUtils;
+
 import umeox.xmpp.aidl.XMPPRosterServiceAdapter;
 import umeox.xmpp.util.XmppHelper;
 import alexclin.ui.FriendsFragment;
@@ -57,7 +59,7 @@ public class AddRosterItemDialog extends AlertDialog implements
 	public AddRosterItemDialog(FriendsFragment mainWindow,
 			XMPPRosterServiceAdapter serviceAdapter, String jid) {
 		this(mainWindow, serviceAdapter);
-		userInputField.setText(XmppHelper.getUser(jid));
+		userInputField.setText(StringUtils.parseName(jid));
 	}
 
 	public void onCreate(Bundle icicle) {

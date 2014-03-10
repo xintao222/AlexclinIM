@@ -1,5 +1,13 @@
 package alexclin.ui;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smackx.muc.HostedRoom;
+import org.jivesoftware.smackx.muc.MultiUserChat;
+
 import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.data.RosterProvider;
 import alexclin.xmpp.jabberim.R;
@@ -12,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 
@@ -22,46 +31,53 @@ import android.widget.ListView;
  */
 public class GroupsFragment extends Fragment {
 	public class GroupAdapter extends BaseAdapter {
-//		private List<>
+        private List<HostedRoom> mRooms;
+        private LayoutInflater mInflater;
 		public GroupAdapter(){
-			
+			mInflater = LayoutInflater.from(getAct());
+			mRooms = new ArrayList<HostedRoom>();
+		}
+		
+		public void updateRooms(Collection<HostedRoom> rooms){
+			mRooms.clear();
+			mRooms.addAll(rooms);
+			notifyDataSetChanged();
 		}
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return 0;
+			return mRooms.size();
 		}
 
 		@Override
 		public Object getItem(int arg0) {
-			// TODO Auto-generated method stub
-			return null;
+			return arg0;
 		}
 
 		@Override
 		public long getItemId(int arg0) {
-			// TODO Auto-generated method stub
-			return 0;
+			return arg0;
 		}
 
 		@Override
-		public View getView(int arg0, View arg1, ViewGroup arg2) {
-			// TODO Auto-generated method stub
-			return null;
+		public View getView(int pos, View convertView, ViewGroup arg2) {
+			if(convertView==null){
+				convertView = mInflater.inflate(R.layout.frag_chat, null);
+			}
+			HostedRoom r = mRooms.get(pos);
+			((TextView) convertView.findViewById(R.id.FragChat_UserName)).setText(r.getName());
+			((TextView) convertView.findViewById(R.id.FragChat_LastTime)).setText("");
+			((TextView) convertView.findViewById(R.id.FragChat_LastMsg)).setText("");
+			return convertView;
 		}
 
 	}
-
-	private RosterObserver mRosterObserver;
+	
 	private ListView mListView;
 	
 	private GroupAdapter mAdapter;
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		mRosterObserver = new RosterObserver();
-		getActivity().getContentResolver().registerContentObserver(RosterProvider.CONTENT_URI, true, mRosterObserver);
-		getActivity().getContentResolver().registerContentObserver(ChatProvider.CONTENT_URI, true, mRosterObserver);		
+	public void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
 	}
 
@@ -70,7 +86,20 @@ public class GroupsFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.frg_grouplist, container, false);
 		mListView = (ListView) view.findViewById(R.id.GroupList_List);
+		initViews();
 		return view;
+	}
+
+	private void initViews() {
+//		mAdapter = new GroupAdapter();
+//		mListView.setAdapter(mAdapter);
+//		try {
+//			mAdapter.updateRooms();			
+//		} catch (XMPPException e) {
+//			e.printStackTrace();
+//		} catch(Exception e){
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override
@@ -79,18 +108,7 @@ public class GroupsFragment extends Fragment {
 		super.onDestroy();
 	}
 	
-	public Handler getHandler(){
-		return ((MainTabActivity)getActivity()).getHadnler();
-	}
-	
-	private class RosterObserver extends ContentObserver{
-		public RosterObserver() {
-			super(getHandler());
-		}
-
-		@Override
-		public void onChange(boolean selfChange) {
-			
-		}
+	public MainTabActivity getAct(){
+		return (MainTabActivity)getActivity();
 	}
 }

@@ -10,13 +10,17 @@ import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.data.ChatProvider.ChatConstants;
 import umeox.xmpp.data.RosterProvider;
+import umeox.xmpp.util.LogUtil;
 import umeox.xmpp.util.PrefConsts;
 import alexclin.ui.MainTabActivity;
+import alexclin.ui.base.GlobalConfig;
 import alexclin.ui.base.JimService;
+import alexclin.util.AudioUtil;
 import alexclin.xmpp.jabberim.R;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.ContentObserver;
@@ -27,6 +31,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.MediaStore.Audio;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,8 +41,11 @@ import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
@@ -62,7 +70,7 @@ import com.actionbarsherlock.view.Window;
 @SuppressWarnings("deprecation")
 /* recent ClipboardManager only available since API 11 */
 public class ChatActivity extends SherlockListActivity implements
-		OnKeyListener, TextWatcher {
+		OnKeyListener, TextWatcher, OnClickListener, OnTouchListener {
 
 	public static final String INTENT_EXTRA_USERNAME = ChatActivity.class
 			.getName() + ".username";
@@ -84,19 +92,26 @@ public class ChatActivity extends SherlockListActivity implements
 	private ContentObserver mContactObserver = new ContactObserver();
 	private TextView mTitle;
 	private TextView mSubTitle;
-	private Button mSendButton = null;
-	private EditText mChatInput = null;
+	
+	private Button mSendButton;
+	private EditText mChatInput;
+	
+	private Button mVoiceBtn;
+	
 	private String mWithJabberID = null;
 	private String mUserScreenName = null;
 	private Intent mServiceIntent;
 	private ServiceConnection mServiceConnection;
 	private XMPPChatServiceAdapter mServiceAdapter;
 	private int mChatFontSize;
+	
+	private AudioUtil mAudioUtil;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(((BaseApp) getApplication()).getConfig().getTheme());
 		super.onCreate(savedInstanceState);
+		mAudioUtil = new AudioUtil(GlobalConfig.VoiceCaheDir);
 
 		mChatFontSize = Integer.valueOf(((BaseApp) getApplication())
 				.getConfig().chatFontSize);
@@ -127,6 +142,15 @@ public class ChatActivity extends SherlockListActivity implements
 		setCustomTitle(titleUserid);
 
 		setChatWindowAdapter();
+	}
+
+	@Override
+	public void onDestroy() {
+		mAudioUtil.release();
+		super.onDestroy();
+		if (hasWindowFocus())
+			unbindXMPPService();
+		getContentResolver().unregisterContentObserver(mContactObserver);
 	}
 
 	private void setCustomTitle(String title) {
@@ -163,14 +187,6 @@ public class ChatActivity extends SherlockListActivity implements
 			bindXMPPService();
 		else
 			unbindXMPPService();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		if (hasWindowFocus())
-			unbindXMPPService();
-		getContentResolver().unregisterContentObserver(mContactObserver);
 	}
 
 	private void registerXMPPService() {
@@ -212,9 +228,11 @@ public class ChatActivity extends SherlockListActivity implements
 
 	private void setSendButton() {
 		mSendButton = (Button) findViewById(R.id.Chat_SendButton);
-		View.OnClickListener onSend = getOnSetListener();
-		mSendButton.setOnClickListener(onSend);
+		mSendButton.setOnClickListener(this);
 		mSendButton.setEnabled(false);
+		mVoiceBtn = (Button)findViewById(R.id.Chat_VoiceBtn);
+		findViewById(R.id.Chat_SwitchBtn).setOnClickListener(this);
+		mVoiceBtn.setOnTouchListener(this);
 	}
 
 	private void setUserInput() {
@@ -274,15 +292,6 @@ public class ChatActivity extends SherlockListActivity implements
 		default:
 			return super.onContextItemSelected((android.view.MenuItem) item);
 		}
-	}
-
-	private View.OnClickListener getOnSetListener() {
-		return new View.OnClickListener() {
-
-			public void onClick(View v) {
-				sendMessageIfNotNull();
-			}
-		};
 	}
 
 	private void sendMessageIfNotNull() {
@@ -507,14 +516,9 @@ public class ChatActivity extends SherlockListActivity implements
 	}
 
 	public void beforeTextChanged(CharSequence s, int start, int count,
-			int after) {
-		// TODO Auto-generated method stub
+			int after) {}
 
-	}
-
-	public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-	}
+	public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
 	private void showToastNotification(int message) {
 		Toast toastNotification = Toast.makeText(this, message,
@@ -590,5 +594,36 @@ public class ChatActivity extends SherlockListActivity implements
 			Log.d(TAG, "ContactObserver.onChange: " + selfChange);
 			updateContactStatus();
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.Chat_SendButton:
+			sendMessageIfNotNull();
+			break;
+		case R.id.Chat_SwitchBtn:
+			if(mVoiceBtn.getVisibility()==View.GONE){
+				mVoiceBtn.setVisibility(View.VISIBLE);
+				mSendButton.setVisibility(View.GONE);
+				mChatInput.setVisibility(View.GONE);
+			}else{
+				mVoiceBtn.setVisibility(View.GONE);
+				mSendButton.setVisibility(View.VISIBLE);
+				mChatInput.setVisibility(View.VISIBLE);
+			}
+			break;
+		}		
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent e) {
+		if(e.getAction()==MotionEvent.ACTION_DOWN){
+			mAudioUtil.startRecording();
+		}else if(e.getAction()==MotionEvent.ACTION_UP){
+			String filePath = mAudioUtil.stopRecording();
+			LogUtil.e(this, "Record:"+filePath);
+		}
+		return true;
 	}
 }

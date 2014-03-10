@@ -85,7 +85,7 @@
 	<string name="FontRost_title">Roster font size</string>
 	<string name="FontRost_summ">Set roster font size</string>
 	<string name="FontRost_dialog">Roster font fize</string>
-	<string name="setFontRoster">Set roster font size</string>
+	<string name="setFontRoster">Set roster font size</string>
     -->
     <string name="pref_theme">主题</string>
 
@@ -203,7 +203,7 @@
     <!--
 	<string name="showGPS_title">GPS to status</string>
 	<string name="showGPS_summ_on">GPS is send to StatusMessage</string>
-	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
+	<string name="showGPS_summ_off">GPS is send to StatusMessage</string>
     -->
 
 
@@ -226,5 +226,8 @@
 
     <!-- SEND listener popup -->
     <string name="chooseContact">选择联系人</string>
+    
+    <string name="Send">发送</string>
+    <string name="PressToSend">按住  发送</string>
 
 </resources>

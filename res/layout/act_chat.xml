@@ -14,24 +14,39 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:baselineAligned="false"
-            android:gravity="bottom"
+            android:gravity="center"
             android:orientation="horizontal"
             android:stretchColumns="1" >
+            
+            <Button
+                android:id="@+id/Chat_SwitchBtn"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:background="@android:drawable/btn_star" />
+            
+            <Button
+                android:id="@+id/Chat_VoiceBtn"
+                android:layout_width="fill_parent"
+                android:layout_height="50dip"
+                android:text="@string/PressToSend"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/Chat_UserInput"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="60sp"
+                android:layout_gravity="bottom"
                 android:hint="@string/chat_enterMsgHint"
-                android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine" />
+                android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
+                 />
 
             <Button
                 android:id="@+id/Chat_SendButton"
                 android:layout_width="60sp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-60sp"
-                android:text="@android:string/ok" />
+                android:text="@string/Send" />
         </LinearLayout>
 
         <ListView

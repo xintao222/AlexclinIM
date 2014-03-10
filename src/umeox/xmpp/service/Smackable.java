@@ -1,5 +1,9 @@
 package umeox.xmpp.service;
 
+import java.util.Collection;
+
+import org.jivesoftware.smackx.muc.HostedRoom;
+
 import umeox.xmpp.aidl.XMPPServiceCallback;
 import umeox.xmpp.base.UmeoxException;
 import umeox.xmpp.util.ConnectionState;
@@ -29,4 +33,6 @@ public interface Smackable {
 	void unRegisterCallback();
 	
 	String getNameForJID(String jid);
+	
+	Collection<HostedRoom> getHostedRooms();
 }

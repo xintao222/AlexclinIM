@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.jivesoftware.smack.AccountManager;
+import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.PacketCollector;
@@ -35,6 +36,9 @@ import org.jivesoftware.smackx.entitycaps.EntityCapsManager;
 import org.jivesoftware.smackx.entitycaps.cache.SimpleDirectoryPersistentCache;
 import org.jivesoftware.smackx.entitycaps.provider.CapsExtensionProvider;
 import org.jivesoftware.smackx.forward.Forwarded;
+import org.jivesoftware.smackx.muc.HostedRoom;
+import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smackx.muc.SubjectUpdatedListener;
 import org.jivesoftware.smackx.packet.DelayInfo;
 import org.jivesoftware.smackx.packet.DelayInformation;
 import org.jivesoftware.smackx.packet.Version;
@@ -857,7 +861,7 @@ public class SmackableImp implements Smackable {
 
 		if (mRosterListener != null)
 			mRoster.removeRosterListener(mRosterListener);
-
+		
 		mRosterListener = new RosterListener() {
 			private boolean first_roster = true;
 
@@ -1239,6 +1243,7 @@ public class SmackableImp implements Smackable {
 
 	private String getName(RosterEntry rosterEntry) {
 		String name = rosterEntry.getName();
+		LogUtil.e(this, "GetName,Jid:"+rosterEntry.getUser()+",Name:"+rosterEntry.getName());
 		if (name != null && name.length() > 0) {
 			return name;
 		}
@@ -1319,4 +1324,17 @@ public class SmackableImp implements Smackable {
         presencePacket.setStatus(msg);
         mXMPPConnection.sendPacket(presencePacket);              
     }
+
+	@Override
+	public Collection<HostedRoom> getHostedRooms() {
+		try {
+			return MultiUserChat.getHostedRooms(mXMPPConnection,
+					"conference."+mXMPPConnection.getServiceName());		
+		} catch (XMPPException e) {
+			e.printStackTrace();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
