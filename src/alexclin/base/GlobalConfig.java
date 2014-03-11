@@ -1,4 +1,4 @@
-package alexclin.ui.base;
+package alexclin.base;
 
 import android.os.Environment;
 

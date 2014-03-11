@@ -1,4 +1,4 @@
-package alexclin.ui.base;
+package alexclin.base;
 
 import java.io.File;
 import java.io.FileWriter;

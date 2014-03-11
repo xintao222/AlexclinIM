@@ -1,4 +1,4 @@
-package alexclin.ui.base;
+package alexclin.base;
 
 import alexclin.xmpp.jabberim.R;
 import android.content.SharedPreferences;

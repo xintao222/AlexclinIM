@@ -6,10 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
 
 /* 
@@ -24,7 +21,7 @@ import android.util.Log;
  */
 public class AudioUtil {
 	private static final String LOG_TAG = AudioUtil.class.getName();
-	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss",Locale.CHINESE);// 设置日期格式
+	private SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss",Locale.CHINESE);// 设置日期格式
 	private MediaRecorder mRecorder;
 	private String dir;
 	private String recordPath;
@@ -45,6 +42,7 @@ public class AudioUtil {
 		mRecorder.release();
 	}
 
+	@SuppressWarnings("deprecation")
 	public void startRecording() {		
 		// 设置音源为Micphone
 		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);

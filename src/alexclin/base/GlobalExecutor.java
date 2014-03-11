@@ -1,4 +1,4 @@
-package alexclin.ui.base;
+package alexclin.base;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

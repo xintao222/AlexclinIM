@@ -1,7 +1,7 @@
 package alexclin.ui.preferences;
 
 import umeox.xmpp.base.BaseApp;
-import alexclin.ui.base.MyApplication;
+import alexclin.base.MyApplication;
 import alexclin.xmpp.jabberim.R;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

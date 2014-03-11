@@ -1,9 +1,9 @@
-package alexclin.ui.base;
+package alexclin.base;
 
 import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.base.BaseConfig;
 import umeox.xmpp.util.LogUtil;
-import alexclin.ui.base.CrashHandler.CrashAble;
+import alexclin.base.CrashHandler.CrashAble;
 import android.content.Context;
 import android.preference.PreferenceManager;
 

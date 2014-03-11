@@ -1,4 +1,4 @@
-package alexclin.ui.base;
+package alexclin.base;
 
 import umeox.xmpp.service.XMPPService;
 import umeox.xmpp.util.ConnectionState;

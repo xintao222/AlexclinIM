@@ -7,8 +7,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import umeox.xmpp.util.XmppHelper;
+import alexclin.base.StatusMode;
 import alexclin.ui.MainTabActivity;
-import alexclin.ui.base.StatusMode;
 import alexclin.xmpp.jabberim.R;
 import android.app.AlertDialog;
 import android.content.Context;
