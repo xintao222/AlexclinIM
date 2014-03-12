@@ -2,8 +2,6 @@ package umeox.xmpp.data;
 
 import java.util.ArrayList;
 
-import umeox.xmpp.util.LogUtil;
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -15,10 +13,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
-import android.os.Handler;
 import android.util.Log;
+
+import com.lidroid.xutils.util.LogUtils;
 
 public class RosterProvider extends ContentProvider {
 
@@ -240,7 +240,7 @@ public class RosterProvider extends ContentProvider {
 	}
 
 	private static void infoLog(String data) {
-		LogUtil.i(TAG, data);		
+		LogUtils.i(data);		
 	}
 
 	private static class RosterDatabaseHelper extends SQLiteOpenHelper {

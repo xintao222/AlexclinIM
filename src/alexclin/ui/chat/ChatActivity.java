@@ -1,5 +1,6 @@
 package alexclin.ui.chat;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -10,33 +11,36 @@ import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.data.ChatProvider.ChatConstants;
 import umeox.xmpp.data.RosterProvider;
-import umeox.xmpp.util.LogUtil;
 import umeox.xmpp.util.PrefConsts;
 import alexclin.base.GlobalConfig;
 import alexclin.base.JimService;
+import alexclin.http.BaseApi.Callback;
+import alexclin.http.FileApi;
+import alexclin.http.ReturnBean;
+import alexclin.http.UploadResult;
+import alexclin.mediatransfer.FileMessager;
+import alexclin.mediatransfer.AudioUtil;
+import alexclin.mediatransfer.MediaDB;
 import alexclin.ui.MainTabActivity;
-import alexclin.util.AudioUtil;
 import alexclin.xmpp.jabberim.R;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.TransitionDrawable;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.provider.MediaStore.Audio;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -46,13 +50,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,27 +67,24 @@ import com.actionbarsherlock.view.Window;
  * @author alex
  * 
  */
-@SuppressWarnings("deprecation")
 /* recent ClipboardManager only available since API 11 */
 public class ChatActivity extends SherlockListActivity implements
-		OnKeyListener, TextWatcher, OnClickListener, OnTouchListener {
+		OnKeyListener, TextWatcher, OnClickListener, OnTouchListener, Callback, OnPreparedListener {
 
 	public static final String INTENT_EXTRA_USERNAME = ChatActivity.class
 			.getName() + ".username";
 	public static final String INTENT_EXTRA_MESSAGE = ChatActivity.class
 			.getName() + ".message";
+	
+	private static final String[] PROJECTION_FROM = new String[] {
+		ChatProvider.ChatConstants._ID, ChatProvider.ChatConstants.DATE,
+		ChatProvider.ChatConstants.DIRECTION,
+		ChatProvider.ChatConstants.JID, ChatProvider.ChatConstants.MESSAGE,
+		ChatProvider.ChatConstants.DELIVERY_STATUS };
 
 	private static final String TAG = "yaxim.ChatWindow";
-	private static final String[] PROJECTION_FROM = new String[] {
-			ChatProvider.ChatConstants._ID, ChatProvider.ChatConstants.DATE,
-			ChatProvider.ChatConstants.DIRECTION,
-			ChatProvider.ChatConstants.JID, ChatProvider.ChatConstants.MESSAGE,
-			ChatProvider.ChatConstants.DELIVERY_STATUS };
-
-	private static final int[] PROJECTION_TO = new int[] { R.id.chat_date,
-			R.id.chat_from, R.id.chat_message };
-
-	private static final int DELAY_NEWMSG = 2000;
+	
+	
 
 	private ContentObserver mContactObserver = new ContactObserver();
 	private TextView mTitle;
@@ -103,18 +100,19 @@ public class ChatActivity extends SherlockListActivity implements
 	private Intent mServiceIntent;
 	private ServiceConnection mServiceConnection;
 	private XMPPChatServiceAdapter mServiceAdapter;
-	private int mChatFontSize;
 	
 	private AudioUtil mAudioUtil;
+	public MediaDB mAudioDb;
+	private MediaPlayer mPlayer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(((BaseApp) getApplication()).getConfig().getTheme());
 		super.onCreate(savedInstanceState);
 		mAudioUtil = new AudioUtil(GlobalConfig.VoiceCaheDir);
-
-		mChatFontSize = Integer.valueOf(((BaseApp) getApplication())
-				.getConfig().chatFontSize);
+		mAudioDb= new MediaDB(this);
+		mPlayer = new MediaPlayer();
+		mPlayer.setOnPreparedListener(this);
 
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.act_chat);
@@ -140,13 +138,16 @@ public class ChatActivity extends SherlockListActivity implements
 		}
 
 		setCustomTitle(titleUserid);
-
-		setChatWindowAdapter();
+		Cursor c = managedQuery(ChatProvider.CONTENT_URI, PROJECTION_FROM,
+				ChatConstants.JID + "='" + mWithJabberID + "'", null, null);
+		setListAdapter(new ChatWindowAdapter(this,c));
 	}
 
 	@Override
 	public void onDestroy() {
 		mAudioUtil.release();
+		mAudioDb.close();
+		mPlayer.release();
 		super.onDestroy();
 		if (hasWindowFocus())
 			unbindXMPPService();
@@ -163,15 +164,6 @@ public class ChatActivity extends SherlockListActivity implements
 		setTitle(null);
 		getSupportActionBar().setCustomView(layout);
 		getSupportActionBar().setDisplayShowCustomEnabled(true);
-	}
-
-	private void setChatWindowAdapter() {
-		String selection = ChatConstants.JID + "='" + mWithJabberID + "'";
-		Cursor cursor = managedQuery(ChatProvider.CONTENT_URI, PROJECTION_FROM,
-				selection, null, null);
-		ListAdapter adapter = new ChatWindowAdapter(cursor, PROJECTION_FROM,
-				PROJECTION_TO, mWithJabberID, mUserScreenName);
-		setListAdapter(adapter);
 	}
 
 	@Override
@@ -266,17 +258,20 @@ public class ChatActivity extends SherlockListActivity implements
 		super.onCreateContextMenu(menu, v, menuInfo);
 
 		View target = ((AdapterContextMenuInfo) menuInfo).targetView;
-		TextView from = (TextView) target.findViewById(R.id.chat_from);
-		getMenuInflater().inflate(R.menu.chat_contextmenu, menu);
-		if (!from.getText().equals(getString(R.string.chat_from_me))) {
-			menu.findItem(R.id.chat_contextmenu_resend).setEnabled(false);
-		}
+//		TextView from = (TextView) target.findViewById(R.id.chat_from);
+		//TODO 
+//		getMenuInflater().inflate(R.menu.chat_contextmenu, menu);
+//		if (!from.getText().equals(getString(R.string.chat_from_me))) {
+//			menu.findItem(R.id.chat_contextmenu_resend).setEnabled(false);
+//		}
 	}
 
 	private CharSequence getMessageFromContextMenu(MenuItem item) {
 		View target = ((AdapterContextMenuInfo) item.getMenuInfo()).targetView;
-		TextView message = (TextView) target.findViewById(R.id.chat_message);
-		return message.getText();
+//		TextView message = (TextView) target.findViewById(R.id.chat_message);
+//		return message.getText();
+		//TODO 
+		return null;
 	}
 
 	public boolean onContextItemSelected(MenuItem item) {
@@ -306,197 +301,7 @@ public class ChatActivity extends SherlockListActivity implements
 		mServiceAdapter.sendMessage(mWithJabberID, message);
 		if (!mServiceAdapter.isServiceAuthenticated())
 			showToastNotification(R.string.toast_stored_offline);
-	}
-
-	private void markAsReadDelayed(final int id, int delay) {
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				markAsRead(id);
-			}
-		}, delay);
-	}
-
-	private void markAsRead(int id) {
-		Uri rowuri = Uri.parse("content://" + ChatProvider.AUTHORITY + "/"
-				+ ChatProvider.TABLE_NAME + "/" + id);
-		Log.d(TAG, "markAsRead: " + rowuri);
-		ContentValues values = new ContentValues();
-		values.put(ChatConstants.DELIVERY_STATUS, ChatConstants.DS_SENT_OR_READ);
-		getContentResolver().update(rowuri, values, null, null);
-	}
-
-	class ChatWindowAdapter extends SimpleCursorAdapter {
-		String mScreenName, mJID;
-
-		ChatWindowAdapter(Cursor cursor, String[] from, int[] to, String JID,
-				String screenName) {
-			super(ChatActivity.this, android.R.layout.simple_list_item_1,
-					cursor, from, to);
-			mScreenName = screenName;
-			mJID = JID;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = convertView;
-			ChatItemWrapper wrapper = null;
-			Cursor cursor = this.getCursor();
-			cursor.moveToPosition(position);
-
-			long dateMilliseconds = cursor.getLong(cursor
-					.getColumnIndex(ChatProvider.ChatConstants.DATE));
-
-			int _id = cursor.getInt(cursor
-					.getColumnIndex(ChatProvider.ChatConstants._ID));
-			String date = getDateString(dateMilliseconds);
-			String message = cursor.getString(cursor
-					.getColumnIndex(ChatProvider.ChatConstants.MESSAGE));
-			boolean from_me = (cursor.getInt(cursor
-					.getColumnIndex(ChatProvider.ChatConstants.DIRECTION)) == ChatConstants.OUTGOING);
-			String jid = cursor.getString(cursor
-					.getColumnIndex(ChatProvider.ChatConstants.JID));
-			int delivery_status = cursor
-					.getInt(cursor
-							.getColumnIndex(ChatProvider.ChatConstants.DELIVERY_STATUS));
-
-			if (row == null) {
-				LayoutInflater inflater = getLayoutInflater();
-				row = inflater.inflate(R.layout.listitem_chatrow, null);
-				wrapper = new ChatItemWrapper(row, ChatActivity.this);
-				row.setTag(wrapper);
-			} else {
-				wrapper = (ChatItemWrapper) row.getTag();
-			}
-
-			if (!from_me && delivery_status == ChatConstants.DS_NEW) {
-				markAsReadDelayed(_id, DELAY_NEWMSG);
-			}
-
-			String from = jid;
-			if (jid.equals(mJID))
-				from = mScreenName;
-			wrapper.populateFrom(date, from_me, from, message, delivery_status);
-
-			return row;
-		}
-	}
-
-	private String getDateString(long milliSeconds) {
-		SimpleDateFormat dateFormater = new SimpleDateFormat(
-				"yy-MM-dd HH:mm:ss", Locale.CHINA);
-		Date date = new Date(milliSeconds);
-		return dateFormater.format(date);
-	}
-
-	public class ChatItemWrapper {
-		private TextView mDateView = null;
-		private TextView mFromView = null;
-		private TextView mMessageView = null;
-		private ImageView mIconView = null;
-
-		private final View mRowView;
-		private ChatActivity chatWindow;
-
-		ChatItemWrapper(View row, ChatActivity chatWindow) {
-			this.mRowView = row;
-			this.chatWindow = chatWindow;
-		}
-
-		void populateFrom(String date, boolean from_me, String from,
-				String message, int delivery_status) {
-			// Log.i(TAG, "populateFrom(" + from_me + ", " + from + ", " +
-			// message + ")");
-			getDateView().setText(date);
-			TypedValue tv = new TypedValue();
-			if (from_me) {
-				getTheme().resolveAttribute(R.attr.ChatMsgHeaderMeColor, tv,
-						true);
-				getDateView().setTextColor(tv.data);
-				getFromView().setText(getString(R.string.chat_from_me));
-				getFromView().setTextColor(tv.data);
-			} else {
-				getTheme().resolveAttribute(R.attr.ChatMsgHeaderYouColor, tv,
-						true);
-				getDateView().setTextColor(tv.data);
-				getFromView().setText(from + ":");
-				getFromView().setTextColor(tv.data);
-			}
-			switch (delivery_status) {
-			case ChatConstants.DS_NEW:
-				ColorDrawable layers[] = new ColorDrawable[2];
-				getTheme().resolveAttribute(R.attr.ChatNewMessageColor, tv,
-						true);
-				layers[0] = new ColorDrawable(tv.data);
-				if (from_me) {
-					// message stored for later transmission
-					getTheme().resolveAttribute(R.attr.ChatStoredMessageColor,
-							tv, true);
-					layers[1] = new ColorDrawable(tv.data);
-				} else {
-					layers[1] = new ColorDrawable(0x00000000);
-				}
-				TransitionDrawable backgroundColorAnimation = new TransitionDrawable(
-						layers);
-				int l = mRowView.getPaddingLeft();
-				int t = mRowView.getPaddingTop();
-				int r = mRowView.getPaddingRight();
-				int b = mRowView.getPaddingBottom();
-				mRowView.setBackgroundDrawable(backgroundColorAnimation);
-				mRowView.setPadding(l, t, r, b);
-				backgroundColorAnimation.setCrossFadeEnabled(true);
-				backgroundColorAnimation.startTransition(DELAY_NEWMSG);
-				getIconView().setImageResource(
-						R.drawable.ic_chat_msg_status_queued);
-				break;
-			case ChatConstants.DS_SENT_OR_READ:
-				getIconView().setImageResource(
-						R.drawable.ic_chat_msg_status_unread);
-				mRowView.setBackgroundColor(0x00000000); // default is
-															// transparent
-				break;
-			case ChatConstants.DS_ACKED:
-				getIconView()
-						.setImageResource(R.drawable.ic_chat_msg_status_ok);
-				mRowView.setBackgroundColor(0x00000000); // default is
-															// transparent
-				break;
-			}
-			getMessageView().setText(message);
-			getMessageView().setTextSize(TypedValue.COMPLEX_UNIT_SP,
-					chatWindow.mChatFontSize);
-		}
-
-		TextView getDateView() {
-			if (mDateView == null) {
-				mDateView = (TextView) mRowView.findViewById(R.id.chat_date);
-			}
-			return mDateView;
-		}
-
-		TextView getFromView() {
-			if (mFromView == null) {
-				mFromView = (TextView) mRowView.findViewById(R.id.chat_from);
-			}
-			return mFromView;
-		}
-
-		TextView getMessageView() {
-			if (mMessageView == null) {
-				mMessageView = (TextView) mRowView
-						.findViewById(R.id.chat_message);
-			}
-			return mMessageView;
-		}
-
-		ImageView getIconView() {
-			if (mIconView == null) {
-				mIconView = (ImageView) mRowView.findViewById(R.id.iconView);
-			}
-			return mIconView;
-		}
-
-	}
+	}	
 
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
 		if (event.getAction() == KeyEvent.ACTION_DOWN
@@ -622,8 +427,65 @@ public class ChatActivity extends SherlockListActivity implements
 			mAudioUtil.startRecording();
 		}else if(e.getAction()==MotionEvent.ACTION_UP){
 			String filePath = mAudioUtil.stopRecording();
-			LogUtil.e(this, "Record:"+filePath);
+			FileApi.uploadFileAsync(this, filePath,filePath);
 		}
 		return true;
+	}
+
+	@Override
+	public void onLoading(long total, long current, int apiInt,Object tag) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStart(int apiInt,Object tag) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onFailure(int error, int apiInt,Object tag) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSuccess(Object msg, int apiInt,Object tag) {
+		ReturnBean<UploadResult> rb = (ReturnBean<UploadResult>)msg;
+		if(rb.getErrorCode()==0){
+			mAudioDb.insert(rb.getResult().getUrl(), (String)tag);
+			sendMessage(FileMessager.wrapMessage(rb.getResult().getUrl(), FileMessager.TYPE_VOICE));
+		}else{
+			
+		}		
+	}
+	
+	public void playMedia(String path){
+		if(mPlayer.isPlaying()){
+			mPlayer.stop();
+		}
+		mPlayer.reset();
+		try {
+			mPlayer.setDataSource(path);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mPlayer.prepareAsync();
+	}
+
+	@Override
+	public void onPrepared(MediaPlayer mp) {
+		mp.start();		
 	}
 }

@@ -1,4 +1,4 @@
-package alexclin.util;
+package alexclin.mediatransfer;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import android.util.Log;
  */
 public class AudioUtil {
 	private static final String LOG_TAG = AudioUtil.class.getName();
-	private SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss",Locale.CHINESE);// 设置日期格式
+	private static SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss",Locale.CHINESE);// 设置日期格式
 	private MediaRecorder mRecorder;
 	private String dir;
 	private String recordPath;
@@ -66,7 +66,7 @@ public class AudioUtil {
 		return recordPath;
 	}
 
-	private String getTime() {		
+	public static String getTime() {		
 		return df.format(new Date());// new Date()为获取当前系统时间
 	}
 }

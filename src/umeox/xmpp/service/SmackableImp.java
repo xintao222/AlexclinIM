@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.jivesoftware.smack.AccountManager;
-import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.PacketCollector;
@@ -38,7 +37,6 @@ import org.jivesoftware.smackx.entitycaps.provider.CapsExtensionProvider;
 import org.jivesoftware.smackx.forward.Forwarded;
 import org.jivesoftware.smackx.muc.HostedRoom;
 import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.jivesoftware.smackx.muc.SubjectUpdatedListener;
 import org.jivesoftware.smackx.packet.DelayInfo;
 import org.jivesoftware.smackx.packet.DelayInformation;
 import org.jivesoftware.smackx.packet.Version;
@@ -61,7 +59,6 @@ import umeox.xmpp.data.ChatProvider.ChatConstants;
 import umeox.xmpp.data.RosterProvider;
 import umeox.xmpp.data.RosterProvider.RosterConstants;
 import umeox.xmpp.util.ConnectionState;
-import umeox.xmpp.util.LogUtil;
 import umeox.xmpp.util.PrefConsts;
 import umeox.xmpp.util.XmppHelper;
 import android.app.AlarmManager;
@@ -80,6 +77,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
+
+import com.lidroid.xutils.util.LogUtils;
 
 public class SmackableImp implements Smackable {
 	final static private String TAG = "yaxim.SmackableImp";
@@ -1243,7 +1242,6 @@ public class SmackableImp implements Smackable {
 
 	private String getName(RosterEntry rosterEntry) {
 		String name = rosterEntry.getName();
-		LogUtil.e(this, "GetName,Jid:"+rosterEntry.getUser()+",Name:"+rosterEntry.getName());
 		if (name != null && name.length() > 0) {
 			return name;
 		}
@@ -1267,7 +1265,7 @@ public class SmackableImp implements Smackable {
 	}
 
 	private void debugLog(String data) {
-		LogUtil.d(TAG, data);
+		LogUtils.d(TAG+data);
 	}
 
 	@Override

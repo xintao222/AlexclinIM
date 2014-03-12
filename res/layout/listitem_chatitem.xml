@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dp" >
+
+    <TextView
+        android:id="@+id/ChatItem_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#bfbfbf"
+        android:padding="2dp"
+        android:text="2014.03.12 11:14"
+        android:textColor="#ffffff"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/ChatItem_OutLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp" >
+
+            <ImageView
+                android:id="@+id/ChatItem_OutHead"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ic_launcher"
+                android:focusable="false" />
+
+            <LinearLayout
+                android:id="@+id/ChatItem_OutLinear"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:layout_toLeftOf="@id/ChatItem_OutHead" >
+
+                <TextView
+                    android:id="@+id/ChatItem_OutContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="left|center"
+                    android:lineSpacingExtra="2dp"
+                    android:minHeight="50dp"
+                    android:text="别人发来的信息"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/ChatItem_OutImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ic_launcher"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="left|center"
+                    android:lineSpacingExtra="2dp"
+                    android:minHeight="50dp"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/ChatItem_OutVoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="left|center"
+                    android:lineSpacingExtra="2dp"
+                    android:minHeight="50dp"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ChatItem_OutStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="2dp"
+                android:layout_toLeftOf="@id/ChatItem_OutLinear"
+                android:gravity="right|center"
+                android:text="失败"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ChatItem_InLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp" >
+
+            <ImageView
+                android:id="@+id/ChatItem_InHead"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ic_launcher"
+                android:clickable="true"
+                android:onClick="head_xiaohei" />
+
+            <TextView
+                android:id="@+id/ChatItem_InContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/ChatItem_InHead"
+                android:gravity="right|center"
+                android:lineSpacingExtra="2dp"
+                android:minHeight="50dp"
+                android:text="自己发出的信息"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/ChatItem_InImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/ChatItem_InHead"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/ChatItem_InVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/ChatItem_InHead"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,11 +1,8 @@
 package alexclin.ui.login;
 
-import java.util.Calendar;
-
 import umeox.xmpp.aidl.IXMPPRosterCallback;
 import umeox.xmpp.aidl.IXMPPRosterService;
 import umeox.xmpp.util.ConnectionState;
-import umeox.xmpp.util.LogUtil;
 import umeox.xmpp.util.PrefConsts;
 import umeox.xmpp.util.XmppHelper;
 import alexclin.base.JimService;
@@ -66,7 +63,6 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 				@Override
 				public void connectionStateChanged(int connectionstate) throws RemoteException {
 					mDailog.dismiss();
-					LogUtil.e(this, Calendar.getInstance().getTime().toString()+","+connectionstate);
 					if(connectionstate == ConnectionState.ONLINE.ordinal()){	
 						sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();
 						startMainActivity();

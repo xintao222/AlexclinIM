@@ -10,7 +10,6 @@ import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.base.BaseConfig;
 import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.util.ConnectionState;
-import umeox.xmpp.util.LogUtil;
 import umeox.xmpp.util.PrefConsts;
 import alexclin.base.JimService;
 import alexclin.base.StatusMode;
@@ -122,7 +121,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 
 	@Override
 	public void onDestroy() {
-		LogUtil.e(this, "onDestroy");
 		super.onDestroy();
 	}
 

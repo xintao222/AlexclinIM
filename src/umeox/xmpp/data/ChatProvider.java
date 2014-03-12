@@ -2,8 +2,6 @@ package umeox.xmpp.data;
 
 import java.util.ArrayList;
 
-import umeox.xmpp.util.LogUtil;
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -17,6 +15,8 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
+
+import com.lidroid.xutils.util.LogUtils;
 
 public class ChatProvider extends ContentProvider {
 
@@ -150,7 +150,7 @@ public class ChatProvider extends ContentProvider {
 				null, null, orderBy);
 
 		if (ret == null) {
-			infoLog("ChatProvider.query: failed");
+			LogUtils.i("ChatProvider.query: failed");
 		} else {
 			ret.setNotificationUri(getContext().getContentResolver(), url);
 		}
@@ -179,15 +179,11 @@ public class ChatProvider extends ContentProvider {
 			throw new UnsupportedOperationException("Cannot update URL: " + url);
 		}
 
-		infoLog("*** notifyChange() rowId: " + rowId + " url " + url);
+		LogUtils.i("*** notifyChange() rowId: " + rowId + " url " + url);
 
 		getContext().getContentResolver().notifyChange(url, null);
 		return count;
 
-	}
-
-	private static void infoLog(String data) {
-		LogUtil.i(TAG, data);		
 	}
 
 	private static class ChatDatabaseHelper extends SQLiteOpenHelper {
@@ -201,7 +197,7 @@ public class ChatProvider extends ContentProvider {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			infoLog("creating new chat table");			
+			LogUtils.i("creating new chat table");			
 
 			db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + ChatConstants._ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -215,7 +211,7 @@ public class ChatProvider extends ContentProvider {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			infoLog("onUpgrade: from " + oldVersion + " to " + newVersion);
+			LogUtils.i("onUpgrade: from " + oldVersion + " to " + newVersion);
 			switch (oldVersion) {
 			case 3:
 				db.execSQL("UPDATE " + TABLE_NAME + " SET READ=1");
