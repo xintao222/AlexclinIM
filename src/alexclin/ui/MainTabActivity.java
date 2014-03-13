@@ -150,6 +150,9 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 		handleSendIntent();
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {}
+
 	void initViews() {
 		setContentView(R.layout.act_maintab);
 		mConnectingText = (TextView) findViewById(R.id.error_view);
@@ -388,11 +391,9 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	public static String getStatusTitle(Context context, String status,
 			String statusMessage) {
 		status = context.getString(StatusMode.fromString(status).getTextId());
-
 		if (statusMessage.length() > 0) {
 			status = status + " (" + statusMessage + ")";
 		}
-
 		return status;
 	}
 

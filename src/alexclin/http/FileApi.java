@@ -31,12 +31,6 @@ public class FileApi extends BaseApi{
 		private Callback callback;
 		private int apiInt;
 		private Object tag;
-
-		public DownCallback(Callback callback, int apiInt) {
-			super();
-			this.callback = callback;
-			this.apiInt = apiInt;
-		}
 		
 		public DownCallback(Callback callback, int apiInt,Object tag) {
 			super();

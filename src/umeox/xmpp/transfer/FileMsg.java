@@ -1,6 +1,6 @@
-package alexclin.http;
+package umeox.xmpp.transfer;
 
-public class FileMessage {
+public class FileMsg {
     private int type;
     private String url;
 	public int getType() {

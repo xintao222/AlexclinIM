@@ -1,5 +1,7 @@
 package alexclin.base;
 
+import com.lidroid.xutils.util.LogUtils;
+
 import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.base.BaseConfig;
 import alexclin.base.CrashHandler.CrashAble;
@@ -10,7 +12,8 @@ public class MyApplication extends BaseApp implements CrashAble {
 	private MyConfig mConfig;
 
 	@Override
-	public void onCreate() {
+	public void onCreate() {		
+		LogUtils.allowWtf = true;
 		mConfig = new MyConfig(PreferenceManager.getDefaultSharedPreferences(this));
 		Thread.setDefaultUncaughtExceptionHandler(CrashHandler.getInstance(this, this));
 	}

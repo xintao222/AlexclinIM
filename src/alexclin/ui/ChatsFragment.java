@@ -10,8 +10,8 @@ import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.data.ChatProvider.ChatConstants;
 import umeox.xmpp.data.RosterProvider;
 import umeox.xmpp.data.RosterProvider.RosterConstants;
-import alexclin.http.FileMessage;
-import alexclin.mediatransfer.FileMessager;
+import umeox.xmpp.transfer.FileMessager;
+import umeox.xmpp.transfer.FileMsg;
 import alexclin.xmpp.jabberim.R;
 import android.content.Context;
 import android.content.Intent;
@@ -101,7 +101,7 @@ public class ChatsFragment extends Fragment {
 					.getColumnIndex(ChatConstants.DATE)))));
 			String msg = c.getString(c.getColumnIndex(ChatConstants.MESSAGE));
 			if(FileMessager.isWrappedMsg(msg)){
-				FileMessage fm = FileMessager.unwrappMessage(msg);
+				FileMsg fm = FileMessager.unwrappMessage(msg);
 				if(fm.getType()==FileMessager.TYPE_VOICE){
 					msg = "语音";
 				}else{

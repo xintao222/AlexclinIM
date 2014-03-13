@@ -1,86 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	android:versionCode="1" android:versionName="0.1" package="alexclin.xmpp.jabberim">
+    package="alexclin.xmpp.jabberim"
+    android:versionCode="1"
+    android:versionName="0.1" >
 
-	<uses-sdk android:targetSdkVersion="14" android:minSdkVersion="7"/>
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="14" />
 
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.RECORD_AUDIO" /> 
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-	<application android:icon="@drawable/ic_launcher"
-		android:name="alexclin.base.MyApplication"
-		android:theme="@style/YaximDarkTheme"
-		android:debuggable="true" android:label="@string/app_name">
+    <application
+        android:name="alexclin.base.MyApplication"
+        android:debuggable="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/YaximDarkTheme" >
+        <activity
+            android:name="alexclin.ui.MainTabActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name" >
+            <intent-filter
+                android:icon="@@drawable/ic_launcher"
+                android:label="@string/app_name" >
+                <action android:name="android.intent.action.SEND" >
+                </action>
 
-		<activity android:name="alexclin.ui.MainTabActivity" android:label="@string/app_name"
-			android:configChanges="orientation|keyboardHidden">			
-			<intent-filter android:icon="@@drawable/ic_launcher" android:label="@string/app_name">
-				<action android:name="android.intent.action.SEND"></action>
-				<category android:name="android.intent.category.DEFAULT"></category>
-				<data android:mimeType="text/*"></data>
-			</intent-filter>
-			<intent-filter android:icon="@drawable/ic_launcher" android:label="@string/app_name">
-				<action android:name="android.intent.action.SENDTO" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<data android:host="jabber" android:scheme="imto" />
-			</intent-filter>
-		</activity>
+                <category android:name="android.intent.category.DEFAULT" >
+                </category>
 
-		<activity android:name="alexclin.ui.chat.ChatActivity" android:label="@string/app_name"
-			android:alwaysRetainTaskState="true">
-		</activity>
+                <data android:mimeType="text/*" >
+                </data>
+            </intent-filter>
+            <intent-filter
+                android:icon="@drawable/ic_launcher"
+                android:label="@string/app_name" >
+                <action android:name="android.intent.action.SENDTO" />
 
-		<activity android:name="alexclin.ui.preferences.MainPrefs"
-			android:label="@string/app_name">
-		</activity>
+                <category android:name="android.intent.category.DEFAULT" />
 
-		<activity android:name="alexclin.ui.preferences.AccountPrefs"
-			android:label="@string/app_name">
-		</activity>
-		
-		<activity android:name="alexclin.ui.login.LoginActivity">
-		    <intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		
-		<activity android:name="alexclin.ui.login.ForgetPwActivity"
-			android:screenOrientation="portrait"/>
-		<activity android:name="alexclin.ui.login.RegisterActivity"
-			android:screenOrientation="portrait"/>
-		
-		<activity android:name="alexclin.ui.FriendsFragment"
-		    android:screenOrientation="portrait"/>
-		
-		<activity android:name="alexclin.ui.GroupsFragment"
-		    android:screenOrientation="portrait"/>
-		
-		<activity android:name="alexclin.ui.ChatsFragment"
-		    android:screenOrientation="portrait"/>
-		
-		<activity android:name="alexclin.ui.PersonalFragment"
-		    android:screenOrientation="portrait"/>
+                <data
+                    android:host="jabber"
+                    android:scheme="imto" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="alexclin.ui.chat.ChatActivity"
+            android:alwaysRetainTaskState="true"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="alexclin.ui.preferences.MainPrefs"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="alexclin.ui.preferences.AccountPrefs"
+            android:label="@string/app_name" >
+        </activity>
+        <activity android:name="alexclin.ui.login.LoginActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-		<service android:name="alexclin.base.JimService">
-		</service>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="alexclin.ui.login.ForgetPwActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="alexclin.ui.login.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="alexclin.ui.FriendsFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="alexclin.ui.GroupsFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="alexclin.ui.ChatsFragment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="alexclin.ui.PersonalFragment"
+            android:screenOrientation="portrait" />
 
-		<receiver android:name="umeox.xmpp.service.XmppReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.ACTION_SHUTDOWN" />
-				<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-			</intent-filter>
-		</receiver>
+        <service android:name="alexclin.base.JimService" >
+        </service>
 
-		<provider android:name="umeox.xmpp.data.ChatProvider"
-			android:authorities="xmpp.android.provider.Chats" />
-		<provider android:name="umeox.xmpp.data.RosterProvider"
-			android:authorities="xmpp.android.provider.Roster" />
+        <receiver android:name="umeox.xmpp.service.XmppReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
-		<activity android:name="de.duenndns.ssl.MemorizingActivity" />
-	</application>
+        <provider
+            android:name="umeox.xmpp.data.ChatProvider"
+            android:authorities="xmpp.android.provider.Chats" />
+        <provider
+            android:name="umeox.xmpp.data.RosterProvider"
+            android:authorities="xmpp.android.provider.Roster" />
+
+        <activity android:name="de.duenndns.ssl.MemorizingActivity" />
+    </application>
+
 </manifest>

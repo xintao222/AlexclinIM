@@ -8,12 +8,12 @@ import com.lidroid.xutils.util.LogUtils;
 
 import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.data.ChatProvider.ChatConstants;
+import umeox.xmpp.transfer.AudioUtil;
+import umeox.xmpp.transfer.FileMessager;
+import umeox.xmpp.transfer.FileMsg;
 import alexclin.base.GlobalConfig;
 import alexclin.http.BaseApi.Callback;
 import alexclin.http.FileApi;
-import alexclin.http.FileMessage;
-import alexclin.mediatransfer.FileMessager;
-import alexclin.mediatransfer.AudioUtil;
 import alexclin.xmpp.jabberim.R;
 import android.content.ContentValues;
 import android.content.Context;
@@ -129,7 +129,7 @@ class ChatWindowAdapter extends ResourceCursorAdapter implements Callback {
 				ch = outHolder;
 			}
 			if(FileMessager.isWrappedMsg(msg)){
-				FileMessage fm = FileMessager.unwrappMessage(msg);
+				FileMsg fm = FileMessager.unwrappMessage(msg);
 				String path = null;
 				if(fm.getType()==FileMessager.TYPE_IMAGE){
 					ch.setType(ChildHolder.TYPE_IMG);
@@ -200,33 +200,24 @@ class ChatWindowAdapter extends ResourceCursorAdapter implements Callback {
 			if(path!=null){
 				mAct.playMedia(path);
 			}else{
-				
+				//TODO 放大显示图片
 			}
 		}		
 	}
 
 	@Override
-	public void onLoading(long total, long current, int apiInt, Object tag) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onLoading(long total, long current, int apiInt, Object tag) {}
 
 	@Override
-	public void onStart(int apiInt, Object tag) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onStart(int apiInt, Object tag) {}
 
 	@Override
-	public void onFailure(int error, int apiInt, Object tag) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onFailure(int error, int apiInt, Object tag) {}
 
 	@Override
 	public void onSuccess(Object result, int apiInt, Object tag) {
 		String path = (String) result;
-		FileMessage fm = (FileMessage) tag;
+		FileMsg fm = (FileMsg) tag;
 		mAct.mAudioDb.insert(fm.getUrl(), path);
 	}
 

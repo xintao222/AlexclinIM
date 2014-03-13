@@ -1,4 +1,4 @@
-package alexclin.mediatransfer;
+package umeox.xmpp.transfer;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +7,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.media.MediaRecorder;
-import android.util.Log;
+
+import com.lidroid.xutils.util.LogUtils;
 
 /* 
  * 如果输出文件被写入外部存储， 
@@ -20,7 +21,6 @@ import android.util.Log;
  * 
  */
 public class AudioUtil {
-	private static final String LOG_TAG = AudioUtil.class.getName();
 	private static SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss",Locale.CHINESE);// 设置日期格式
 	private MediaRecorder mRecorder;
 	private String dir;
@@ -55,7 +55,7 @@ public class AudioUtil {
 		try {
 			mRecorder.prepare();
 		} catch (IOException e) {
-			Log.e(LOG_TAG, "prepare() failed");
+			LogUtils.e("prepare() failed");
 		}
 		mRecorder.start();
 	}

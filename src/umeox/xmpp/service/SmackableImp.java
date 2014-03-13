@@ -80,9 +80,7 @@ import android.util.Log;
 
 import com.lidroid.xutils.util.LogUtils;
 
-public class SmackableImp implements Smackable {
-	final static private String TAG = "yaxim.SmackableImp";
-	
+public class SmackableImp implements Smackable {	
 	final static private int PACKET_TIMEOUT = 30000;
 
 	final static private String[] SEND_OFFLINE_PROJECTION = new String[] {
@@ -256,12 +254,11 @@ public class SmackableImp implements Smackable {
 				mConnectingThread = new_thread;
 			} else
 				try {
-					Log.d(TAG,
-							"updateConnectingThread: old thread is still running, killing it.");
+					LogUtils.e("updateConnectingThread: old thread is still running, killing it.");
 					mConnectingThread.interrupt();
 					mConnectingThread.join(50);
 				} catch (InterruptedException e) {
-					Log.d(TAG, "updateConnectingThread: failed to join(): " + e);
+					LogUtils.d("updateConnectingThread: failed to join(): " + e);
 				} finally {
 					mConnectingThread = new_thread;
 				}
@@ -289,7 +286,7 @@ public class SmackableImp implements Smackable {
 	@Override
 	public synchronized void requestConnectionState(ConnectionState new_state,
 			final boolean create_account) {
-		Log.d(TAG, "requestConnState: " + mState + " -> " + new_state
+		LogUtils.d("requestConnState: " + mState + " -> " + new_state
 				+ (create_account ? " create_account!" : ""));
 		mRequestedState = new_state;
 		if (new_state == mState)
@@ -311,8 +308,7 @@ public class SmackableImp implements Smackable {
 						try {
 							doConnect(create_account);
 						} catch (IllegalArgumentException e) {
-							// this might happen when DNS resolution in
-							// ConnectionConfiguration fails
+							// 当配置中的DNS解析错误时可能会出现
 							onDisconnected(e);
 						} catch (UmeoxException e) {
 							onDisconnected(e);
@@ -402,7 +398,7 @@ public class SmackableImp implements Smackable {
 		if (new_state == ConnectionState.ONLINE
 				|| new_state == ConnectionState.CONNECTING)
 			mLastError = null;
-		Log.d(TAG, "updateConnectionState: " + mState + " -> " + new_state
+		LogUtils.d("updateConnectionState: " + mState + " -> " + new_state
 				+ " (" + mLastError + ")");
 		if (new_state == mState)
 			return;
@@ -423,7 +419,7 @@ public class SmackableImp implements Smackable {
 																		// CARBONS
 			public void onReceiptReceived(String fromJid, String toJid,
 					String receiptId) {
-				Log.d(TAG, "got delivery receipt for " + receiptId);
+				LogUtils.d("got delivery receipt for " + receiptId);
 				changeMessageDeliveryStatus(receiptId, ChatConstants.DS_ACKED);
 			}
 		});
@@ -439,8 +435,7 @@ public class SmackableImp implements Smackable {
 								capsCacheDir));
 			}
 		} catch (java.io.IOException e) {
-			Log.e(TAG,
-					"Could not init Entity Caps cache: "
+			LogUtils.e("Could not init Entity Caps cache: "
 							+ e.getLocalizedMessage());
 		}
 
@@ -519,7 +514,7 @@ public class SmackableImp implements Smackable {
 	}
 
 	private void onDisconnected(Throwable reason) {
-		Log.e(TAG, "onDisconnected: " + reason);
+		LogUtils.e("onDisconnected: " + reason);
 		reason.printStackTrace();
 		// iterate through to the deepest exception
 		while (reason.getCause() != null)
@@ -570,18 +565,18 @@ public class SmackableImp implements Smackable {
 				}
 			};
 			mXMPPConnection.addConnectionListener(mConnectionListener);
-
+			
 			// SMACK auto-logins if we were authenticated before
 			if (!mXMPPConnection.isAuthenticated()) {
 				if (create_account) {
-					Log.d(TAG, "creating new server account...");
+					LogUtils.d("creating new server account...");
 					AccountManager am = new AccountManager(mXMPPConnection);
 					am.createAccount(mConfig.jabberID, mConfig.password);
 				}
 				mXMPPConnection.login(mConfig.jabberID, mConfig.password,
 						mConfig.ressource);
 			}
-			Log.d(TAG, "SM: can resume = " + mStreamHandler.isResumePossible()
+			LogUtils.d("SM: can resume = " + mStreamHandler.isResumePossible()
 					+ " needbind=" + need_bind);
 			if (need_bind) {
 				mStreamHandler.notifyInitialLogin();
@@ -593,7 +588,7 @@ public class SmackableImp implements Smackable {
 					e.getCause());
 		} catch (Exception e) {
 			// actually we just care for IllegalState or NullPointer or XMPPEx.
-			Log.e(TAG, "tryToConnect(): " + Log.getStackTraceString(e));
+			LogUtils.e("tryToConnect(): " + Log.getStackTraceString(e));
 			throw new UmeoxException(e.getLocalizedMessage(), e.getCause());
 		}
 	}
@@ -674,7 +669,7 @@ public class SmackableImp implements Smackable {
 	}
 
 	private void removeOldRosterEntries() {
-		Log.d(TAG, "removeOldRosterEntries()");
+		LogUtils.d("removeOldRosterEntries()");
 		Collection<RosterEntry> rosterEntries = mRoster.getEntries();
 		StringBuilder exclusion = new StringBuilder(RosterConstants.JID
 				+ " NOT IN (");
@@ -690,7 +685,7 @@ public class SmackableImp implements Smackable {
 		exclusion.append(")");
 		int count = mContentResolver.delete(RosterProvider.CONTENT_URI,
 				exclusion.toString(), null);
-		Log.d(TAG, "deleted " + count + " old roster entries");
+		LogUtils.d("deleted " + count + " old roster entries");
 	}
 
 	// HACK: add an incoming subscription request as a fake roster entry
@@ -740,7 +735,7 @@ public class SmackableImp implements Smackable {
 			String message = cursor.getString(MSG_COL);
 			String packetID = cursor.getString(PACKETID_COL);
 			long ts = cursor.getLong(TS_COL);
-			Log.d(TAG, "sendOfflineMessages: " + toJID + " > " + message);
+			LogUtils.d("sendOfflineMessages: " + toJID + " > " + message);
 			final Message newMessage = new Message(toJID, Message.Type.chat);
 			newMessage.setBody(message);
 			DelayInformation delay = new DelayInformation(new Date(ts));
@@ -777,7 +772,7 @@ public class SmackableImp implements Smackable {
 	}
 
 	public void sendReceipt(String toJID, String id) {
-		Log.d(TAG, "sending XEP-0184 ack to " + toJID + " id=" + id);
+		LogUtils.d("sending XEP-0184 ack to " + toJID + " id=" + id);
 		final Message ack = new Message(toJID, Message.Type.normal);
 		ack.addExtension(new DeliveryReceipt(id));
 		mXMPPConnection.sendPacket(ack);
@@ -971,10 +966,10 @@ public class SmackableImp implements Smackable {
 	private void gotServerPong(String pongID) {
 		long latency = System.currentTimeMillis() - mPingTimestamp;
 		if (pongID != null && pongID.equals(mPingID))
-			Log.i(TAG, String.format("Ping: server latency %1.3fs",
+			LogUtils.i(String.format("Ping: server latency %1.3fs",
 					latency / 1000.));
 		else
-			Log.i(TAG, String.format("Ping: server latency %1.3fs (estimated)",
+			LogUtils.i(String.format("Ping: server latency %1.3fs (estimated)",
 					latency / 1000.));
 		mPingID = null;
 		((AlarmManager) mService.getSystemService(Context.ALARM_SERVICE))
@@ -1082,7 +1077,7 @@ public class SmackableImp implements Smackable {
 
 						// try to extract a carbon
 						if (cc != null) {
-							Log.d(TAG, "carbon: " + cc.toXML());
+							LogUtils.d("carbon: " + cc.toXML());
 							msg = (Message) cc.getForwarded()
 									.getForwardedPacket();
 
@@ -1099,8 +1094,7 @@ public class SmackableImp implements Smackable {
 										.getExtension(DeliveryReceipt.ELEMENT,
 												DeliveryReceipt.NAMESPACE);
 								if (dr != null) {
-									Log.d(TAG,
-											"got CC'ed delivery receipt for "
+									LogUtils.d("got CC'ed delivery receipt for "
 													+ dr.getId());
 									changeMessageDeliveryStatus(dr.getId(),
 											ChatConstants.DS_ACKED);
@@ -1122,7 +1116,7 @@ public class SmackableImp implements Smackable {
 
 						// ignore empty messages
 						if (chatMessage == null) {
-							Log.d(TAG, "empty message.");
+							LogUtils.d("empty message.");
 							return;
 						}
 
@@ -1141,7 +1135,7 @@ public class SmackableImp implements Smackable {
 				} catch (Exception e) {
 					// SMACK silently discards exceptions dropped from
 					// processPacket :(
-					Log.e(TAG, "failed to process packet:");
+					LogUtils.e("failed to process packet:");
 					e.printStackTrace();
 				}
 			}
@@ -1175,7 +1169,7 @@ public class SmackableImp implements Smackable {
 				} catch (Exception e) {
 					// SMACK silently discards exceptions dropped from
 					// processPacket :(
-					Log.e(TAG, "failed to process presence:");
+					LogUtils.e("failed to process presence:");
 					e.printStackTrace();
 				}
 			}
@@ -1265,7 +1259,7 @@ public class SmackableImp implements Smackable {
 	}
 
 	private void debugLog(String data) {
-		LogUtils.d(TAG+data);
+		LogUtils.d(data);
 	}
 
 	@Override

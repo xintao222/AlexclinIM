@@ -146,9 +146,7 @@ public abstract class BaseConfig implements OnSharedPreferenceChangeListener {
 		this.statusMessage = prefs.getString(PrefConsts.STATUS_MESSAGE, "");
         this.theme = prefs.getString(PrefConsts.THEME, "dark");
         this.chatFontSize = prefs.getString("setSizeChat", "18");
-        this.showOffline = prefs.getBoolean(PrefConsts.SHOW_OFFLINE, false);
-
-		
+        this.showOffline = prefs.getBoolean(PrefConsts.SHOW_OFFLINE, false);		
 	}
 	
 	/**

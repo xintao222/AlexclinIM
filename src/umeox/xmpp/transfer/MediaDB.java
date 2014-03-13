@@ -1,4 +1,4 @@
-package alexclin.mediatransfer;
+package umeox.xmpp.transfer;
 
 import java.io.File;
 

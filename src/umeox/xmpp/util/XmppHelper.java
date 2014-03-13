@@ -1,5 +1,7 @@
 package umeox.xmpp.util;
 
+import java.util.Locale;
+
 import org.jivesoftware.smack.XMPPConnection;
 
 import gnu.inet.encoding.Stringprep;
@@ -48,7 +50,7 @@ public class XmppHelper {
 
 	public static String capitalizeString(String original) {
 		return (original.length() == 0) ? original :
-			original.substring(0, 1).toUpperCase() + original.substring(1);
+			original.substring(0, 1).toUpperCase(Locale.CHINA) + original.substring(1);
 	}
 
 	public static int getEditTextColor(Context ctx) {

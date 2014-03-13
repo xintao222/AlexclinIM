@@ -11,6 +11,9 @@ import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.data.ChatProvider.ChatConstants;
 import umeox.xmpp.data.RosterProvider;
+import umeox.xmpp.transfer.AudioUtil;
+import umeox.xmpp.transfer.FileMessager;
+import umeox.xmpp.transfer.MediaDB;
 import umeox.xmpp.util.PrefConsts;
 import alexclin.base.GlobalConfig;
 import alexclin.base.JimService;
@@ -18,9 +21,6 @@ import alexclin.http.BaseApi.Callback;
 import alexclin.http.FileApi;
 import alexclin.http.ReturnBean;
 import alexclin.http.UploadResult;
-import alexclin.mediatransfer.FileMessager;
-import alexclin.mediatransfer.AudioUtil;
-import alexclin.mediatransfer.MediaDB;
 import alexclin.ui.MainTabActivity;
 import alexclin.xmpp.jabberim.R;
 import android.app.Activity;
@@ -83,8 +83,6 @@ public class ChatActivity extends SherlockListActivity implements
 		ChatProvider.ChatConstants.DELIVERY_STATUS };
 
 	private static final String TAG = "yaxim.ChatWindow";
-	
-	
 
 	private ContentObserver mContactObserver = new ContactObserver();
 	private TextView mTitle;
@@ -104,6 +102,7 @@ public class ChatActivity extends SherlockListActivity implements
 	private AudioUtil mAudioUtil;
 	public MediaDB mAudioDb;
 	private MediaPlayer mPlayer;
+	private boolean isPlayed;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -153,6 +152,9 @@ public class ChatActivity extends SherlockListActivity implements
 			unbindXMPPService();
 		getContentResolver().unregisterContentObserver(mContactObserver);
 	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {}
 
 	private void setCustomTitle(String title) {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -463,10 +465,13 @@ public class ChatActivity extends SherlockListActivity implements
 	
 	public void playMedia(String path){
 		if(mPlayer.isPlaying()){
-			mPlayer.stop();
+			mPlayer.stop();			
 		}
-		mPlayer.reset();
+		if(isPlayed){
+			mPlayer.reset();
+		}		
 		try {
+			isPlayed = true;
 			mPlayer.setDataSource(path);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block

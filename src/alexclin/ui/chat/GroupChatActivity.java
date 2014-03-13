@@ -1,6 +1,12 @@
 package alexclin.ui.chat;
 
-//群组聊天界面，有待实现
-public class GroupChatActivity {
+import android.os.Bundle;
 
+import com.actionbarsherlock.app.SherlockListActivity;
+
+//群组聊天界面，有待实现
+public class GroupChatActivity extends SherlockListActivity{
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {}
 }

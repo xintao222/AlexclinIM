@@ -76,13 +76,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="left|center"
-                    android:lineSpacingExtra="2dp"
+                    android:gravity="center"
                     android:minHeight="50dp"
-                    android:textColor="#ff000000"
                     android:textSize="15sp"
+                    android:text="语音消息"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -141,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/ChatItem_InHead"
+                android:text="语音消息"
                 android:visibility="gone" />
         </RelativeLayout>
     </RelativeLayout>
