@@ -187,7 +187,7 @@ public class ChatProvider extends ContentProvider {
 	private static class ChatDatabaseHelper extends SQLiteOpenHelper {
 
 		private static final String DATABASE_NAME = "chat.db";
-		private static final int DATABASE_VERSION = 5;
+		private static final int DATABASE_VERSION = 1;
 
 		public ChatDatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -202,6 +202,7 @@ public class ChatProvider extends ContentProvider {
 					+ ChatConstants.DATE + " INTEGER,"
 					+ ChatConstants.DIRECTION + " INTEGER,"
 					+ ChatConstants.JID + " TEXT,"
+					+ ChatConstants.USER + "  TEXT UNIQUE ON CONFLICT REPLACE,"
 					+ ChatConstants.MESSAGE + " TEXT,"
 					+ ChatConstants.DELIVERY_STATUS + " INTEGER,"
 					+ ChatConstants.PACKET_ID + " TEXT);");
@@ -210,12 +211,7 @@ public class ChatProvider extends ContentProvider {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			LogUtils.i("onUpgrade: from " + oldVersion + " to " + newVersion);
-			switch (oldVersion) {
-			case 3:
-				db.execSQL("UPDATE " + TABLE_NAME + " SET READ=1");
-			case 4:
-				db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD " + ChatConstants.PACKET_ID + " TEXT");
-				break;
+			switch (oldVersion) {			
 			default:
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 				onCreate(db);
@@ -236,6 +232,7 @@ public class ChatProvider extends ContentProvider {
 		public static final String DATE = "date";
 		public static final String DIRECTION = "from_me";
 		public static final String JID = "jid";
+		public static final String USER = "user";
 		public static final String MESSAGE = "message";
 		public static final String DELIVERY_STATUS = "read"; // SQLite can not rename columns, reuse old name
 		public static final String PACKET_ID = "pid";
@@ -253,6 +250,7 @@ public class ChatProvider extends ContentProvider {
 			tmpList.add(DATE);
 			tmpList.add(DIRECTION);
 			tmpList.add(JID);
+			tmpList.add(USER);
 			tmpList.add(MESSAGE);
 			return tmpList;
 		}

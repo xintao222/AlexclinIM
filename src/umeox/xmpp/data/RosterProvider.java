@@ -246,7 +246,7 @@ public class RosterProvider extends ContentProvider {
 	private static class RosterDatabaseHelper extends SQLiteOpenHelper {
 
 		private static final String DATABASE_NAME = "roster.db";
-		private static final int DATABASE_VERSION = 4;
+		private static final int DATABASE_VERSION = 1;
 
 		public RosterDatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -255,11 +255,11 @@ public class RosterProvider extends ContentProvider {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			infoLog("creating new roster table");
-
 			db.execSQL("CREATE TABLE " + TABLE_ROSTER + " ("
 					+ RosterConstants._ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ RosterConstants.JID + " TEXT UNIQUE ON CONFLICT REPLACE, "
+					+ RosterConstants.JID + " TEXT, "
+					+ RosterConstants.USER + " TEXT UNIQUE ON CONFLICT REPLACE, "
 					+ RosterConstants.ALIAS
 					+ " TEXT, " + RosterConstants.STATUS_MODE + " INTEGER, "
 					+ RosterConstants.STATUS_MESSAGE + " TEXT, "
@@ -293,6 +293,7 @@ public class RosterProvider extends ContentProvider {
 		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.xmpp.roster";
 
 		public static final String JID = "jid";
+		public static final String USER = "user";
 		public static final String ALIAS = "alias";
 		public static final String STATUS_MODE = "status_mode";
 		public static final String STATUS_MESSAGE = "status_message";
@@ -303,10 +304,11 @@ public class RosterProvider extends ContentProvider {
 		public static ArrayList<String> getRequiredColumns() {
 			ArrayList<String> tmpList = new ArrayList<String>();
 			tmpList.add(JID);
+			tmpList.add(USER);
 			tmpList.add(ALIAS);
 			tmpList.add(STATUS_MODE);
 			tmpList.add(STATUS_MESSAGE);
-			tmpList.add(GROUP);
+			tmpList.add(GROUP);			
 			return tmpList;
 		}
 
