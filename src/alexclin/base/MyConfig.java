@@ -27,4 +27,10 @@ public class MyConfig extends BaseConfig {
 			return R.style.YaximDarkTheme;
 		}
 	}
+
+	@Override
+	protected void initParam(SharedPreferences _prefs) {
+		// TODO Auto-generated method stub
+		
+	}
 }

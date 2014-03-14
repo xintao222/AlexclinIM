@@ -36,8 +36,6 @@ public class ChatProvider extends ContentProvider {
 		URI_MATCHER.addURI(AUTHORITY, "chats/#", MESSAGE_ID);
 	}
 
-	private static final String TAG = "xmpp.ChatProvider";
-
 	private SQLiteOpenHelper mOpenHelper;
 
 	public ChatProvider() {

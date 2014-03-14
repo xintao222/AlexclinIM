@@ -30,8 +30,6 @@ public abstract class BaseConfig implements OnSharedPreferenceChangeListener {
 
 	private static final String TAG = "xmpp.Configuration";
 
-	private static final String GMAIL_SERVER = "talk.google.com";
-
 	private static final HashSet<String> RECONNECT_PREFS = new HashSet<String>(Arrays.asList(
 				PrefConsts.JID,
 				PrefConsts.PASSWORD,
@@ -80,10 +78,13 @@ public abstract class BaseConfig implements OnSharedPreferenceChangeListener {
 	private final SharedPreferences prefs;
 
 	public BaseConfig(SharedPreferences _prefs) {
+		initParam(_prefs);
 		prefs = _prefs;
 		prefs.registerOnSharedPreferenceChangeListener(this);
 		loadPrefs(prefs);
 	}
+
+	protected abstract void initParam(SharedPreferences _prefs);
 
 	@Override
 	protected void finalize() {

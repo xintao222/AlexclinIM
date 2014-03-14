@@ -42,7 +42,7 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 	private Button mServSetBtn;
 	private ProgressDialog mDailog;
 	
-	SharedPreferences sp ;
+	private SharedPreferences sp ;
 	private Intent mXmppServiceIntent;
 	private IXMPPRosterService mStub;
 	private IXMPPRosterCallback.Stub callback;
