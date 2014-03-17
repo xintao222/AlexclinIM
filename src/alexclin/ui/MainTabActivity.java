@@ -12,6 +12,7 @@ import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.util.ConnectionState;
 import umeox.xmpp.util.PrefConsts;
 import alexclin.base.JimService;
+import alexclin.base.MyApplication;
 import alexclin.base.StatusMode;
 import alexclin.dialogs.AddRosterItemDialog;
 import alexclin.dialogs.ChangeStatusDialog;
@@ -190,6 +191,10 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 		mPos2 = (int) (screenW / 3.0);
 		mPos3 = (int) (screenW * 2 / 3.0);
 		mPos4 = (int) (screenW * 3 / 4.0);
+	}
+	
+	public String getUser(){
+		return ((MyApplication)getApplication()).getConfig().jabberID;
 	}
 
 	public int getStatusActionIcon() {

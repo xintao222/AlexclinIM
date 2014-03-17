@@ -412,13 +412,14 @@ public class FriendsFragment extends Fragment implements OnChildClickListener {
 	}
 
 	private void registerListAdapter() {
-		rosterListAdapter = new RosterExpListAdapter(mMainActivity);
+		rosterListAdapter = new RosterExpListAdapter(mMainActivity,((MainTabActivity)getActivity()).getUser());
 		mListView.setAdapter(rosterListAdapter);
 	}
 
 	public class RosterExpListAdapter extends SimpleCursorTreeAdapter {
+		private String user;
 
-		public RosterExpListAdapter(Context context) {
+		public RosterExpListAdapter(Context context,String user) {
 			super(context, /* cursor = */null, R.layout.maingroup_row,
 					GROUPS_FROM, GROUPS_TO, R.layout.mainchild_row,
 					new String[] { RosterConstants.ALIAS,
@@ -426,15 +427,16 @@ public class FriendsFragment extends Fragment implements OnChildClickListener {
 							RosterConstants.STATUS_MODE }, new int[] {
 							R.id.roster_screenname, R.id.roster_statusmsg,
 							R.id.roster_icon });
+			this.user = user;
 		}
 
 		public void requery() {
-			String selectWhere = null;
+			String selectWhere = RosterConstants.USER +" = ?";
 			if (!mMainActivity.showOffline)
-				selectWhere = OFFLINE_EXCLUSION;
+				selectWhere = selectWhere + " and "+OFFLINE_EXCLUSION;
 			Cursor cursor = mMainActivity.getContentResolver().query(
 					RosterProvider.GROUPS_URI, GROUPS_QUERY_COUNTED,
-					selectWhere, null, RosterConstants.GROUP);
+					selectWhere, new String[]{user}, RosterConstants.GROUP);
 			Cursor oldCursor = getCursor();
 			changeCursor(cursor);
 			mMainActivity.stopManagingCursor(oldCursor);

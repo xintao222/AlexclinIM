@@ -12,6 +12,7 @@ import umeox.xmpp.data.RosterProvider;
 import umeox.xmpp.data.RosterProvider.RosterConstants;
 import umeox.xmpp.transfer.FileMessager;
 import umeox.xmpp.transfer.FileMsg;
+import alexclin.base.MyApplication;
 import alexclin.xmpp.jabberim.R;
 import android.content.Context;
 import android.content.Intent;
@@ -67,8 +68,8 @@ public class ChatsFragment extends Fragment {
 				ChatConstants.DATE, ChatConstants.MESSAGE };
 		String selction = ChatConstants.DATE + " in( select max("
 				+ ChatConstants.DATE + ") from " + ChatProvider.TABLE_NAME
-				+ " group by " + ChatConstants.JID + ")";
-		Cursor c = getAct().managedQuery(ChatProvider.CONTENT_URI, projection, selction, null,
+				+ " group by " + ChatConstants.JID + ") and "+ChatConstants.USER+ " = ?";
+		Cursor c = getAct().managedQuery(ChatProvider.CONTENT_URI, projection, selction, new String[]{getAct().getUser()},
 				ChatConstants.DATE + " desc");
 		mAdapter = new ChatListAdapter(getAct(), c);
 		mListView.setAdapter(mAdapter);

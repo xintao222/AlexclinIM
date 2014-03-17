@@ -259,7 +259,7 @@ public class RosterProvider extends ContentProvider {
 					+ RosterConstants._ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ RosterConstants.JID + " TEXT, "
-					+ RosterConstants.USER + " TEXT UNIQUE ON CONFLICT REPLACE, "
+					+ RosterConstants.USER + " TEXT, "
 					+ RosterConstants.ALIAS
 					+ " TEXT, " + RosterConstants.STATUS_MODE + " INTEGER, "
 					+ RosterConstants.STATUS_MESSAGE + " TEXT, "

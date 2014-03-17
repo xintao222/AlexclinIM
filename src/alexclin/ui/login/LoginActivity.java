@@ -33,7 +33,7 @@ import android.widget.EditText;
  * @author alex
  * 
  */
-public class LoginActivity extends Activity implements OnClickListener, ServiceConnection{
+public class LoginActivity extends Activity implements OnClickListener, ServiceConnection,Runnable{
 	private EditText mUserNameEdt;
 	private EditText mPasswordEdt;
 	private Button mSubmitBtn;
@@ -66,8 +66,9 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 					if(connectionstate == ConnectionState.ONLINE.ordinal()){	
 						sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();
 						startMainActivity();
-					}else if(connectionstate == ConnectionState.OFFLINE.ordinal()){
-						ToastUtil.toastShort(LoginActivity.this, R.string.LoginFailedNotify);					
+					}else if(connectionstate == ConnectionState.OFFLINE.ordinal()||
+							connectionstate == ConnectionState.DISCONNECTED.ordinal()){
+						mServSetBtn.post(LoginActivity.this);					
 					}				
 				}			
 			};
@@ -195,6 +196,12 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 	@Override
 	public void onServiceDisconnected(ComponentName name) {
 		mStub = null;		
+	}
+
+	@Override
+	public void run() {
+		mDailog.dismiss();
+		ToastUtil.toastShort(this, R.string.LoginFailedNotify);		
 	}
 	
 }

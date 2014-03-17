@@ -46,7 +46,6 @@ public class ChatProvider extends ContentProvider {
 		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 		int count;
 		switch (URI_MATCHER.match(url)) {
-
 		case MESSAGES:
 			count = db.delete(TABLE_NAME, where, whereArgs);
 			break;
@@ -195,14 +194,14 @@ public class ChatProvider extends ContentProvider {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			LogUtils.i("creating new chat table");			
+			LogUtils.e("creating new chat table");			
 
 			db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + ChatConstants._ID
 					+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
 					+ ChatConstants.DATE + " INTEGER,"
 					+ ChatConstants.DIRECTION + " INTEGER,"
 					+ ChatConstants.JID + " TEXT,"
-					+ ChatConstants.USER + "  TEXT UNIQUE ON CONFLICT REPLACE,"
+					+ ChatConstants.USER + "  TEXT,"
 					+ ChatConstants.MESSAGE + " TEXT,"
 					+ ChatConstants.DELIVERY_STATUS + " INTEGER,"
 					+ ChatConstants.PACKET_ID + " TEXT);");
@@ -210,7 +209,7 @@ public class ChatProvider extends ContentProvider {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			LogUtils.i("onUpgrade: from " + oldVersion + " to " + newVersion);
+			LogUtils.e("onUpgrade: from " + oldVersion + " to " + newVersion);
 			switch (oldVersion) {			
 			default:
 				db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);

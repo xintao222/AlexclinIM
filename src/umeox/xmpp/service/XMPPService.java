@@ -481,6 +481,7 @@ public abstract class XMPPService extends Service {
 		} else {
 			connectionClosed();
 		}
+		broadcastConnectionState();
 	}
 
 	private void connectionClosed() {

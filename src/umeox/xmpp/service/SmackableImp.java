@@ -22,6 +22,7 @@ import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.IQ.Type;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
+import org.jivesoftware.smack.packet.PacketExtension;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.Presence.Mode;
 import org.jivesoftware.smack.packet.RosterPacket;
@@ -29,6 +30,7 @@ import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smack.util.DNSUtil;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smack.util.dns.DNSJavaResolver;
+import org.jivesoftware.smackx.FormField;
 import org.jivesoftware.smackx.carbons.Carbon;
 import org.jivesoftware.smackx.carbons.CarbonManager;
 import org.jivesoftware.smackx.entitycaps.EntityCapsManager;
@@ -37,6 +39,7 @@ import org.jivesoftware.smackx.entitycaps.provider.CapsExtensionProvider;
 import org.jivesoftware.smackx.forward.Forwarded;
 import org.jivesoftware.smackx.muc.HostedRoom;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smackx.packet.DataForm;
 import org.jivesoftware.smackx.packet.DelayInfo;
 import org.jivesoftware.smackx.packet.DelayInformation;
 import org.jivesoftware.smackx.packet.Version;
@@ -91,6 +94,10 @@ public class SmackableImp implements Smackable {
 			+ ChatConstants.OUTGOING
 			+ " AND "
 			+ ChatConstants.DELIVERY_STATUS + " = " + ChatConstants.DS_NEW;
+
+	private static final String PING_ALARM = "org.yaxim.androidclient.PING_ALARM";
+
+	private static final String PONG_TIMEOUT_ALARM = "org.yaxim.androidclient.PONG_TIMEOUT_ALARM";
 
 	static File capsCacheDir = null; // /< this is used to cache if we already
 										// initialized EntityCapsCache
@@ -166,8 +173,6 @@ public class SmackableImp implements Smackable {
 
 	private PendingIntent mPingAlarmPendIntent;
 	private PendingIntent mPongTimeoutAlarmPendIntent;
-	private static final String PING_ALARM = "org.yaxim.androidclient.PING_ALARM";
-	private static final String PONG_TIMEOUT_ALARM = "org.yaxim.androidclient.PONG_TIMEOUT_ALARM";
 	private Intent mPingAlarmIntent = new Intent(PING_ALARM);
 	private Intent mPongTimeoutAlarmIntent = new Intent(PONG_TIMEOUT_ALARM);
 	private Service mService;
@@ -546,6 +551,7 @@ public class SmackableImp implements Smackable {
 			mConnectionListener = new ConnectionListener() {
 				public void connectionClosedOnError(Exception e) {
 					onDisconnected(e);
+					updateConnectionState(ConnectionState.DISCONNECTED);
 				}
 
 				public void connectionClosed() {
@@ -1189,7 +1195,8 @@ public class SmackableImp implements Smackable {
 		values.put(ChatConstants.DELIVERY_STATUS, delivery_status);
 		values.put(ChatConstants.DATE, ts);
 		values.put(ChatConstants.PACKET_ID, packetID);
-
+		values.put(ChatConstants.USER, StringUtils.parseName(mXMPPConnection.getUser()));
+		
 		mContentResolver.insert(ChatProvider.CONTENT_URI, values);
 	}
 
@@ -1203,7 +1210,8 @@ public class SmackableImp implements Smackable {
 		values.put(RosterConstants.STATUS_MODE, getStatusInt(presence));
 		values.put(RosterConstants.STATUS_MESSAGE, presence.getStatus());
 		values.put(RosterConstants.GROUP, getGroup(entry.getGroups()));
-
+		values.put(RosterConstants.USER, StringUtils.parseName(mXMPPConnection.getUser()));
+		LogUtils.e("Values:"+values.toString());
 		return values;
 	}
 
@@ -1215,7 +1223,7 @@ public class SmackableImp implements Smackable {
 
 	private void deleteRosterEntryFromDB(final String jabberID) {
 		int count = mContentResolver.delete(RosterProvider.CONTENT_URI,
-				RosterConstants.JID + " = ?", new String[] { jabberID });
+				RosterConstants.JID + " = ? and "+RosterConstants.USER +" = ?", new String[] { jabberID,StringUtils.parseName(mXMPPConnection.getUser())});
 		debugLog("deleteRosterEntryFromDB: Deleted " + count + " entries");
 	}
 
