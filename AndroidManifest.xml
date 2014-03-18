@@ -88,8 +88,7 @@
             android:name="alexclin.ui.PersonalFragment"
             android:screenOrientation="portrait" />
 
-        <service android:name="alexclin.base.JimService" >
-        </service>
+        <service android:name="alexclin.base.JimService" />
 
         <receiver android:name="umeox.xmpp.service.XmppReceiver" >
             <intent-filter>
@@ -97,15 +96,15 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
-        <provider
+        <!--
+            <provider
             android:name="umeox.xmpp.data.ChatProvider"
             android:authorities="xmpp.android.provider.Chats" />
         <provider
             android:name="umeox.xmpp.data.RosterProvider"
             android:authorities="xmpp.android.provider.Roster" />
+        -->
 
-        <activity android:name="de.duenndns.ssl.MemorizingActivity" />
     </application>
 
 </manifest>
