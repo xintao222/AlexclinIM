@@ -96,14 +96,13 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <!--
-            <provider
-            android:name="umeox.xmpp.data.ChatProvider"
-            android:authorities="xmpp.android.provider.Chats" />
+        
         <provider
-            android:name="umeox.xmpp.data.RosterProvider"
-            android:authorities="xmpp.android.provider.Roster" />
-        -->
+            android:name="alexclin.data.PhoneChatProvider"
+            android:authorities="umeox.jim.provider.Chats" />
+        <provider
+            android:name="alexclin.data.PhoneRosterProvider"
+            android:authorities="umeox.jim.provider.Roster" />
 
     </application>
 
