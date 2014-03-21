@@ -2,7 +2,7 @@ package alexclin.ui.login;
 
 import umeox.xmpp.aidl.IXMPPRosterCallback;
 import umeox.xmpp.aidl.IXMPPRosterService;
-import umeox.xmpp.util.ConnectionState;
+import umeox.xmpp.service.Smackable.ConnectionState;
 import umeox.xmpp.util.PrefConsts;
 import umeox.xmpp.util.XmppHelper;
 import alexclin.base.JimService;

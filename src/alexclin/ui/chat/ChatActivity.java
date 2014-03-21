@@ -1,8 +1,6 @@
 package alexclin.ui.chat;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import umeox.xmpp.aidl.IXMPPChatService;
@@ -12,7 +10,7 @@ import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.data.ChatProvider.ChatConstants;
 import umeox.xmpp.data.RosterProvider;
 import umeox.xmpp.transfer.AudioUtil;
-import umeox.xmpp.transfer.FileMessager;
+import umeox.xmpp.transfer.FileSender;
 import umeox.xmpp.transfer.MediaDB;
 import umeox.xmpp.util.PrefConsts;
 import alexclin.base.GlobalConfig;
@@ -23,9 +21,7 @@ import alexclin.http.ReturnBean;
 import alexclin.http.UploadResult;
 import alexclin.ui.MainTabActivity;
 import alexclin.xmpp.jabberim.R;
-import android.app.Activity;
 import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -457,7 +453,7 @@ public class ChatActivity extends SherlockListActivity implements
 		ReturnBean<UploadResult> rb = (ReturnBean<UploadResult>)msg;
 		if(rb.getErrorCode()==0){
 			mAudioDb.insert(rb.getResult().getUrl(), (String)tag);
-			sendMessage(FileMessager.wrapMessage(rb.getResult().getUrl(), FileMessager.TYPE_VOICE));
+			sendMessage(FileSender.wrapMessage(rb.getResult().getUrl(), FileSender.TYPE_VOICE));
 		}else{
 			
 		}		

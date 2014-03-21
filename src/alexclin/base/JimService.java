@@ -1,7 +1,7 @@
 package alexclin.base;
 
 import umeox.xmpp.service.XMPPService;
-import umeox.xmpp.transfer.FileMessager;
+import umeox.xmpp.transfer.FileSender;
 import alexclin.ui.MainTabActivity;
 import alexclin.ui.chat.ChatActivity;
 import alexclin.util.StringUtil;
@@ -39,7 +39,7 @@ public class JimService extends XMPPService {
 		} else if (mConfig.ticker) {
 			int newline = message.indexOf('\n');
 			int limit = 0;
-			if(FileMessager.isWrappedMsg(message)){
+			if(FileSender.isWrappedMsg(message)){
 				message = "语音消息";
 			}
 			String messageSummary = message;
@@ -111,7 +111,7 @@ public class JimService extends XMPPService {
 	}
 
 	@Override
-	public String getConnectStr(int state,int param) {
+	public String getConnectStr(Status state,int param) {
 		switch (state) {
 		case Conn_Connecting:
 			return getString(R.string.conn_connecting);
@@ -127,6 +127,10 @@ public class JimService extends XMPPService {
 			return getString(R.string.conn_disconnected);
 		case Conn_Networkchg:
 			return getString(R.string.conn_networkchg);
+		case Conn_No_Network:
+			break;
+		default:
+			break;
 		}
 		return null;
 	}

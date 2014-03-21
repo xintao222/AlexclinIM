@@ -169,7 +169,7 @@
     <string name="account_port_dialog_title">输入服务器端口</string>
     <string name="account_port_hint">5222</string>
     <string name="account_customserver_title">配置服务器</string>
-    <string name="account_customserver_summ">（可选）手工设置服务器名</string>
+    <string name="account_customserver_summ">设置服务器地址</string>
     <string name="account_customserver_dialog_title">输入服务器名</string>
     <string name="account_customserver_hint">host.example.com</string>
     <string name="require_ssl_title">需要 SSL/TLS</string>

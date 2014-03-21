@@ -4,13 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.lidroid.xutils.util.LogUtils;
-
 import umeox.xmpp.data.ChatProvider;
 import umeox.xmpp.data.ChatProvider.ChatConstants;
 import umeox.xmpp.transfer.AudioUtil;
-import umeox.xmpp.transfer.FileMessager;
-import umeox.xmpp.transfer.FileMsg;
+import umeox.xmpp.transfer.FileSender;
 import alexclin.base.GlobalConfig;
 import alexclin.http.BaseApi.Callback;
 import alexclin.http.FileApi;
@@ -26,6 +23,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.lidroid.xutils.util.LogUtils;
 
 class ChatWindowAdapter extends ResourceCursorAdapter implements Callback {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:mm:ss", Locale.CHINA);
@@ -128,10 +127,10 @@ class ChatWindowAdapter extends ResourceCursorAdapter implements Callback {
 				inHolder.setVisbility(View.GONE);
 				ch = outHolder;
 			}
-			if(FileMessager.isWrappedMsg(msg)){
-				FileMsg fm = FileMessager.unwrappMessage(msg);
+			if(FileSender.isWrappedMsg(msg)){
+				FileSender.Msg fm = FileSender.unwrappMessage(msg);
 				String path = null;
-				if(fm.getType()==FileMessager.TYPE_IMAGE){
+				if(fm.getType()==FileSender.TYPE_IMAGE){
 					ch.setType(ChildHolder.TYPE_IMG);
 					path = GlobalConfig.ImageCaheDir+"/" + AudioUtil.getTime()+".jpg";
 				}else{
@@ -177,9 +176,9 @@ class ChatWindowAdapter extends ResourceCursorAdapter implements Callback {
 		case ChatConstants.DS_NEW:
 			return "未发送";
 		case ChatConstants.DS_ACKED:
-			return "已发送";
-		case ChatConstants.DS_SENT_OR_READ:
 			return "已读";
+		case ChatConstants.DS_SENT_OR_READ:
+			return "已发送";
 		case ChatConstants.DS_FAILED:
 			return "发送失败";
 		}
@@ -217,7 +216,7 @@ class ChatWindowAdapter extends ResourceCursorAdapter implements Callback {
 	@Override
 	public void onSuccess(Object result, int apiInt, Object tag) {
 		String path = (String) result;
-		FileMsg fm = (FileMsg) tag;
+		FileSender.Msg fm = (FileSender.Msg) tag;
 		mAct.mAudioDb.insert(fm.getUrl(), path);
 	}
 

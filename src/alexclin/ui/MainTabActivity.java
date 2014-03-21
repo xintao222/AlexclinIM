@@ -9,7 +9,7 @@ import umeox.xmpp.aidl.XMPPRosterServiceAdapter;
 import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.base.BaseConfig;
 import umeox.xmpp.data.ChatProvider;
-import umeox.xmpp.util.ConnectionState;
+import umeox.xmpp.service.Smackable.ConnectionState;
 import umeox.xmpp.util.PrefConsts;
 import alexclin.base.JimService;
 import alexclin.base.MyApplication;
