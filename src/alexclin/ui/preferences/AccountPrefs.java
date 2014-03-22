@@ -26,7 +26,6 @@ public class AccountPrefs extends PreferenceActivity {
 	private int themedTextColor;
 
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(((BaseApp)getApplication()).getConfig().getTheme());
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.layout.act_accountprefs);
 

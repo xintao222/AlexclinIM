@@ -9,7 +9,6 @@ import android.preference.PreferenceActivity;
 
 public class MainPrefs extends PreferenceActivity{
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(((BaseApp)getApplication()).getConfig().getTheme());
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.layout.act_mainprefs);
 	}

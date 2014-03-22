@@ -105,7 +105,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		mConfig = ((BaseApp) getApplication()).getConfig();
 		mTheme = mConfig.theme;
-		setTheme(mConfig.getTheme());
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);

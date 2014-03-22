@@ -102,7 +102,6 @@ public class ChatActivity extends SherlockListActivity implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(((BaseApp) getApplication()).getConfig().getTheme());
 		super.onCreate(savedInstanceState);
 		mAudioUtil = new AudioUtil(GlobalConfig.VoiceCaheDir);
 		mAudioDb= new MediaDB(this);
