@@ -1,14 +1,14 @@
 package alexclin.ui.login;
 
-import umeox.xmpp.aidl.IXMPPRosterCallback;
 import umeox.xmpp.aidl.IXMPPRosterService;
+import umeox.xmpp.aidl.IXMPPStateCallback;
 import umeox.xmpp.service.Smackable.ConnectionState;
 import umeox.xmpp.util.PrefConsts;
+import umeox.xmpp.util.ToastUtil;
 import umeox.xmpp.util.XmppHelper;
 import alexclin.base.JimService;
 import alexclin.ui.MainTabActivity;
 import alexclin.ui.preferences.AccountPrefs;
-import alexclin.util.ToastUtil;
 import alexclin.xmpp.jabberim.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,74 +23,96 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 
-/**
- * 登陆界面
- * 
- * @author alex
- * 
- */
-public class LoginActivity extends Activity implements OnClickListener, ServiceConnection,Runnable{
-	private EditText mUserNameEdt;
-	private EditText mPasswordEdt;
-	private Button mSubmitBtn;
-	private Button mRegisterBtn;
-	private Button mFrogetPWBtn;
-	private Button mServSetBtn;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.util.LogUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+
+public class LoginActivity extends Activity implements ServiceConnection{
+	@ViewInject(R.id.UserNameInput_Login)
+	private EditText mUserEdt;
+	@ViewInject(R.id.PasswordInput_Login)
+	private EditText mPassEdt;
+
 	private ProgressDialog mDailog;
-	
-	private SharedPreferences sp ;
+
+	private SharedPreferences sp;
 	private Intent mXmppServiceIntent;
 	private IXMPPRosterService mStub;
-	private IXMPPRosterCallback.Stub callback;
+	private IXMPPStateCallback.Stub callback;
 	private Intent mActivityIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.act_login);
 		super.onCreate(savedInstanceState);
-		initViewAndListener();
+		ViewUtils.inject(this);		
+		mDailog = new ProgressDialog(this);
+		mDailog.setMessage("登录中。。。");
 		mXmppServiceIntent = new Intent(this, JimService.class);
 		mActivityIntent = new Intent(this, MainTabActivity.class);
-		sp = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		if(!autoLogin(sp)){
+		sp = PreferenceManager.getDefaultSharedPreferences(this);
+		if(!autoLogin()){
 			sp.edit().putBoolean(PrefConsts.CONN_STARTUP, false).commit();
-			callback = new IXMPPRosterCallback.Stub(){
+			callback = new IXMPPStateCallback.Stub(){
 				@Override
 				public void connectionStateChanged(int connectionstate) throws RemoteException {
 					mDailog.dismiss();
 					if(connectionstate == ConnectionState.ONLINE.ordinal()){	
 						sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();
 						startMainActivity();
-					}else if(connectionstate == ConnectionState.OFFLINE.ordinal()||
-							connectionstate == ConnectionState.DISCONNECTED.ordinal()){
-						mServSetBtn.post(LoginActivity.this);					
+					}else if(connectionstate == ConnectionState.OFFLINE.ordinal()){
+						ToastUtil.toastShort(LoginActivity.this, R.string.LoginFailedNotify);					
 					}				
 				}			
 			};
 			bindService(mXmppServiceIntent, this, BIND_AUTO_CREATE);
-		}		
+		}
+		
 	}
 
-	private boolean autoLogin(SharedPreferences sp) {
+	@OnClick({ R.id.Submit_Login, R.id.Register_Login, R.id.Forget_Login,R.id.ServerSetting_Login })
+	public void onClick(View v) {
+		Intent intent = new Intent();
+		switch (v.getId()) {
+		case R.id.Submit_Login:
+			login();
+			break;
+		case R.id.Register_Login:
+			intent.setClass(LoginActivity.this, RegisterActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.Forget_Login:
+			intent.setClass(LoginActivity.this, ForgetPwActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.ServerSetting_Login:
+			intent.setClass(LoginActivity.this, AccountPrefs.class);
+			startActivity(intent);
+			break;
+		}
+	}
+
+	private boolean autoLogin() {
 		String jid = sp.getString(PrefConsts.JID, "");
 		String password = sp.getString(PrefConsts.PASSWORD, "");
-		mUserNameEdt.setText(jid);
-		mPasswordEdt.setText(password);
+		mUserEdt.setText(jid);
+		mPassEdt.setText(password);
 		String customServer = sp.getString(PrefConsts.CUSTOM_SERVER,
 				"");
 		if(!XmppHelper.verifyUserAndPW(jid, password)||customServer.equals("")){
 			return false;
 		}else{
 			startService(mXmppServiceIntent);
-			startMainActivity();
+			startActivity(mActivityIntent);
+			this.finish();
 			return true;
-		}		
+		}
 	}
+	
+	
 
 	private void startMainActivity() {
 		if(!isFinishing()){
@@ -112,30 +134,15 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 		super.onDestroy();
 	}
 
-	private void initViewAndListener() {
-		mUserNameEdt = (EditText) findViewById(R.id.UserNameInput_Login);
-		mPasswordEdt = (EditText) findViewById(R.id.PasswordInput_Login);
-		mSubmitBtn = (Button) findViewById(R.id.Submit_Login);
-		mRegisterBtn = (Button) findViewById(R.id.Register_Login);
-		mFrogetPWBtn = (Button) findViewById(R.id.Forget_Login);
-		mServSetBtn = (Button) findViewById(R.id.ServerSetting_Login);
-		mSubmitBtn.setOnClickListener(this);
-		mRegisterBtn.setOnClickListener(this);
-		mFrogetPWBtn.setOnClickListener(this);
-		mServSetBtn.setOnClickListener(this);
-		mDailog = new ProgressDialog(this);
-		mDailog.setMessage("登录中。。。");
-	}
-
 	private void login() {
-		String customServer = sp.getString(PrefConsts.CUSTOM_SERVER,
-				"");
+		String customServer = sp.getString(PrefConsts.CUSTOM_SERVER,"");
+		LogUtils.e("customServer:"+customServer);
 		if(customServer.equals("")){
 			showNotifyDialog(R.string.NoServerSetting);
 			return;
 		}
-		String jid = mUserNameEdt.getText().toString().trim();
-		String password = mPasswordEdt.getText().toString();
+		String jid = mUserEdt.getText().toString().trim();
+		String password = mPassEdt.getText().toString();
 		if (XmppHelper.verifyUserAndPW(jid, password)) {
 			SharedPreferences sp = PreferenceManager
 					.getDefaultSharedPreferences(this);
@@ -154,25 +161,6 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 		builder.setTitle(R.string.OperationNotify)
 				.setMessage(res).setPositiveButton(R.string.ok, null).create().show();
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.Submit_Login:
-			login();
-			break;
-		case R.id.Register_Login:
-			startActivity(new Intent(this, RegisterActivity.class));
-			break;
-		case R.id.Forget_Login:
-			startActivity(new Intent(this, ForgetPwActivity.class));
-			break;
-		case R.id.ServerSetting_Login:
-			startActivity(new Intent(this, AccountPrefs.class));
-			break;
-		}
-	}
-	
 	
 
 	@Override
@@ -196,12 +184,6 @@ public class LoginActivity extends Activity implements OnClickListener, ServiceC
 	@Override
 	public void onServiceDisconnected(ComponentName name) {
 		mStub = null;		
-	}
-
-	@Override
-	public void run() {
-		mDailog.dismiss();
-		ToastUtil.toastShort(this, R.string.LoginFailedNotify);		
 	}
 	
 }

@@ -3,8 +3,8 @@ package alexclin.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import umeox.xmpp.aidl.IXMPPRosterCallback;
 import umeox.xmpp.aidl.IXMPPRosterService;
+import umeox.xmpp.aidl.IXMPPStateCallback;
 import umeox.xmpp.aidl.XMPPRosterServiceAdapter;
 import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.base.BaseConfig;
@@ -60,6 +60,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.Window;
+import com.lidroid.xutils.util.LogUtils;
 
 public class MainTabActivity extends SherlockFragmentActivity implements
 		OnClickListener, OnPageChangeListener {
@@ -71,7 +72,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	private Intent xmppServiceIntent;
 	private ServiceConnection xmppServiceConnection;
 	XMPPRosterServiceAdapter serviceAdapter;
-	private IXMPPRosterCallback.Stub rosterCallback;
+	private IXMPPStateCallback.Stub rosterCallback;
 
 	private TextView mConnectingText;
 	boolean showOffline;
@@ -534,14 +535,9 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	}
 
 	private void setConnectingStatus(boolean isConnecting) {
-
-		String lastStatus;
-
-		if (serviceAdapter != null
-				&& !serviceAdapter.isAuthenticated()
-				&& (lastStatus = serviceAdapter.getConnectionStateString()) != null) {
+		if (serviceAdapter != null&& !serviceAdapter.isAuthenticated()) {
 			mConnectingText.setVisibility(View.VISIBLE);
-			mConnectingText.setText(lastStatus);
+			mConnectingText.setText(JimService.getConnectStr(this, serviceAdapter.getConnectionState()));
 		} else if (serviceAdapter == null
 				|| serviceAdapter.isAuthenticated() == false) {
 			mConnectingText.setVisibility(View.VISIBLE);
@@ -563,15 +559,14 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 		PreferenceManager.getDefaultSharedPreferences(this).edit()
 				.putBoolean(PrefConsts.CONN_STARTUP, !oldState).commit();
 		setSupportProgressBarIndeterminateVisibility(true);
-		if (oldState) {
+		LogUtils.i("toggleConnection:"+oldState);
+		if (oldState) {			
 			setConnectingStatus(false);
 			(new Thread() {
 				public void run() {
 					serviceAdapter.disconnect();
-					stopService(xmppServiceIntent);
 				}
 			}).start();
-
 		} else
 			startConnection(false);
 	}
@@ -636,7 +631,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	}
 
 	private void createUICallback() {
-		rosterCallback = new IXMPPRosterCallback.Stub() {
+		rosterCallback = new IXMPPStateCallback.Stub() {
 			@Override
 			public void connectionStateChanged(final int connectionstate) throws RemoteException {
 				mainHandler.post(new Runnable() {
