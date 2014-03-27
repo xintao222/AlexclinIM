@@ -58,7 +58,7 @@ public class LoginActivity extends Activity implements ServiceConnection{
 			sp.edit().putBoolean(PrefConsts.CONN_STARTUP, false).commit();
 			callback = new IXMPPStateCallback.Stub(){
 				@Override
-				public void connectionStateChanged(int connectionstate) throws RemoteException {
+				public void connectionStateChanged(int connectionstate,String msg) throws RemoteException {
 					mDailog.dismiss();
 					if(connectionstate == ConnectionState.ONLINE.ordinal()){	
 						sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();
@@ -105,6 +105,7 @@ public class LoginActivity extends Activity implements ServiceConnection{
 		if(!XmppHelper.verifyUserAndPW(jid, password)||customServer.equals("")){
 			return false;
 		}else{
+			sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();
 			startService(mXmppServiceIntent);
 			startActivity(mActivityIntent);
 			this.finish();
@@ -125,7 +126,7 @@ public class LoginActivity extends Activity implements ServiceConnection{
 	protected void onDestroy() {
 		if(mStub!=null){
 			try {
-				mStub.unregisterRosterCallback(callback);
+				mStub.unregisterStateCallback(callback);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -175,7 +176,7 @@ public class LoginActivity extends Activity implements ServiceConnection{
 	public void onServiceConnected(ComponentName name, IBinder service) {
 		mStub = IXMPPRosterService.Stub.asInterface(service);
 		try {
-			mStub.registerRosterCallback(callback);
+			mStub.registerStateCallback(callback);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

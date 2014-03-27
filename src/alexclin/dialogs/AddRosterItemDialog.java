@@ -5,6 +5,7 @@ import org.jivesoftware.smack.util.StringUtils;
 
 import umeox.xmpp.aidl.XMPPRosterServiceAdapter;
 import umeox.xmpp.util.XmppHelper;
+import alexclin.base.MyConfig;
 import alexclin.ui.FriendsFragment;
 import alexclin.xmpp.jabberim.R;
 import android.app.AlertDialog;
@@ -80,7 +81,7 @@ public class AddRosterItemDialog extends AlertDialog implements
 	public void afterTextChanged(Editable s) {
 		if(!s.toString().matches(" *")){
 			okButton.setEnabled(true);
-			userInputField.setTextColor(XmppHelper.getEditTextColor(mMainWindow.getActivity()));
+			userInputField.setTextColor(MyConfig.getEditTextColor(mMainWindow.getActivity()));
 		}else{
 			okButton.setEnabled(false);
 			userInputField.setTextColor(Color.RED);

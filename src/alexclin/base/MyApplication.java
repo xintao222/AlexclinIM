@@ -14,6 +14,11 @@ public class MyApplication extends BaseApp implements CrashAble {
 	@Override
 	public void onCreate() {		
 		LogUtils.allowWtf = true;
+		LogUtils.allowD = true;
+		LogUtils.allowW = true;
+		LogUtils.allowE = true;
+		LogUtils.allowV = true;
+		LogUtils.allowI = true;
 		mConfig = new MyConfig(PreferenceManager.getDefaultSharedPreferences(this));
 		Thread.setDefaultUncaughtExceptionHandler(CrashHandler.getInstance(this, this));
 	}

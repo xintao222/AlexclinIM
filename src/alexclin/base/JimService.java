@@ -1,6 +1,7 @@
 package alexclin.base;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.jivesoftware.smack.packet.Presence;
@@ -11,7 +12,6 @@ import umeox.xmpp.service.Smackable.ConnectionState;
 import umeox.xmpp.service.SmackableImp;
 import umeox.xmpp.service.XMPPService;
 import umeox.xmpp.transfer.FileSender;
-import umeox.xmpp.transfer.FileSender.Msg;
 import alexclin.ui.MainTabActivity;
 import alexclin.ui.chat.ChatActivity;
 import alexclin.xmpp.jabberim.R;
@@ -50,19 +50,12 @@ public class JimService extends XMPPService {
 		switch (state) {
 		case CONNECTING:
 			return ctx.getString(R.string.conn_connecting);
-		case DISCONNECTING:
-			// TODO
-			break;
 		case DISCONNECTED:
 			return ctx.getString(R.string.conn_disconnected);
 		case OFFLINE:
 			return ctx.getString(R.string.conn_offline);
 		case ONLINE:
 			return ctx.getString(R.string.conn_online);
-		case RECONNECT_DELAYED:
-			break;
-		case RECONNECT_NETWORK:
-			break;
 		default:
 			break;
 		}
@@ -257,7 +250,43 @@ public class JimService extends XMPPService {
 			values.put(RosterConstants.USER, mConfig.jabberID);
 			getContentResolver().insert(RosterProvider.CONTENT_URI, values);
 		}else{
-			mSmackable.sendPresenceRequest(request.getFrom(), Presence.Type.subscribed.name());
+			mSmackable.sendPresenceRequest(request.getFrom(), request.getType().name());
 		}
 	}
+
+	@Override
+	protected String constructStateMsg(String msg, int time) {
+		if(msg!=null){
+			if(msg.contains("conflict")){
+				msg = "连接关闭，您的帐号已在其它地方登录";
+			}else if(msg.contains("SASL authentication failed")){
+				msg = "连接关闭，错误的用户名或密码";
+			}else if(msg.contains("Network is unreachable")){
+				msg = "连接关闭，当前网络不可用";
+			}else if(msg.equals("online")){
+				return "在线";
+			}else if("offline".equals(msg)){
+				return "离线";
+			}else{
+				//Read error: ssl=0x44d568d0: I/O error during system call, Connection timed out
+				//其它未区分的错误
+				msg = "网络错误";
+			}
+			if(time<0){
+				return msg +",等待网络恢复后重新连接";
+			}else if(time==0){
+				return msg;
+			}else{
+				return msg +String.format(Locale.CHINESE,"，将会在%ds后重新连接",time);
+			}
+		}else{
+			return null;
+		}
+	}
+
+	@Override
+	protected void sendMediaMsg(String user, String path, int type) {
+		// TODO Auto-generated method stub
+		
+	}	
 }

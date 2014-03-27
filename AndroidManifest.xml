@@ -90,7 +90,7 @@
 
         <service android:name="alexclin.base.JimService" />
 
-        <receiver android:name="umeox.xmpp.service.XmppReceiver" >
+        <receiver android:name="alexclin.base.JimReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

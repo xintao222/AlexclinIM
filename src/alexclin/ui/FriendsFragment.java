@@ -232,8 +232,8 @@ public class FriendsFragment extends Fragment implements OnChildClickListener {
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							mMainActivity.serviceAdapter.sendPresenceRequest(jid, "subscribed");
-//							addToRosterDialog(jid);
-							mMainActivity.serviceAdapter.sendPresenceRequest(jid,"subscribe");
+							addToRosterDialog(jid);
+//							mMainActivity.serviceAdapter.sendPresenceRequest(jid,"subscribe");
 						}
 					})
 			.setNegativeButton(android.R.string.no, 

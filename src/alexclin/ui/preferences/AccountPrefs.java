@@ -1,9 +1,8 @@
 package alexclin.ui.preferences;
 
 
-import umeox.xmpp.base.BaseApp;
 import umeox.xmpp.util.PrefConsts;
-import umeox.xmpp.util.XmppHelper;
+import alexclin.base.MyConfig;
 import alexclin.xmpp.jabberim.R;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -30,7 +29,7 @@ public class AccountPrefs extends PreferenceActivity {
 		addPreferencesFromResource(R.layout.act_accountprefs);
 
 		sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-		themedTextColor = XmppHelper.getEditTextColor(this);
+		themedTextColor = MyConfig.getEditTextColor(this);
 	
 
 		this.prefPrio = (EditTextPreference) findPreference(PrefConsts.PRIORITY);

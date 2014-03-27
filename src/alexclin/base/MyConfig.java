@@ -1,7 +1,9 @@
 package alexclin.base;
 
 import alexclin.xmpp.jabberim.R;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.TypedValue;
 import umeox.xmpp.base.BaseConfig;
 
 public class MyConfig extends BaseConfig {
@@ -32,5 +34,17 @@ public class MyConfig extends BaseConfig {
 	protected void initParam(SharedPreferences _prefs) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static int getEditTextColor(Context ctx) {
+		TypedValue tv = new TypedValue();
+		boolean found = ctx.getTheme().resolveAttribute(android.R.attr.editTextColor, tv, true);
+		if (found) {
+			// SDK 11+
+			return ctx.getResources().getColor(tv.resourceId);
+		} else {
+			// SDK < 11
+			return ctx.getResources().getColor(android.R.color.primary_text_light);
+		}
 	}
 }

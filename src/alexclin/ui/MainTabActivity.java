@@ -18,6 +18,7 @@ import alexclin.dialogs.AddRosterItemDialog;
 import alexclin.dialogs.ChangeStatusDialog;
 import alexclin.ui.login.LoginActivity;
 import alexclin.ui.preferences.MainPrefs;
+import alexclin.util.StringUtil;
 import alexclin.xmpp.jabberim.R;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -405,16 +406,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	public void setAndSaveStatus(StatusMode statusMode, String message,
 			int priority) {
 		setStatus(statusMode, message);
-
-		SharedPreferences.Editor prefedit = PreferenceManager
-				.getDefaultSharedPreferences(this).edit();
-		// do not save "offline" to prefs, or else!
-		if (statusMode != StatusMode.offline)
-			prefedit.putString(PrefConsts.STATUS_MODE, statusMode.name());
-		prefedit.putString(PrefConsts.STATUS_MESSAGE, message);
-		prefedit.putString(PrefConsts.PRIORITY, String.valueOf(priority));
-		prefedit.commit();
-
 		// check if we are connected and want to go offline
 		boolean needToDisconnect = (statusMode == StatusMode.offline)
 				&& isConnected();
@@ -425,7 +416,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 		if (needToConnect || needToDisconnect)
 			toggleConnection();
 		else if (isConnected())
-			serviceAdapter.setStatusFromConfig();
+			serviceAdapter.setStatus(statusMode.ordinal(),message,priority,mConfig.messageCarbons);
 	}
 
 	private void setStatus(StatusMode statusMode, String message) {
@@ -534,10 +525,14 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 				.putBoolean(PrefConsts.SHOW_OFFLINE, showOffline).commit();
 	}
 
-	private void setConnectingStatus(boolean isConnecting) {
+	private void setConnectingStatus(boolean isConnecting,String msg) {
 		if (serviceAdapter != null&& !serviceAdapter.isAuthenticated()) {
-			mConnectingText.setVisibility(View.VISIBLE);
-			mConnectingText.setText(JimService.getConnectStr(this, serviceAdapter.getConnectionState()));
+			if(StringUtil.isNullOrEmpty(msg)){
+				mConnectingText.setVisibility(View.GONE);
+			}else{
+				mConnectingText.setVisibility(View.VISIBLE);
+				mConnectingText.setText(msg);
+			}			
 		} else if (serviceAdapter == null
 				|| serviceAdapter.isAuthenticated() == false) {
 			mConnectingText.setVisibility(View.VISIBLE);
@@ -547,7 +542,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	}
 
 	public void startConnection(boolean create_account) {
-		setConnectingStatus(true);
 		xmppServiceIntent.putExtra("create_account", create_account);
 		startService(xmppServiceIntent);
 	}
@@ -561,7 +555,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 		setSupportProgressBarIndeterminateVisibility(true);
 		LogUtils.i("toggleConnection:"+oldState);
 		if (oldState) {			
-			setConnectingStatus(false);
 			(new Thread() {
 				public void run() {
 					serviceAdapter.disconnect();
@@ -588,7 +581,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	private void initXMPPServiceIntent() {
 		Log.i(TAG, "init XMPPService intent");
 		xmppServiceIntent = new Intent(this, JimService.class);
-		xmppServiceIntent.setAction("org.yaxim.androidclient.XMPPSERVICE");
+//		xmppServiceIntent.setAction("org.yaxim.androidclient.XMPPSERVICE");
 		xmppServiceConnection = new ServiceConnection() {
 			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 			// required for Sherlock's invalidateOptionsMenu */
@@ -597,17 +590,14 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 				serviceAdapter = new XMPPRosterServiceAdapter(
 						IXMPPRosterService.Stub.asInterface(service));
 				serviceAdapter.registerUICallback(rosterCallback);
-				Log.i(TAG,
-						"getConnectionState(): "
+				Log.i(TAG,"getConnectionState(): "
 								+ serviceAdapter.getConnectionState());
 				invalidateOptionsMenu();
 				actionBar.setIcon(getStatusActionIcon());
-				// TODO 顶部显示用户名
-				// actionBar.setTitle(serviceAdapter.);
 				actionBar.setTitle(PreferenceManager
 						.getDefaultSharedPreferences(MainTabActivity.this)
 						.getString(PrefConsts.JID, ""));
-				setConnectingStatus(serviceAdapter.getConnectionState() == ConnectionState.CONNECTING.ordinal());
+				setConnectingStatus(serviceAdapter.getConnectionState() == ConnectionState.CONNECTING.ordinal(),serviceAdapter.getConnectionStateString());
 				setSupportProgressBarIndeterminateVisibility(serviceAdapter
 						.getConnectionState() == ConnectionState.CONNECTING.ordinal());
 			}
@@ -633,13 +623,13 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	private void createUICallback() {
 		rosterCallback = new IXMPPStateCallback.Stub() {
 			@Override
-			public void connectionStateChanged(final int connectionstate) throws RemoteException {
+			public void connectionStateChanged(final int connectionstate,final String msg) throws RemoteException {
 				mainHandler.post(new Runnable() {
 					@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 					// required for Sherlock's invalidateOptionsMenu */
 					public void run() {
 						boolean isConnected = connectionstate==ConnectionState.ONLINE.ordinal();
-						setConnectingStatus(!isConnected);
+						setConnectingStatus(!isConnected,msg);
 						setSupportProgressBarIndeterminateVisibility(false);
 						invalidateOptionsMenu();
 					}
@@ -687,16 +677,10 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	}
 
 	@Override
-	public void onPageScrollStateChanged(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onPageScrollStateChanged(int arg0) {}
 
 	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
 	@Override
 	public void onPageSelected(int arg0) {
