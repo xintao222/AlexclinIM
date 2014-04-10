@@ -5,7 +5,9 @@ import org.jivesoftware.smack.util.StringUtils;
 
 import umeox.xmpp.aidl.XMPPRosterServiceAdapter;
 import umeox.xmpp.util.XmppHelper;
+import alexclin.base.MyApplication;
 import alexclin.base.MyConfig;
+import alexclin.data.AddOtherDB;
 import alexclin.ui.FriendsFragment;
 import alexclin.xmpp.jabberim.R;
 import android.app.AlertDialog;
@@ -76,6 +78,9 @@ public class AddRosterItemDialog extends AlertDialog implements
 		mServiceAdapter.addRosterItem(userInputField.getText()
 				.toString(), aliasInputField.getText().toString(),
 				mGroupNameView.getGroupName(),verifyMsgEdt.getText().toString());
+		String jid = XmppHelper.getUser(userInputField.getText().toString());
+		String user = ((MyApplication)getContext().getApplicationContext()).getConfig().jabberID;
+		AddOtherDB.record(getContext(), jid, user);
 	}
 
 	public void afterTextChanged(Editable s) {

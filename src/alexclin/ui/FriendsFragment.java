@@ -233,7 +233,6 @@ public class FriendsFragment extends Fragment implements OnChildClickListener {
 						public void onClick(DialogInterface dialog, int which) {
 							mMainActivity.serviceAdapter.sendPresenceRequest(jid, "subscribed");
 							addToRosterDialog(jid);
-//							mMainActivity.serviceAdapter.sendPresenceRequest(jid,"subscribe");
 						}
 					})
 			.setNegativeButton(android.R.string.no, 
@@ -431,12 +430,12 @@ public class FriendsFragment extends Fragment implements OnChildClickListener {
 		}
 
 		public void requery() {
-			String selectWhere = RosterConstants.USER +" = ?";
+			String selectWhere = RosterConstants.USER + " = ? and "+RosterConstants.TYPE + " = ?";
 			if (!mMainActivity.showOffline)
 				selectWhere = selectWhere + " and "+OFFLINE_EXCLUSION;
 			Cursor cursor = mMainActivity.getContentResolver().query(
 					RosterProvider.GROUPS_URI, GROUPS_QUERY_COUNTED,
-					selectWhere, new String[]{user}, RosterConstants.GROUP);
+					selectWhere, new String[]{user,RosterConstants.TYPE_BOTH+""}, RosterConstants.GROUP);
 			Cursor oldCursor = getCursor();
 			changeCursor(cursor);
 			mMainActivity.stopManagingCursor(oldCursor);

@@ -7,6 +7,7 @@ import umeox.xmpp.util.PrefConsts;
 import umeox.xmpp.util.XmppHelper;
 import alexclin.ui.MainTabActivity;
 import alexclin.ui.preferences.AccountPrefs;
+import alexclin.util.StringUtil;
 import alexclin.xmpp.jabberim.R;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -97,12 +98,10 @@ public class FirstStartDialog extends AlertDialog implements DialogInterface.OnC
 	}
 
 	public void afterTextChanged(Editable s) {
-		try {
-			XmppHelper.verifyJabberID(s);
+		if(StringUtil.isNullOrEmpty(s.toString())){
 			mOkButton.setEnabled(true);
-			//mOkButton.setOnClickListener(this);
 			mEditJabberID.setTextColor(themedTextColor);
-		} catch (UmeoxException e) {
+		}else{
 			mOkButton.setEnabled(false);
 			mEditJabberID.setTextColor(Color.RED);
 		}

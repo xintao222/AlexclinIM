@@ -18,7 +18,6 @@ import alexclin.dialogs.AddRosterItemDialog;
 import alexclin.dialogs.ChangeStatusDialog;
 import alexclin.ui.login.LoginActivity;
 import alexclin.ui.preferences.MainPrefs;
-import alexclin.util.StringUtil;
 import alexclin.xmpp.jabberim.R;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -82,7 +81,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	private StatusMode mStatusMode;
 
 	private ActionBar actionBar;
-	private String mTheme;
 
 	private ViewPager mViewPager;
 	private FragPagerAdapter adapter;
@@ -106,7 +104,6 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		mConfig = ((BaseApp) getApplication()).getConfig();
-		mTheme = mConfig.theme;
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_ACTION_BAR);
@@ -137,16 +134,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getPreferences(PreferenceManager.getDefaultSharedPreferences(this));
-		String theme = PreferenceManager.getDefaultSharedPreferences(this)
-				.getString(PrefConsts.THEME, "dark");
-		if (theme.equals(mTheme) == false) {
-			// restart
-			Intent restartIntent = new Intent(this, MainTabActivity.class);
-			restartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(restartIntent);
-			finish();
-		}
+		getPreferences(PreferenceManager.getDefaultSharedPreferences(this));		
 		bindXMPPService();
 		// handle SEND action
 		handleSendIntent();
@@ -525,20 +513,23 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 				.putBoolean(PrefConsts.SHOW_OFFLINE, showOffline).commit();
 	}
 
-	private void setConnectingStatus(boolean isConnecting,String msg) {
-		if (serviceAdapter != null&& !serviceAdapter.isAuthenticated()) {
-			if(StringUtil.isNullOrEmpty(msg)){
-				mConnectingText.setVisibility(View.GONE);
-			}else{
-				mConnectingText.setVisibility(View.VISIBLE);
-				mConnectingText.setText(msg);
-			}			
-		} else if (serviceAdapter == null
-				|| serviceAdapter.isAuthenticated() == false) {
+	private void setConnectingStatus(int state,String msg) {
+		ConnectionState cs = ConnectionState.values()[state];
+		switch (cs) {
+		case CONNECTING:		
 			mConnectingText.setVisibility(View.VISIBLE);
-			mConnectingText.setText(R.string.conn_offline);
-		} else
+			mConnectingText.setText("正在连接服务器...");
+			break;
+		case DISCONNECTED:
+		case DISCONNECTING:
+		case OFFLINE:
+			mConnectingText.setVisibility(View.VISIBLE);
+			mConnectingText.setText(msg);
+			break;
+		case ONLINE:
 			mConnectingText.setVisibility(View.GONE);
+			break;
+		}
 	}
 
 	public void startConnection(boolean create_account) {
@@ -597,7 +588,7 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 				actionBar.setTitle(PreferenceManager
 						.getDefaultSharedPreferences(MainTabActivity.this)
 						.getString(PrefConsts.JID, ""));
-				setConnectingStatus(serviceAdapter.getConnectionState() == ConnectionState.CONNECTING.ordinal(),serviceAdapter.getConnectionStateString());
+				setConnectingStatus(serviceAdapter.getConnectionState(),serviceAdapter.getConnectionStateString());
 				setSupportProgressBarIndeterminateVisibility(serviceAdapter
 						.getConnectionState() == ConnectionState.CONNECTING.ordinal());
 			}
@@ -623,13 +614,12 @@ public class MainTabActivity extends SherlockFragmentActivity implements
 	private void createUICallback() {
 		rosterCallback = new IXMPPStateCallback.Stub() {
 			@Override
-			public void connectionStateChanged(final int connectionstate,final String msg) throws RemoteException {
+			public void connectionStateChanged(final int state,final String msg) throws RemoteException {
 				mainHandler.post(new Runnable() {
 					@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 					// required for Sherlock's invalidateOptionsMenu */
 					public void run() {
-						boolean isConnected = connectionstate==ConnectionState.ONLINE.ordinal();
-						setConnectingStatus(!isConnected,msg);
+						setConnectingStatus(state,msg);
 						setSupportProgressBarIndeterminateVisibility(false);
 						invalidateOptionsMenu();
 					}

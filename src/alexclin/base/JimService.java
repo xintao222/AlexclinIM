@@ -12,6 +12,8 @@ import umeox.xmpp.service.Smackable.ConnectionState;
 import umeox.xmpp.service.SmackableImp;
 import umeox.xmpp.service.XMPPService;
 import umeox.xmpp.transfer.FileSender;
+import umeox.xmpp.util.XmppHelper;
+import alexclin.data.AddOtherDB;
 import alexclin.ui.MainTabActivity;
 import alexclin.ui.chat.ChatActivity;
 import alexclin.xmpp.jabberim.R;
@@ -120,15 +122,21 @@ public class JimService extends XMPPService {
 
 	@Override
 	protected void showStatusNotification(ConnectionState state) {
+		String title = mConfig.jabberID;
+		String content = getConnectStr(this, state.ordinal());
+		if((getConnectionState()==ConnectionState.OFFLINE
+				||getConnectionState()==ConnectionState.DISCONNECTED)&&!mWillReconnect.get()){
+			title = getString(R.string.app_name);
+			content = "正在运行.....";
+		}
 		Notification n = new Notification(R.drawable.ic_offline,
-				mConfig.jabberID, System.currentTimeMillis());
+				title, System.currentTimeMillis());
 		n.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
 		Intent notificationIntent = new Intent(this, MainTabActivity.class);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		n.contentIntent = PendingIntent.getActivity(this, 0,
 				notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		n.setLatestEventInfo(this, mConfig.jabberID,
-				getConnectStr(this, state.ordinal()), n.contentIntent);
+		n.setLatestEventInfo(this, title,content, n.contentIntent);
 		startForeground(SERVICE_NOTIFICATION, n);
 	}
 
@@ -231,13 +239,8 @@ public class JimService extends XMPPService {
 
 	@Override
 	protected void receivePresence(Presence request) {
-		Cursor c = getContentResolver().query(
-				RosterProvider.CONTENT_URI,	null,
-				RosterConstants.JID + "= ? AND " + RosterConstants.USER
-						+ " = ?",
-				new String[] { request.getFrom(), mConfig.jabberID }, null);
-		boolean has = c.moveToNext();
-		c.close();
+		String jid = XmppHelper.getUser(request.getFrom());
+		boolean has = AddOtherDB.isInAddHistory(this, jid, mConfig.jabberID);
 		if(!has){
 			ContentValues values = new ContentValues();
 			values.put(RosterConstants.JID, request.getFrom());
@@ -248,9 +251,15 @@ public class JimService extends XMPPService {
 					SmackableImp.getStatusInt(request));
 			values.put(RosterConstants.STATUS_MESSAGE, request.getStatus());
 			values.put(RosterConstants.USER, mConfig.jabberID);
+			values.put(RosterConstants.TYPE, RosterConstants.TYPE_BOTH);
 			getContentResolver().insert(RosterProvider.CONTENT_URI, values);
 		}else{
-			mSmackable.sendPresenceRequest(request.getFrom(), request.getType().name());
+			if(request.getType()==Presence.Type.subscribe){
+				sendPresenceRequest(request.getFrom(), Presence.Type.subscribed);
+			}else{
+				sendPresenceRequest(request.getFrom(), Presence.Type.unsubscribed);
+			}
+			AddOtherDB.remove(this, jid, mConfig.jabberID);
 		}
 	}
 
@@ -258,19 +267,22 @@ public class JimService extends XMPPService {
 	protected String constructStateMsg(String msg, int time) {
 		if(msg!=null){
 			if(msg.contains("conflict")){
-				msg = "连接关闭，您的帐号已在其它地方登录";
+				msg = "您的帐号已在其它地方登录";
 			}else if(msg.contains("SASL authentication failed")){
-				msg = "连接关闭，错误的用户名或密码";
+				msg = "错误的用户名或密码";
 			}else if(msg.contains("Network is unreachable")){
-				msg = "连接关闭，当前网络不可用";
+				msg = "当前网络不可用";
+			}else if(msg.contains("system-shutdown")){
+				msg = "服务器关闭";
 			}else if(msg.equals("online")){
 				return "在线";
 			}else if("offline".equals(msg)){
 				return "离线";
+			}else if(msg.contains("Connection timed out")){
+				msg = "连接超时";
 			}else{
 				//Read error: ssl=0x44d568d0: I/O error during system call, Connection timed out
 				//其它未区分的错误
-				msg = "网络错误";
 			}
 			if(time<0){
 				return msg +",等待网络恢复后重新连接";
@@ -288,5 +300,5 @@ public class JimService extends XMPPService {
 	protected void sendMediaMsg(String user, String path, int type) {
 		// TODO Auto-generated method stub
 		
-	}	
+	}
 }

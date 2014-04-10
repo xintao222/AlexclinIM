@@ -22,14 +22,6 @@ public class MyConfig extends BaseConfig {
 		return "phone";
 	}
 
-	public int getTheme() {
-		if (theme.equals("light")) {
-			return R.style.YaximLightTheme;
-		} else {
-			return R.style.YaximDarkTheme;
-		}
-	}
-
 	@Override
 	protected void initParam(SharedPreferences _prefs) {
 		// TODO Auto-generated method stub

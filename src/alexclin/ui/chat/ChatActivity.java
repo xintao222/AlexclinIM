@@ -13,6 +13,7 @@ import umeox.xmpp.transfer.AudioUtil;
 import umeox.xmpp.transfer.FileSender;
 import umeox.xmpp.transfer.MediaDB;
 import umeox.xmpp.util.PrefConsts;
+import umeox.xmpp.util.ToastUtil;
 import alexclin.base.GlobalConfig;
 import alexclin.base.JimService;
 import alexclin.http.BaseApi.Callback;
@@ -56,6 +57,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockListActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.Window;
+import com.lidroid.xutils.util.LogUtils;
 
 /**
  * 聊天界面
@@ -293,6 +295,7 @@ public class ChatActivity extends SherlockListActivity implements
 	}
 
 	private void sendMessage(String message) {
+		LogUtils.e("message:"+message);
 		mChatInput.setText(null);
 		mSendButton.setEnabled(false);
 		mServiceAdapter.sendMessage(mWithJabberID, message);
@@ -443,8 +446,7 @@ public class ChatActivity extends SherlockListActivity implements
 
 	@Override
 	public void onFailure(int error, int apiInt,Object tag) {
-		// TODO Auto-generated method stub
-		
+		ToastUtil.toastShort(this, "发送语音失败！");		
 	}
 
 	@Override

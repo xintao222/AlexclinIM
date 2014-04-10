@@ -81,7 +81,7 @@ public class ChatsFragment extends Fragment {
 
 		public ChatListAdapter(Context context, Cursor c) {
 			super(context, R.layout.listitem_fragchat, c,
-					true);
+					FLAG_AUTO_REQUERY);
 		}
 
 		@Override

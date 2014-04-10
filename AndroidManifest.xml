@@ -88,12 +88,14 @@
             android:name="alexclin.ui.PersonalFragment"
             android:screenOrientation="portrait" />
 
-        <service android:name="alexclin.base.JimService" />
+        <service android:name="alexclin.base.JimService"/>
 
-        <receiver android:name="alexclin.base.JimReceiver" >
+        <receiver android:name="alexclin.base.JimReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="umeox.xmpp.service.CHECK_ALARM" /> 
             </intent-filter>
         </receiver>
         

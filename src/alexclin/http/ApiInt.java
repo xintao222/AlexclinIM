@@ -17,7 +17,7 @@ public class ApiInt {
 	private static SparseArray<String> mUrlMap = new SparseArray<String>();
 	private static SparseArray<Type> mClassMap = new SparseArray<Type>();
 	static {
-		mUrlMap.put(UploadFile, FileHost+"upload");
+		mUrlMap.put(UploadFile, FileHost+"im/uploadFile");
 		/*********************************************************************/
 		mClassMap.put(UploadFile, new TypeToken<ReturnBean<UploadResult>>(){}.getType());
 	}

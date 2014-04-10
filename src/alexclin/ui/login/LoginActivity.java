@@ -3,6 +3,7 @@ package alexclin.ui.login;
 import umeox.xmpp.aidl.IXMPPRosterService;
 import umeox.xmpp.aidl.IXMPPStateCallback;
 import umeox.xmpp.service.Smackable.ConnectionState;
+import umeox.xmpp.service.XMPPService;
 import umeox.xmpp.util.PrefConsts;
 import umeox.xmpp.util.ToastUtil;
 import umeox.xmpp.util.XmppHelper;
@@ -53,7 +54,7 @@ public class LoginActivity extends Activity implements ServiceConnection{
 		mDailog.setMessage("登录中。。。");
 		mXmppServiceIntent = new Intent(this, JimService.class);
 		mActivityIntent = new Intent(this, MainTabActivity.class);
-		sp = PreferenceManager.getDefaultSharedPreferences(this);
+		sp = PreferenceManager.getDefaultSharedPreferences(this);		
 		if(!autoLogin()){
 			sp.edit().putBoolean(PrefConsts.CONN_STARTUP, false).commit();
 			callback = new IXMPPStateCallback.Stub(){
@@ -61,16 +62,14 @@ public class LoginActivity extends Activity implements ServiceConnection{
 				public void connectionStateChanged(int connectionstate,String msg) throws RemoteException {
 					mDailog.dismiss();
 					if(connectionstate == ConnectionState.ONLINE.ordinal()){	
-						sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();
 						startMainActivity();
-					}else if(connectionstate == ConnectionState.OFFLINE.ordinal()){
+					}else if(connectionstate == ConnectionState.OFFLINE.ordinal()){						
 						ToastUtil.toastShort(LoginActivity.this, R.string.LoginFailedNotify);					
 					}				
 				}			
 			};
 			bindService(mXmppServiceIntent, this, BIND_AUTO_CREATE);
-		}
-		
+		}		
 	}
 
 	@OnClick({ R.id.Submit_Login, R.id.Register_Login, R.id.Forget_Login,R.id.ServerSetting_Login })
@@ -117,6 +116,9 @@ public class LoginActivity extends Activity implements ServiceConnection{
 
 	private void startMainActivity() {
 		if(!isFinishing()){
+			sp.edit().putBoolean(PrefConsts.CONN_STARTUP, true).commit();			
+			mXmppServiceIntent.setAction(XMPPService.ACTION_REFRESH);
+			startService(mXmppServiceIntent);
 			startActivity(mActivityIntent);
 			finish();
 		}		
@@ -150,6 +152,7 @@ public class LoginActivity extends Activity implements ServiceConnection{
 			sp.edit().putString(PrefConsts.JID, jid)
 					.putString(PrefConsts.PASSWORD, password).commit();
             //启动服务并监听登陆结果
+			mXmppServiceIntent.setAction(XMPPService.ACTION_LOGIN);
 			startService(mXmppServiceIntent);
 			mDailog.show();
 		} else {
